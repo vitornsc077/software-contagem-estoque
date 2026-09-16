@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>Contagem de Estoque</title>
-  <meta name="description" content="Sistema intuitivo e mobile-first de contagem física de estoque para loja e depósito">
+  <meta name="description" content="Sistema intuitivo e mobile-first de contagem física de estoque para loja e depósito com envio via WhatsApp">
   
   <!-- Tipografia Moderna de Alta Legibilidade -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -13,45 +13,39 @@
 
   <style>
     /* ==========================================================================
-       DESIGN SYSTEM - TEMA LARANJA PASTEL ACOLHEDOR & ALTA LEGIBILIDADE (UX OTIMIZADA)
+       DESIGN SYSTEM - TEMA LARANJA PASTEL ACOLHEDOR & ALTA LEGIBILIDADE
        ========================================================================== */
     :root {
       --font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
       
-      /* Fundo Laranja Pastel Suave & Confortável */
+      /* Fundo Laranja Pastel Suave */
       --bg-app: #fef5ee;              /* Laranja pastel suave / pêssego acolhedor */
-      --bg-surface: #ffffff;          /* Cards em branco puro para máximo contraste */
+      --bg-surface: #ffffff;          /* Cards em branco puro */
       --bg-surface-subtle: #fdf0e4;   /* Tom pastel para hover e badges */
-      --bg-surface-active: #fffaf5;   /* Fundo ativo para itens selecionados */
       
-      /* Textos Adaptados: Tons quentes de alto contraste (evita preto chapado) */
-      --text-main: #291811;           /* Marrom espresso muito escuro, contraste altíssimo */
-      --text-secondary: #5c4135;      /* Marrom café para subtítulos e metadados */
-      --text-muted: #8c7365;          /* Tom suave legível para dicas e placeholders */
+      /* Textos Adaptados: Tons quentes de alto contraste */
+      --text-main: #291811;           /* Marrom espresso muito escuro */
+      --text-secondary: #5c4135;      /* Marrom café para subtítulos */
+      --text-muted: #8c7365;          /* Tom suave legível */
       --text-inverse: #ffffff;
       
       /* Bordas em tons quentes harmônicos */
-      --border-subtle: #f3e2d5;       /* Borda pastel delicada */
-      --border-medium: #e8ccba;       /* Borda com bom destaque */
-      --border-strong: #d9b299;
-      --border-focus: #ea580c;        /* Laranja vivo para foco */
+      --border-subtle: #f3e2d5;
+      --border-medium: #e8ccba;
+      --border-focus: #ea580c;
 
       /* Acentos e Cores de Ação */
       --color-accent: #ea580c;        /* Laranja marcante elegante */
-      --color-accent-light: #ffedd5;  /* Laranja pastel para badges/pills */
       --color-whatsapp: #15803d;      /* Verde escuro contrastante */
-      --color-whatsapp-btn: #16a34a;  /* Verde WhatsApp vibrante e legível */
-      --color-obsidian: #6d28d9;      /* Roxo Obsidian */
-      --color-obsidian-bg: #f5f3ff;
+      --color-whatsapp-btn: #16a34a;  /* Verde WhatsApp vibrante */
       --color-success: #15803d;
       --color-success-bg: #dcfce7;
-      --color-danger: #c2410c;        /* Laranja terracota/vermelho queimado para subtrair */
+      --color-danger: #c2410c;        /* Terracota para subtrair */
       --color-danger-bg: #fee2e2;
 
-      /* Sombras leves e suaves */
+      /* Sombras leves */
       --shadow-sm: 0 1px 3px rgba(41, 24, 17, 0.04);
       --shadow-card: 0 2px 6px rgba(41, 24, 17, 0.05), 0 1px 2px rgba(41, 24, 17, 0.03);
-      --shadow-active: 0 4px 12px rgba(234, 88, 12, 0.12);
       --shadow-bottom: 0 -4px 16px rgba(41, 24, 17, 0.08);
 
       /* Dimensões Ergonômicas para Uso com Polegar */
@@ -76,7 +70,7 @@
       line-height: 1.5;
       font-size: 15px;
       min-height: 100vh;
-      padding-bottom: 110px; /* Espaço para a barra de ação inferior */
+      padding-bottom: 110px;
     }
 
     .container {
@@ -86,7 +80,7 @@
     }
 
     /* ==========================================================================
-       HEADER COMPACTO E ELEGANTE (SEM POLUIÇÃO VISUAL)
+       HEADER COMPACTO E LIMPO
        ========================================================================== */
     header.app-header {
       background-color: var(--bg-surface);
@@ -100,71 +94,44 @@
     .header-content {
       max-width: 680px;
       margin: 0 auto;
-      padding: 10px 14px;
+      padding: 12px 14px;
       display: flex;
       align-items: center;
-      justify-content: space-between;
+      justify-content: center;
       gap: 10px;
     }
 
     .brand-group {
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 10px;
     }
 
     .brand-badge {
-      width: 34px;
-      height: 34px;
+      width: 36px;
+      height: 36px;
       background: linear-gradient(135deg, #f97316, #ea580c);
       color: #fff;
       border-radius: var(--radius-sm);
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 17px;
+      font-size: 18px;
       box-shadow: 0 2px 4px rgba(234, 88, 12, 0.25);
     }
 
     .brand-group h1 {
-      font-size: 16px;
+      font-size: 17px;
       font-weight: 800;
       color: var(--text-main);
       letter-spacing: -0.2px;
-      line-height: 1.2;
-    }
-
-    .header-actions {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .btn-header-icon {
-      width: 38px;
-      height: 38px;
-      border-radius: var(--radius-sm);
-      border: 1.5px solid var(--border-subtle);
-      background-color: var(--bg-surface);
-      color: var(--text-secondary);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      transition: all 0.15s ease;
-    }
-
-    .btn-header-icon:active {
-      background-color: var(--bg-surface-subtle);
-      border-color: var(--color-accent);
-      color: var(--color-accent);
     }
 
     /* BARRA DE PESQUISA COMPACTA */
     .search-wrapper {
       max-width: 680px;
       margin: 0 auto;
-      padding: 8px 14px 10px 14px;
+      padding: 0 14px 10px 14px;
     }
 
     .search-input-box {
@@ -220,7 +187,7 @@
       display: flex;
     }
 
-    /* SELETOR DE ESTAÇÃO / ABAS DE CATEGORIA (FOCO MENTAL) */
+    /* SELETOR DE ESTAÇÃO / ABAS DE CATEGORIA */
     .category-nav-bar {
       background-color: var(--bg-surface);
       border-bottom: 1.5px solid var(--border-subtle);
@@ -293,7 +260,7 @@
       color: #ffffff;
     }
 
-    /* BARRA COMPACTA DE PROGRESSO E AÇÃO RÁPIDA (SUBSTITUI O CARD POLUÍDO) */
+    /* BARRA COMPACTA DE PROGRESSO */
     .progress-bar-strip {
       display: flex;
       align-items: center;
@@ -336,7 +303,7 @@
     }
 
     /* ==========================================================================
-       LISTA DE PRODUTOS - CARDS AREJADOS E LIMPOS
+       LISTA DE PRODUTOS
        ========================================================================== */
     .category-block {
       margin-bottom: 20px;
@@ -360,7 +327,7 @@
       gap: 8px;
     }
 
-    /* CARD DE PRODUTO INDIVIDUAL */
+    /* CARD DE PRODUTO */
     .product-card {
       background-color: var(--bg-surface);
       border: 1.5px solid var(--border-subtle);
@@ -374,7 +341,6 @@
       transition: all 0.15s ease;
     }
 
-    /* Quando o item tem contagem > 0: destaque sutil e limpo */
     .product-card.is-counted {
       border-color: #86efac;
       background-color: #fcfdfc;
@@ -416,7 +382,7 @@
       text-decoration: underline;
     }
 
-    /* CONTROLES DE QUANTIDADE TOUCH-FIRST */
+    /* CONTROLES DE QUANTIDADE */
     .qty-stepper {
       display: flex;
       align-items: center;
@@ -446,10 +412,6 @@
       border-color: var(--color-danger);
       color: var(--color-danger);
       transform: scale(0.92);
-    }
-
-    .stepper-btn-plus {
-      border-color: var(--border-medium);
     }
 
     .stepper-btn-plus:active {
@@ -493,7 +455,7 @@
       color: #15803d;
     }
 
-    /* BOTÃO CLEAN DE ADICIONAR PRODUTO NOVO */
+    /* BOTÃO DE ADICIONAR PRODUTO NOVO */
     .add-new-product-clean {
       margin-top: 10px;
       border-radius: var(--radius-md);
@@ -619,7 +581,7 @@
     }
 
     /* ==========================================================================
-       BARRA DE FINALIZAÇÃO INFERIOR FIXA (MOBILE-FIRST)
+       BARRA FIXA INFERIOR
        ========================================================================== */
     .sticky-bottom-action-bar {
       position: fixed;
@@ -712,7 +674,7 @@
     }
 
     /* ==========================================================================
-       MODAIS E DIÁLOGOS
+       MODAIS
        ========================================================================== */
     .modal-backdrop {
       position: fixed;
@@ -742,7 +704,7 @@
     .modal-sheet {
       background-color: #ffffff;
       width: 100%;
-      max-width: 540px;
+      max-width: 520px;
       border-radius: var(--radius-lg) var(--radius-lg) 0 0;
       max-height: 88vh;
       display: flex;
@@ -814,7 +776,6 @@
       background-color: var(--bg-app);
     }
 
-    /* PREVIEW DO RELATÓRIO */
     .preview-code-box {
       background-color: #fffaf5;
       border: 1.5px solid var(--border-subtle);
@@ -842,104 +803,6 @@
       align-items: center;
       gap: 6px;
     }
-
-    /* FORMULÁRIO CONFIGURAÇÕES OBSIDIAN */
-    .field-group {
-      margin-bottom: 14px;
-    }
-
-    .field-group label {
-      display: block;
-      font-size: 12px;
-      font-weight: 700;
-      color: var(--text-secondary);
-      margin-bottom: 5px;
-    }
-
-    .field-input {
-      width: 100%;
-      height: 42px;
-      padding: 0 12px;
-      border-radius: var(--radius-sm);
-      border: 1.5px solid var(--border-medium);
-      font-size: 14px;
-      font-family: inherit;
-      color: var(--text-main);
-    }
-
-    .field-input:focus {
-      outline: none;
-      border-color: var(--color-obsidian);
-      box-shadow: 0 0 0 3px rgba(109, 40, 217, 0.12);
-    }
-
-    .pw-input-wrapper {
-      position: relative;
-    }
-
-    .btn-show-hide-pw {
-      position: absolute;
-      right: 8px;
-      top: 50%;
-      transform: translateY(-50%);
-      background: none;
-      border: none;
-      color: var(--text-muted);
-      cursor: pointer;
-      font-size: 11px;
-      font-weight: 700;
-      padding: 4px;
-    }
-
-    .obsidian-ssl-tip {
-      background-color: var(--color-obsidian-bg);
-      border-left: 3px solid var(--color-obsidian);
-      padding: 10px 12px;
-      border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
-      font-size: 12px;
-      color: #4c1d95;
-      line-height: 1.4;
-      margin-top: 10px;
-    }
-
-    .obsidian-ssl-tip a {
-      color: var(--color-obsidian);
-      font-weight: 700;
-      text-decoration: underline;
-    }
-
-    /* STATUS DE ENVIO */
-    .sync-progress-box {
-      margin-top: 12px;
-      border: 1.5px solid var(--border-subtle);
-      border-radius: var(--radius-sm);
-      padding: 10px 12px;
-      background-color: #ffffff;
-    }
-
-    .sync-row {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 6px 0;
-      font-size: 12px;
-      border-bottom: 1px solid var(--border-subtle);
-    }
-
-    .sync-row:last-child {
-      border-bottom: none;
-    }
-
-    .sync-tag {
-      font-size: 10px;
-      font-weight: 800;
-      padding: 2px 7px;
-      border-radius: var(--radius-full);
-    }
-
-    .tag-wait { background-color: var(--bg-surface-subtle); color: var(--text-muted); }
-    .tag-ok { background-color: var(--color-success-bg); color: var(--color-success); }
-    .tag-fail { background-color: var(--color-danger-bg); color: var(--color-danger); }
 
     /* TOASTS */
     .toast-deck {
@@ -977,7 +840,6 @@
     .toast-card.t-success { border-left: 5px solid var(--color-success); }
     .toast-card.t-error { border-left: 5px solid var(--color-danger); }
     .toast-card.t-info { border-left: 5px solid var(--color-accent); }
-    .toast-card.t-obsidian { border-left: 5px solid var(--color-obsidian); }
 
     .toast-text {
       flex: 1;
@@ -996,18 +858,7 @@
     <div class="header-content">
       <div class="brand-group">
         <div class="brand-badge">📦</div>
-        <div>
-          <h1>Contagem de Estoque</h1>
-        </div>
-      </div>
-      <div class="header-actions">
-        <!-- Configurações do Obsidian -->
-        <button id="btnOpenSettings" class="btn-header-icon" title="Configurações Obsidian" aria-label="Configurações">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <circle cx="12" cy="12" r="3"></circle>
-            <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
-          </svg>
-        </button>
+        <h1>Contagem de Estoque</h1>
       </div>
     </div>
 
@@ -1053,10 +904,10 @@
   </header>
 
   <!-- ==========================================================================
-       2. CONTEÚDO PRINCIPAL (FOCO TOTAL NA TAREFA DE CONTAGEM)
+       2. CONTEÚDO PRINCIPAL
        ========================================================================== -->
   <main class="container">
-    <!-- Linha de Resumo Sutil e Limpa -->
+    <!-- Linha de Resumo Sutil -->
     <div class="progress-bar-strip">
       <span class="progress-stats-text">
         Progresso: <strong id="stripCountedStats">0 itens</strong> (<span id="stripUnitsStats">0 un</span>)
@@ -1082,7 +933,7 @@
   </main>
 
   <!-- ==========================================================================
-       3. BARRA FIXA INFERIOR (AÇÃO DIRETA NO POLEGAR)
+       3. BARRA FIXA INFERIOR DE FINALIZAÇÃO (WHATSAPP)
        ========================================================================== -->
   <div class="sticky-bottom-action-bar">
     <div class="bottom-bar-wrapper">
@@ -1095,22 +946,22 @@
         📋 Revisar
       </button>
 
-      <button id="btnFinalizeMain" class="btn-primary-finalize" title="Finalizar contagem e enviar para WhatsApp e Obsidian">
+      <button id="btnFinalizeMain" class="btn-primary-finalize" title="Finalizar contagem e enviar para o WhatsApp">
         <svg viewBox="0 0 24 24">
           <path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766 0-3.18-2.587-5.771-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.299.045-.677.063-1.092-.069-.252-.08-.575-.187-.988-.365-1.739-.751-2.874-2.502-2.961-2.617-.087-.116-.708-.94-.708-1.793s.448-1.273.607-1.446c.159-.173.346-.217.462-.217l.332.006c.106.005.249-.04.39.298.144.347.491 1.2.534 1.287.043.087.072.188.014.304-.058.116-.087.188-.173.289l-.26.304c-.087.086-.177.18-.076.354.101.174.449.741.964 1.201.662.591 1.221.774 1.394.86.174.086.275.072.376-.044.101-.116.433-.506.549-.68.116-.173.231-.145.39-.086.159.058 1.011.477 1.184.564.173.087.289.13.332.203.043.072.043.419-.101.824z"/>
         </svg>
-        Finalizar
+        Finalizar WhatsApp
       </button>
     </div>
   </div>
 
   <!-- ==========================================================================
-       MODAL 1: REVISÃO & FINALIZAÇÃO (WHATSAPP + OBSIDIAN)
+       MODAL 1: REVISÃO & ENVIO WHATSAPP
        ========================================================================== -->
   <div id="modalReview" class="modal-backdrop">
     <div class="modal-sheet">
       <div class="sheet-header">
-        <h2>📋 Resumo do Relatório</h2>
+        <h2>📋 Resumo da Contagem</h2>
         <button class="sheet-close-btn" id="btnCloseReviewModal">&times;</button>
       </div>
       <div class="sheet-body">
@@ -1119,78 +970,18 @@
         </div>
 
         <div id="reportPreviewText" class="preview-code-box">Carregando dados...</div>
-
-        <!-- Painel de Status de Sincronização -->
-        <div class="sync-progress-box" id="syncStatusBox" style="display: none;">
-          <div class="sync-row">
-            <span>🟣 Obsidian Local REST API</span>
-            <span class="sync-tag tag-wait" id="syncObsidianBadge">Aguardando</span>
-          </div>
-          <div class="sync-row">
-            <span>🟢 Envio WhatsApp</span>
-            <span class="sync-tag tag-wait" id="syncWhatsappBadge">Aguardando</span>
-          </div>
-          <p id="syncObsidianDetail" style="font-size: 11px; color: var(--text-muted); margin-top: 6px;"></p>
-        </div>
       </div>
       <div class="sheet-footer">
         <button type="button" class="btn-dismiss-add-item" id="btnCopyReport">Copiar Texto</button>
         <button type="button" class="btn-primary-finalize" id="btnConfirmFinalize" style="flex: 1;">
-          Enviar Agora
+          Enviar no WhatsApp
         </button>
       </div>
     </div>
   </div>
 
   <!-- ==========================================================================
-       MODAL 2: CONFIGURAÇÕES DO OBSIDIAN
-       ========================================================================== -->
-  <div id="modalSettings" class="modal-backdrop">
-    <div class="modal-sheet">
-      <div class="sheet-header">
-        <h2>🟣 Configurações do Obsidian</h2>
-        <button class="sheet-close-btn" id="btnCloseSettingsModal">&times;</button>
-      </div>
-      <div class="sheet-body">
-        <div class="field-group">
-          <label for="obsidianUrl">URL Local REST API</label>
-          <input type="text" id="obsidianUrl" class="field-input" placeholder="https://127.0.0.1:27124" value="https://127.0.0.1:27124">
-        </div>
-
-        <div class="field-group">
-          <label for="obsidianApiKey">Chave de API (Bearer Token)</label>
-          <div class="pw-input-wrapper">
-            <input type="password" id="obsidianApiKey" class="field-input" placeholder="Cole a chave gerada no plugin">
-            <button type="button" class="btn-show-hide-pw" id="btnToggleApiKey">Exibir</button>
-          </div>
-        </div>
-
-        <div class="field-group">
-          <label for="obsidianFolder">Pasta no Vault</label>
-          <input type="text" id="obsidianFolder" class="field-input" placeholder="Contagens/" value="Contagens/">
-        </div>
-
-        <div style="display: flex; align-items: center; gap: 8px; margin-top: 8px;">
-          <button type="button" id="btnTestObsidian" class="btn-dismiss-add-item" style="color: var(--color-obsidian); font-weight: 700;">
-            ⚡ Testar Conexão
-          </button>
-          <span id="testConnStatus" style="font-size: 12px; font-weight: 600;"></span>
-        </div>
-
-        <div class="obsidian-ssl-tip">
-          <strong>⚠️ Dica sobre Certificado SSL no celular/navegador:</strong><br>
-          Se o teste falhar, acesse uma vez a URL <a id="linkOpenObsidianUrl" href="https://127.0.0.1:27124" target="_blank" rel="noopener">https://127.0.0.1:27124</a> e clique em <em>Avançado &gt; Continuar</em> para liberar o certificado autoassinado.
-        </div>
-      </div>
-      <div class="sheet-footer">
-        <button type="button" class="btn-dismiss-add-item" id="btnCancelSettings">Cancelar</button>
-        <button type="button" class="btn-confirm-add-item" id="btnSaveSettings">Salvar</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- ==========================================================================
-       MODAL 3: CONFIRMAÇÃO DE ZERAR / NOVA CONTAGEM
+       MODAL 2: CONFIRMAÇÃO DE ZERAR / NOVA CONTAGEM
        ========================================================================== -->
   <div id="modalResetConfirm" class="modal-backdrop">
     <div class="modal-sheet" style="max-width: 400px;">
@@ -1219,16 +1010,16 @@
        LÓGICA JAVASCRIPT AUTOCONTIDA
        ========================================================================== -->
   <script>
+    // Número Fixo WhatsApp
     const WHATSAPP_FIXED_PHONE = "5511982785102";
 
     const STORAGE_KEYS = {
       COUNTS: "estoque_counts_v1",
       CUSTOM_ITEMS: "estoque_custom_items_v1",
-      OBSIDIAN_CONFIG: "estoque_obsidian_config_v1",
       ACTIVE_CAT: "estoque_active_cat_v1"
     };
 
-    // Catálogo exato de 74 produtos
+    // Catálogo de 74 produtos
     const CATALOG_PRESET = {
       "Geladeira": [
         "Hot miola", "Ketchup", "Mostarda", "Milho", "Cebola branca",
@@ -1260,12 +1051,7 @@
     const state = {
       counts: {},
       customItems: [],
-      obsidianConfig: {
-        url: "https://127.0.0.1:27124",
-        apiKey: "",
-        folder: "Contagens/"
-      },
-      activeCategory: "Geladeira", // Padrão focado na primeira estação (reduz sobrecarga)
+      activeCategory: "Geladeira",
       searchQuery: ""
     };
 
@@ -1284,9 +1070,6 @@
         const savedCustom = localStorage.getItem(STORAGE_KEYS.CUSTOM_ITEMS);
         if (savedCustom) state.customItems = JSON.parse(savedCustom);
 
-        const savedObsidian = localStorage.getItem(STORAGE_KEYS.OBSIDIAN_CONFIG);
-        if (savedObsidian) state.obsidianConfig = { ...state.obsidianConfig, ...JSON.parse(savedObsidian) };
-
         const savedCat = localStorage.getItem(STORAGE_KEYS.ACTIVE_CAT);
         if (savedCat) state.activeCategory = savedCat;
       } catch (err) {
@@ -1300,16 +1083,13 @@
     function saveCustomItemsToStorage() {
       try { localStorage.setItem(STORAGE_KEYS.CUSTOM_ITEMS, JSON.stringify(state.customItems)); } catch (e) {}
     }
-    function saveObsidianConfigToStorage() {
-      try { localStorage.setItem(STORAGE_KEYS.OBSIDIAN_CONFIG, JSON.stringify(state.obsidianConfig)); } catch (e) {}
-    }
 
     function getItemId(category, name) {
       return `${category}__${name.trim().toLowerCase().replace(/[^a-z0-9]/g, '_')}`;
     }
 
     // ==========================================================================
-    // RENDERIZAÇÃO DA UI COM VISÃO LIMPA E FOCADA
+    // RENDERIZAÇÃO DA UI
     // ==========================================================================
     function renderUI() {
       const container = document.getElementById("categoriesContainer");
@@ -1319,7 +1099,6 @@
       const query = state.searchQuery.trim().toLowerCase();
       let totalVisible = 0;
 
-      // Se há busca ativa, busca em todas categorias; senão, foca na categoria selecionada
       const showAll = query !== "" || state.activeCategory === "all" || state.activeCategory === "counted_only";
 
       categories.forEach(category => {
@@ -1426,7 +1205,7 @@
     }
 
     // ==========================================================================
-    // TOTALIZADORES E CONTADORES DE ESTAÇÃO
+    // TOTALIZADORES
     // ==========================================================================
     function updateBadgesAndTotals() {
       let totalUnits = 0;
@@ -1455,22 +1234,18 @@
         });
       });
 
-      // Badges
       document.getElementById("badgeGeladeira").textContent = `${counts["Geladeira"].counted}/${counts["Geladeira"].total}`;
       document.getElementById("badgeFreezer").textContent = `${counts["Freezer"].counted}/${counts["Freezer"].total}`;
       document.getElementById("badgePrateleira").textContent = `${counts["Prateleira"].counted}/${counts["Prateleira"].total}`;
       document.getElementById("badgeCountedOnly").textContent = totalCountedDistinct;
       document.getElementById("badgeAll").textContent = totalCountedDistinct;
 
-      // Resumo limpo superior
       document.getElementById("stripCountedStats").textContent = `${totalCountedDistinct} tipos`;
       document.getElementById("stripUnitsStats").textContent = `${totalUnits} un`;
 
-      // Barra inferior
       document.getElementById("bottomSummaryTitle").textContent = `${totalCountedDistinct} itens contados`;
       document.getElementById("bottomSummaryUnits").textContent = `${totalUnits} unidades totais`;
 
-      // Sincroniza visual das abas ativas
       document.querySelectorAll(".nav-pill").forEach(p => {
         p.classList.toggle("active", p.dataset.category === state.activeCategory);
       });
@@ -1495,7 +1270,6 @@
 
       updateBadgesAndTotals();
 
-      // Se estiver na aba "apenas contados" e o item foi zerado, re-renderiza para sumir limpo
       if (state.activeCategory === "counted_only" && newQty === 0) {
         renderUI();
       }
@@ -1534,7 +1308,7 @@
     }
 
     // ==========================================================================
-    // MENSAGENS E RELATÓRIOS
+    // MENSAGEM DO WHATSAPP
     // ==========================================================================
     function getActiveItemsGrouped() {
       const categories = ["Geladeira", "Freezer", "Prateleira"];
@@ -1568,8 +1342,7 @@
       const pad = n => String(n).padStart(2, '0');
       const dateStr = `${pad(d.getDate())}/${pad(d.getMonth() + 1)}/${d.getFullYear()}`;
       const timeStr = `${pad(d.getHours())}:${pad(d.getMinutes())}`;
-      const fileStamp = `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())} ${pad(d.getHours())}-${pad(d.getMinutes())}`;
-      return { dateStr, timeStr, fileStamp };
+      return { dateStr, timeStr };
     }
 
     function generateWhatsAppMessage() {
@@ -1604,113 +1377,20 @@
       return msg;
     }
 
-    function generateObsidianMarkdown() {
-      const { grouped, totalUnits, totalTypes } = getActiveItemsGrouped();
-      const { dateStr, timeStr } = getTimestamp();
-
-      let md = `---\n`;
-      md += `tags:\n  - estoque\n  - contagem\n`;
-      md += `data: ${dateStr}\n`;
-      md += `hora: ${timeStr}\n`;
-      md += `total_itens: ${totalTypes}\n`;
-      md += `total_unidades: ${totalUnits}\n`;
-      md += `---\n\n`;
-      md += `# 📋 Contagem de Estoque - ${dateStr}\n\n`;
-      md += `> **Horário:** ${timeStr} | **Produtos:** ${totalTypes} | **Volume Total:** ${totalUnits} un\n\n`;
-
-      for (const [cat, items] of Object.entries(grouped)) {
-        md += `## 🔹 ${cat}\n\n`;
-        md += `| Produto | Quantidade |\n| :--- | :---: |\n`;
-        items.forEach(i => {
-          md += `| ${i.name} | **${i.qty} un** |\n`;
-        });
-        md += `\n`;
-      }
-
-      return md;
-    }
-
-    // ==========================================================================
-    // ENVIO OBSIDIAN & WHATSAPP
-    // ==========================================================================
-    async function sendToObsidian(mdContent) {
-      const cfg = state.obsidianConfig;
-      const { fileStamp } = getTimestamp();
-
-      let folder = (cfg.folder || "Contagens/").trim();
-      if (!folder.endsWith("/")) folder += "/";
-      if (folder.startsWith("/")) folder = folder.substring(1);
-
-      const fileName = `Contagem - ${fileStamp}.md`;
-      const base = (cfg.url || "https://127.0.0.1:27124").trim().replace(/\/$/, "");
-      const endpoint = `${base}/vault/${encodeURIComponent(folder + fileName).replace(/%2F/g, '/')}`;
-
-      const headers = { "Content-Type": "text/markdown; charset=utf-8" };
-      if (cfg.apiKey && cfg.apiKey.trim()) {
-        headers["Authorization"] = `Bearer ${cfg.apiKey.trim()}`;
-      }
-
-      try {
-        const res = await fetch(endpoint, {
-          method: "PUT",
-          headers: headers,
-          body: mdContent,
-          mode: "cors"
-        });
-
-        if (res.ok || res.status === 200 || res.status === 204 || res.status === 201) {
-          return { success: true, msg: `Salvo no Obsidian em "${folder}".` };
-        }
-        return { success: false, msg: `Obsidian retornou status ${res.status}.` };
-      } catch (err) {
-        return { success: false, msg: "Não foi possível conectar ao Obsidian (Verifique o aplicativo e certificado)." };
-      }
-    }
-
-    async function handleFinalize() {
+    function handleFinalize() {
       const { totalTypes } = getActiveItemsGrouped();
       if (totalTypes === 0) {
         showToast("Nenhum item contado ainda.", "t-error");
         return;
       }
 
-      const syncBox = document.getElementById("syncStatusBox");
-      const obBadge = document.getElementById("syncObsidianBadge");
-      const waBadge = document.getElementById("syncWhatsappBadge");
-      const obDetail = document.getElementById("syncObsidianDetail");
-
-      syncBox.style.display = "block";
-      obBadge.className = "sync-tag tag-wait";
-      obBadge.textContent = "Salvando...";
-      waBadge.className = "sync-tag tag-wait";
-      waBadge.textContent = "Preparando...";
-      obDetail.textContent = "";
-
-      const md = generateObsidianMarkdown();
       const wa = generateWhatsAppMessage();
-
-      // 1. Obsidian PUT
-      const obRes = await sendToObsidian(md);
-      if (obRes.success) {
-        obBadge.className = "sync-tag tag-ok";
-        obBadge.textContent = "Salvo!";
-        showToast("Obsidian sincronizado!", "t-obsidian");
-      } else {
-        obBadge.className = "sync-tag tag-fail";
-        obBadge.textContent = "Falhou";
-        obDetail.textContent = obRes.msg;
-        showToast("Obsidian offline. Abrindo WhatsApp...", "t-info");
-      }
-
-      // 2. WhatsApp
-      waBadge.className = "sync-tag tag-ok";
-      waBadge.textContent = "Abrindo...";
-
       const url = `https://wa.me/${WHATSAPP_FIXED_PHONE}?text=${encodeURIComponent(wa)}`;
 
+      showToast("Abrindo WhatsApp...", "t-success");
       setTimeout(() => {
         window.open(url, "_blank");
-      }, 600);
+      }, 400);
     }
 
     function showToast(text, type = "t-info") {
@@ -1721,7 +1401,6 @@
       let icon = "ℹ️";
       if (type === "t-success") icon = "✅";
       if (type === "t-error") icon = "⚠️";
-      if (type === "t-obsidian") icon = "🟣";
 
       el.innerHTML = `<span>${icon}</span><span class="toast-text">${escapeHtml(text)}</span>`;
       container.appendChild(el);
@@ -1854,7 +1533,6 @@
       const modalReview = document.getElementById("modalReview");
       const openRev = () => {
         document.getElementById("reportPreviewText").textContent = generateWhatsAppMessage();
-        document.getElementById("syncStatusBox").style.display = "none";
         modalReview.classList.add("open");
       };
       document.getElementById("btnOpenReview").addEventListener("click", openRev);
@@ -1866,64 +1544,6 @@
         navigator.clipboard.writeText(generateWhatsAppMessage()).then(() => {
           showToast("Copiado para a área de transferência!", "t-success");
         });
-      });
-
-      // Configurações Obsidian
-      const modalSet = document.getElementById("modalSettings");
-      document.getElementById("btnOpenSettings").addEventListener("click", () => {
-        document.getElementById("obsidianUrl").value = state.obsidianConfig.url || "https://127.0.0.1:27124";
-        document.getElementById("obsidianApiKey").value = state.obsidianConfig.apiKey || "";
-        document.getElementById("obsidianFolder").value = state.obsidianConfig.folder || "Contagens/";
-        document.getElementById("linkOpenObsidianUrl").href = state.obsidianConfig.url || "https://127.0.0.1:27124";
-        document.getElementById("testConnStatus").textContent = "";
-        modalSet.classList.add("open");
-      });
-      document.getElementById("btnCloseSettingsModal").addEventListener("click", () => modalSet.classList.remove("open"));
-      document.getElementById("btnCancelSettings").addEventListener("click", () => modalSet.classList.remove("open"));
-
-      document.getElementById("btnToggleApiKey").addEventListener("click", () => {
-        const inp = document.getElementById("obsidianApiKey");
-        const btn = document.getElementById("btnToggleApiKey");
-        if (inp.type === "password") {
-          inp.type = "text";
-          btn.textContent = "Ocultar";
-        } else {
-          inp.type = "password";
-          btn.textContent = "Exibir";
-        }
-      });
-
-      document.getElementById("btnSaveSettings").addEventListener("click", () => {
-        state.obsidianConfig.url = document.getElementById("obsidianUrl").value.trim() || "https://127.0.0.1:27124";
-        state.obsidianConfig.apiKey = document.getElementById("obsidianApiKey").value.trim();
-        state.obsidianConfig.folder = document.getElementById("obsidianFolder").value.trim() || "Contagens/";
-        saveObsidianConfigToStorage();
-        modalSet.classList.remove("open");
-        showToast("Configurações salvas", "t-obsidian");
-      });
-
-      document.getElementById("btnTestObsidian").addEventListener("click", async () => {
-        const st = document.getElementById("testConnStatus");
-        st.style.color = "var(--color-accent)";
-        st.textContent = "Testando...";
-        const url = document.getElementById("obsidianUrl").value.trim() || "https://127.0.0.1:27124";
-        const key = document.getElementById("obsidianApiKey").value.trim();
-        const headers = {};
-        if (key) headers["Authorization"] = `Bearer ${key}`;
-
-        try {
-          const res = await fetch(`${url.replace(/\/$/, '')}/`, { method: "GET", headers, mode: "cors" });
-          if (res.ok) {
-            st.style.color = "var(--color-success)";
-            st.textContent = "✅ Conectado com sucesso!";
-          } else {
-            st.style.color = "var(--color-danger)";
-            st.textContent = `Erro (${res.status})`;
-          }
-        } catch(e) {
-          st.style.color = "var(--color-danger)";
-          st.textContent = "❌ Falha. Clique no link abaixo para aceitar o certificado SSL.";
-        }
       });
 
       // Fecha modais ao clicar fora
