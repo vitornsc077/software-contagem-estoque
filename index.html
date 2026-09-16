@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Contagem de Estoque - Loja & Depósito</title>
-  <meta name="description" content="Sistema mobile-first de contagem física de estoque com integração para WhatsApp e Obsidian Local REST API">
+  <title>Contagem de Estoque</title>
+  <meta name="description" content="Sistema intuitivo e mobile-first de contagem física de estoque para loja e depósito">
   
   <!-- Tipografia Moderna de Alta Legibilidade -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -13,54 +13,52 @@
 
   <style>
     /* ==========================================================================
-       DESIGN SYSTEM - TEMA CLARO, MODERNO E DE ALTO CONTRASTE (MOBILE-FIRST)
+       DESIGN SYSTEM - TEMA LARANJA PASTEL ACOLHEDOR & ALTA LEGIBILIDADE (UX OTIMIZADA)
        ========================================================================== */
     :root {
       --font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
       
-      /* Cores de Fundo (Claras para alta visibilidade em depósito/loja) */
-      --bg-app: #f4f6f9;
-      --bg-surface: #ffffff;
-      --bg-surface-elevated: #ffffff;
-      --bg-subtle: #edf2f7;
+      /* Fundo Laranja Pastel Suave & Confortável */
+      --bg-app: #fef5ee;              /* Laranja pastel suave / pêssego acolhedor */
+      --bg-surface: #ffffff;          /* Cards em branco puro para máximo contraste */
+      --bg-surface-subtle: #fdf0e4;   /* Tom pastel para hover e badges */
+      --bg-surface-active: #fffaf5;   /* Fundo ativo para itens selecionados */
       
-      /* Cores de Texto (Escuras e de Alto Contraste) */
-      --text-main: #0f172a;       /* Slate 900 */
-      --text-secondary: #334155;  /* Slate 700 */
-      --text-muted: #64748b;      /* Slate 500 */
+      /* Textos Adaptados: Tons quentes de alto contraste (evita preto chapado) */
+      --text-main: #291811;           /* Marrom espresso muito escuro, contraste altíssimo */
+      --text-secondary: #5c4135;      /* Marrom café para subtítulos e metadados */
+      --text-muted: #8c7365;          /* Tom suave legível para dicas e placeholders */
       --text-inverse: #ffffff;
       
-      /* Bordas e Divisores */
-      --border-light: #e2e8f0;
-      --border-strong: #cbd5e1;
-      --border-focus: #3b82f6;
+      /* Bordas em tons quentes harmônicos */
+      --border-subtle: #f3e2d5;       /* Borda pastel delicada */
+      --border-medium: #e8ccba;       /* Borda com bom destaque */
+      --border-strong: #d9b299;
+      --border-focus: #ea580c;        /* Laranja vivo para foco */
 
-      /* Cores Semânticas de Ação */
-      --color-primary: #1d4ed8;       /* Azul sólido para destaque */
-      --color-primary-bg: #eff6ff;
-      --color-whatsapp: #128c7e;      /* WhatsApp Dark Teal */
-      --color-whatsapp-btn: #25d366;  /* WhatsApp Green */
+      /* Acentos e Cores de Ação */
+      --color-accent: #ea580c;        /* Laranja marcante elegante */
+      --color-accent-light: #ffedd5;  /* Laranja pastel para badges/pills */
+      --color-whatsapp: #15803d;      /* Verde escuro contrastante */
+      --color-whatsapp-btn: #16a34a;  /* Verde WhatsApp vibrante e legível */
       --color-obsidian: #6d28d9;      /* Roxo Obsidian */
       --color-obsidian-bg: #f5f3ff;
       --color-success: #15803d;
       --color-success-bg: #dcfce7;
-      --color-danger: #b91c1c;
+      --color-danger: #c2410c;        /* Laranja terracota/vermelho queimado para subtrair */
       --color-danger-bg: #fee2e2;
-      --color-warning: #b45309;
-      --color-warning-bg: #fef3c7;
-      
-      /* Sombras e Elevações */
-      --shadow-sm: 0 1px 2px 0 rgba(15, 23, 42, 0.05);
-      --shadow-md: 0 4px 6px -1px rgba(15, 23, 42, 0.08), 0 2px 4px -2px rgba(15, 23, 42, 0.05);
-      --shadow-lg: 0 10px 15px -3px rgba(15, 23, 42, 0.1), 0 4px 6px -4px rgba(15, 23, 42, 0.05);
-      --shadow-bottom-bar: 0 -4px 16px rgba(15, 23, 42, 0.12);
 
-      /* Dimensões Ergonômicas de Toque */
-      --touch-size: 44px;
-      --touch-size-lg: 48px;
-      --radius-sm: 8px;
-      --radius-md: 12px;
-      --radius-lg: 16px;
+      /* Sombras leves e suaves */
+      --shadow-sm: 0 1px 3px rgba(41, 24, 17, 0.04);
+      --shadow-card: 0 2px 6px rgba(41, 24, 17, 0.05), 0 1px 2px rgba(41, 24, 17, 0.03);
+      --shadow-active: 0 4px 12px rgba(234, 88, 12, 0.12);
+      --shadow-bottom: 0 -4px 16px rgba(41, 24, 17, 0.08);
+
+      /* Dimensões Ergonômicas para Uso com Polegar */
+      --touch-size: 46px;
+      --radius-sm: 10px;
+      --radius-md: 14px;
+      --radius-lg: 18px;
       --radius-full: 9999px;
     }
 
@@ -78,68 +76,62 @@
       line-height: 1.5;
       font-size: 15px;
       min-height: 100vh;
-      padding-bottom: 120px; /* Espaço para a barra de ação flutuante */
+      padding-bottom: 110px; /* Espaço para a barra de ação inferior */
     }
 
-    /* Utilitários */
     .container {
-      max-width: 820px;
+      max-width: 680px;
       margin: 0 auto;
-      padding: 0 16px;
+      padding: 0 14px;
     }
 
-    /* HEADER PRINCIPAL */
+    /* ==========================================================================
+       HEADER COMPACTO E ELEGANTE (SEM POLUIÇÃO VISUAL)
+       ========================================================================== */
     header.app-header {
       background-color: var(--bg-surface);
-      border-bottom: 2px solid var(--border-light);
+      border-bottom: 1.5px solid var(--border-subtle);
       position: sticky;
       top: 0;
       z-index: 40;
       box-shadow: var(--shadow-sm);
     }
 
-    .header-top {
+    .header-content {
+      max-width: 680px;
+      margin: 0 auto;
+      padding: 10px 14px;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 12px 16px;
-      gap: 12px;
+      gap: 10px;
     }
 
-    .brand-title {
+    .brand-group {
       display: flex;
       align-items: center;
       gap: 8px;
     }
 
-    .brand-icon {
-      width: 36px;
-      height: 36px;
-      background: linear-gradient(135deg, #1e40af, #3b82f6);
+    .brand-badge {
+      width: 34px;
+      height: 34px;
+      background: linear-gradient(135deg, #f97316, #ea580c);
       color: #fff;
-      border-radius: var(--radius-md);
+      border-radius: var(--radius-sm);
       display: flex;
       align-items: center;
       justify-content: center;
-      font-weight: 800;
-      font-size: 18px;
-      box-shadow: 0 2px 4px rgba(30, 64, 175, 0.25);
+      font-size: 17px;
+      box-shadow: 0 2px 4px rgba(234, 88, 12, 0.25);
     }
 
-    .brand-text h1 {
-      font-size: 17px;
+    .brand-group h1 {
+      font-size: 16px;
       font-weight: 800;
       color: var(--text-main);
-      letter-spacing: -0.3px;
+      letter-spacing: -0.2px;
       line-height: 1.2;
-    }
-
-    .brand-text span {
-      font-size: 11px;
-      font-weight: 600;
-      color: var(--text-muted);
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
     }
 
     .header-actions {
@@ -148,77 +140,74 @@
       gap: 8px;
     }
 
-    .btn-header {
+    .btn-header-icon {
+      width: 38px;
+      height: 38px;
+      border-radius: var(--radius-sm);
+      border: 1.5px solid var(--border-subtle);
+      background-color: var(--bg-surface);
+      color: var(--text-secondary);
       display: flex;
       align-items: center;
       justify-content: center;
-      width: 40px;
-      height: 40px;
-      border-radius: var(--radius-md);
-      border: 1px solid var(--border-strong);
-      background-color: var(--bg-surface);
-      color: var(--text-secondary);
-      font-size: 17px;
       cursor: pointer;
       transition: all 0.15s ease;
     }
 
-    .btn-header:hover, .btn-header:active {
-      background-color: var(--bg-subtle);
-      color: var(--text-main);
-      border-color: var(--border-focus);
+    .btn-header-icon:active {
+      background-color: var(--bg-surface-subtle);
+      border-color: var(--color-accent);
+      color: var(--color-accent);
     }
 
-    /* BARRA DE PESQUISA & FILTROS */
-    .search-filter-section {
-      padding: 8px 16px 12px 16px;
-      background-color: var(--bg-surface);
+    /* BARRA DE PESQUISA COMPACTA */
+    .search-wrapper {
+      max-width: 680px;
+      margin: 0 auto;
+      padding: 8px 14px 10px 14px;
     }
 
-    .search-box {
+    .search-input-box {
       position: relative;
       display: flex;
       align-items: center;
-      margin-bottom: 10px;
     }
 
-    .search-icon {
+    .search-icon-svg {
       position: absolute;
-      left: 14px;
+      left: 12px;
       color: var(--text-muted);
       pointer-events: none;
       display: flex;
-      align-items: center;
     }
 
-    .search-input {
+    .search-field {
       width: 100%;
-      height: 46px;
-      padding: 0 40px 0 42px;
+      height: 42px;
+      padding: 0 38px 0 38px;
       border-radius: var(--radius-md);
-      border: 1.5px solid var(--border-strong);
-      background-color: var(--bg-app);
-      font-size: 15px;
+      border: 1.5px solid var(--border-subtle);
+      background-color: var(--bg-surface);
+      font-size: 14px;
       font-family: inherit;
       color: var(--text-main);
       transition: all 0.2s ease;
     }
 
-    .search-input:focus {
+    .search-field:focus {
       outline: none;
-      border-color: var(--color-primary);
-      background-color: var(--bg-surface);
-      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+      border-color: var(--color-accent);
+      box-shadow: 0 0 0 3px rgba(234, 88, 12, 0.12);
     }
 
-    .search-clear {
+    .search-clear-btn {
       position: absolute;
-      right: 10px;
+      right: 8px;
       background: none;
       border: none;
       color: var(--text-muted);
-      width: 28px;
-      height: 28px;
+      width: 26px;
+      height: 26px;
       border-radius: 50%;
       cursor: pointer;
       display: none;
@@ -227,33 +216,40 @@
       font-size: 16px;
     }
 
-    .search-clear.visible {
+    .search-clear-btn.visible {
       display: flex;
     }
 
-    /* CATEGORY TABS / PILLS */
-    .category-tabs-scroll {
+    /* SELETOR DE ESTAÇÃO / ABAS DE CATEGORIA (FOCO MENTAL) */
+    .category-nav-bar {
+      background-color: var(--bg-surface);
+      border-bottom: 1.5px solid var(--border-subtle);
+      padding: 6px 14px 8px 14px;
+    }
+
+    .category-pills {
+      max-width: 680px;
+      margin: 0 auto;
       display: flex;
-      gap: 8px;
+      gap: 6px;
       overflow-x: auto;
-      padding-bottom: 2px;
-      scrollbar-width: none; /* Firefox */
-      -ms-overflow-style: none; /* IE */
+      scrollbar-width: none;
+      -webkit-overflow-scrolling: touch;
     }
 
-    .category-tabs-scroll::-webkit-scrollbar {
-      display: none; /* Chrome/Safari */
+    .category-pills::-webkit-scrollbar {
+      display: none;
     }
 
-    .tab-pill {
+    .nav-pill {
       flex-shrink: 0;
       display: inline-flex;
       align-items: center;
       gap: 6px;
-      padding: 8px 14px;
+      padding: 8px 12px;
       border-radius: var(--radius-full);
-      border: 1.5px solid var(--border-strong);
-      background-color: var(--bg-surface);
+      border: 1.5px solid var(--border-subtle);
+      background-color: var(--bg-app);
       color: var(--text-secondary);
       font-size: 13px;
       font-weight: 700;
@@ -262,584 +258,527 @@
       white-space: nowrap;
     }
 
-    .tab-pill:hover {
-      background-color: var(--bg-subtle);
-      border-color: var(--text-muted);
+    .nav-pill:active {
+      transform: scale(0.97);
     }
 
-    .tab-pill.active {
-      background-color: var(--color-primary);
-      border-color: var(--color-primary);
-      color: var(--text-inverse);
-      box-shadow: 0 2px 6px rgba(29, 78, 216, 0.3);
+    .nav-pill.active {
+      background-color: var(--color-accent);
+      border-color: var(--color-accent);
+      color: #ffffff;
+      box-shadow: 0 2px 6px rgba(234, 88, 12, 0.25);
     }
 
-    .tab-badge {
+    .nav-pill-badge {
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      min-width: 20px;
-      height: 20px;
-      padding: 0 6px;
-      border-radius: 10px;
+      min-width: 18px;
+      height: 18px;
+      padding: 0 5px;
+      border-radius: 9px;
       font-size: 11px;
       font-weight: 800;
-      background-color: var(--bg-subtle);
-      color: var(--text-secondary);
+      background-color: rgba(41, 24, 17, 0.08);
+      color: var(--text-main);
     }
 
-    .tab-pill.active .tab-badge {
-      background-color: rgba(255, 255, 255, 0.25);
+    .nav-pill.active .nav-pill-badge {
+      background-color: rgba(255, 255, 255, 0.3);
       color: #ffffff;
     }
 
-    .tab-badge.highlight {
+    .nav-pill-badge.highlight {
       background-color: var(--color-success);
       color: #ffffff;
     }
 
-    /* RESUMO RÁPIDO DO TOPO */
-    .stats-card-bar {
-      margin: 14px 0 10px 0;
-      background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
-      border: 1.5px solid var(--border-light);
-      border-radius: var(--radius-md);
-      padding: 12px 16px;
-      display: grid;
-      grid-template-columns: 1fr 1fr auto;
-      gap: 12px;
-      align-items: center;
-      box-shadow: var(--shadow-sm);
-    }
-
-    .stat-item {
+    /* BARRA COMPACTA DE PROGRESSO E AÇÃO RÁPIDA (SUBSTITUI O CARD POLUÍDO) */
+    .progress-bar-strip {
       display: flex;
-      flex-direction: column;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 4px 6px 4px;
+      margin-bottom: 8px;
+      font-size: 13px;
     }
 
-    .stat-item .stat-label {
-      font-size: 11px;
+    .progress-stats-text {
       font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
+      color: var(--text-secondary);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .progress-stats-text strong {
+      color: var(--color-accent);
+      font-size: 14px;
+    }
+
+    .btn-clean-action {
+      background: none;
+      border: none;
       color: var(--text-muted);
-    }
-
-    .stat-item .stat-value {
-      font-size: 20px;
-      font-weight: 800;
-      color: var(--text-main);
-      line-height: 1.2;
-    }
-
-    .stat-item .stat-value.highlight {
-      color: var(--color-success);
-    }
-
-    .btn-quick-reset {
-      border: 1px solid var(--border-strong);
-      background-color: var(--bg-surface);
-      color: var(--color-danger);
       font-size: 12px;
-      font-weight: 700;
-      padding: 8px 12px;
-      border-radius: var(--radius-sm);
+      font-weight: 600;
       cursor: pointer;
       display: inline-flex;
       align-items: center;
       gap: 4px;
-      transition: all 0.15s ease;
+      padding: 4px 8px;
+      border-radius: var(--radius-sm);
     }
 
-    .btn-quick-reset:hover {
+    .btn-clean-action:active {
+      color: var(--color-danger);
       background-color: var(--color-danger-bg);
-      border-color: var(--color-danger);
     }
 
-    /* LISTAGEM DE CATEGORIAS E PRODUTOS */
-    .category-section {
-      margin-bottom: 24px;
-      background-color: var(--bg-surface);
-      border: 1.5px solid var(--border-light);
-      border-radius: var(--radius-lg);
-      overflow: hidden;
-      box-shadow: var(--shadow-sm);
+    /* ==========================================================================
+       LISTA DE PRODUTOS - CARDS AREJADOS E LIMPOS
+       ========================================================================== */
+    .category-block {
+      margin-bottom: 20px;
     }
 
-    .category-header {
-      background-color: #f1f5f9;
-      padding: 12px 16px;
-      border-bottom: 1.5px solid var(--border-light);
+    .category-section-title {
+      font-size: 13px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.6px;
+      color: var(--text-muted);
+      margin: 8px 4px 8px 4px;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 12px;
     }
 
-    .category-title {
-      font-size: 16px;
-      font-weight: 800;
-      color: var(--text-main);
+    .products-flow {
       display: flex;
-      align-items: center;
+      flex-direction: column;
       gap: 8px;
     }
 
-    .category-icon {
-      font-size: 18px;
-    }
-
-    .category-counter {
-      font-size: 12px;
-      font-weight: 700;
-      color: var(--text-secondary);
+    /* CARD DE PRODUTO INDIVIDUAL */
+    .product-card {
       background-color: var(--bg-surface);
-      border: 1px solid var(--border-strong);
-      padding: 3px 10px;
-      border-radius: var(--radius-full);
-    }
-
-    .category-counter.active {
-      background-color: var(--color-success-bg);
-      color: var(--color-success);
-      border-color: rgba(21, 128, 61, 0.3);
-    }
-
-    /* ITENS DE PRODUTO */
-    .products-list {
-      divide-y: 1px solid var(--border-light);
-    }
-
-    .product-row {
+      border: 1.5px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 12px 14px;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 12px 16px;
-      border-bottom: 1px solid var(--border-light);
-      background-color: var(--bg-surface);
-      transition: background-color 0.15s ease;
       gap: 12px;
+      box-shadow: var(--shadow-card);
+      transition: all 0.15s ease;
     }
 
-    .product-row:last-child {
-      border-bottom: none;
+    /* Quando o item tem contagem > 0: destaque sutil e limpo */
+    .product-card.is-counted {
+      border-color: #86efac;
+      background-color: #fcfdfc;
+      box-shadow: 0 2px 8px rgba(22, 163, 74, 0.08);
     }
 
-    .product-row.has-count {
-      background-color: #f0fdf4; /* Verde bem suave quando preenchido */
-      border-left: 4px solid var(--color-success);
-    }
-
-    .product-info {
+    .product-card-details {
       flex: 1;
       min-width: 0;
     }
 
-    .product-name {
+    .product-title-text {
       font-size: 15px;
       font-weight: 700;
       color: var(--text-main);
+      line-height: 1.35;
       word-break: break-word;
-      line-height: 1.3;
     }
 
-    .product-meta {
+    .product-card.is-counted .product-title-text {
+      color: #14532d;
+    }
+
+    .product-sub-meta {
       display: flex;
       align-items: center;
-      gap: 6px;
-      margin-top: 3px;
-      font-size: 12px;
+      gap: 8px;
+      margin-top: 2px;
+      font-size: 11px;
       color: var(--text-muted);
     }
 
-    .badge-custom {
-      font-size: 10px;
-      font-weight: 700;
-      text-transform: uppercase;
-      background-color: var(--color-primary-bg);
-      color: var(--color-primary);
-      padding: 1px 6px;
-      border-radius: 4px;
-      border: 1px solid rgba(29, 78, 216, 0.2);
-    }
-
-    .btn-delete-custom {
+    .btn-remove-custom-item {
       background: none;
       border: none;
       color: var(--color-danger);
-      font-size: 11px;
-      font-weight: 600;
-      text-decoration: underline;
+      font-weight: 700;
       cursor: pointer;
-      padding: 0 4px;
+      text-decoration: underline;
     }
 
-    /* CONTROLES DE QUANTIDADE (TOUCH-FIRST) */
-    .quantity-controls {
+    /* CONTROLES DE QUANTIDADE TOUCH-FIRST */
+    .qty-stepper {
       display: flex;
       align-items: center;
-      gap: 6px;
+      gap: 4px;
       flex-shrink: 0;
     }
 
-    .btn-qty {
+    .stepper-btn {
       width: var(--touch-size);
       height: var(--touch-size);
-      border-radius: var(--radius-md);
-      border: 1.5px solid var(--border-strong);
-      font-size: 20px;
-      font-weight: 800;
+      border-radius: var(--radius-sm);
+      border: 1.5px solid var(--border-medium);
+      background-color: var(--bg-surface);
       display: flex;
       align-items: center;
       justify-content: center;
+      font-size: 20px;
+      font-weight: 800;
       cursor: pointer;
-      background-color: var(--bg-surface);
       user-select: none;
       transition: all 0.12s ease;
+      color: var(--text-secondary);
     }
 
-    .btn-qty-minus {
-      color: var(--color-danger);
-      background-color: #fff;
-    }
-
-    .btn-qty-minus:active {
+    .stepper-btn-minus:active {
       background-color: var(--color-danger-bg);
       border-color: var(--color-danger);
+      color: var(--color-danger);
       transform: scale(0.92);
     }
 
-    .btn-qty-plus {
-      color: var(--color-success);
-      background-color: #fff;
+    .stepper-btn-plus {
+      border-color: var(--border-medium);
     }
 
-    .btn-qty-plus:active {
+    .stepper-btn-plus:active {
       background-color: var(--color-success-bg);
       border-color: var(--color-success);
+      color: var(--color-success);
       transform: scale(0.92);
     }
 
-    .qty-input {
-      width: 58px;
+    .stepper-input {
+      width: 54px;
       height: var(--touch-size);
       text-align: center;
-      font-size: 18px;
+      font-size: 17px;
       font-weight: 800;
       font-family: inherit;
-      border-radius: var(--radius-md);
-      border: 1.5px solid var(--border-strong);
+      border-radius: var(--radius-sm);
+      border: 1.5px solid var(--border-subtle);
       background-color: var(--bg-app);
       color: var(--text-main);
       -moz-appearance: textfield;
       transition: all 0.15s ease;
     }
 
-    .qty-input::-webkit-outer-spin-button,
-    .qty-input::-webkit-inner-spin-button {
+    .stepper-input::-webkit-outer-spin-button,
+    .stepper-input::-webkit-inner-spin-button {
       -webkit-appearance: none;
       margin: 0;
     }
 
-    .qty-input:focus {
+    .stepper-input:focus {
       outline: none;
-      border-color: var(--color-primary);
+      border-color: var(--color-accent);
       background-color: #ffffff;
-      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+      box-shadow: 0 0 0 3px rgba(234, 88, 12, 0.15);
     }
 
-    .product-row.has-count .qty-input {
+    .product-card.is-counted .stepper-input {
       background-color: #ffffff;
-      border-color: var(--color-success);
-      color: var(--color-success);
+      border-color: #86efac;
+      color: #15803d;
     }
 
-    /* FORMULÁRIO RÁPIDO PARA ADICIONAR PRODUTO NOVO */
-    .add-custom-box {
-      background-color: #f8fafc;
-      padding: 12px 16px;
-      border-top: 1.5px dashed var(--border-strong);
-    }
-
-    .add-custom-toggle-btn {
-      width: 100%;
-      padding: 10px;
-      background: none;
-      border: 1.5px dashed var(--border-strong);
+    /* BOTÃO CLEAN DE ADICIONAR PRODUTO NOVO */
+    .add-new-product-clean {
+      margin-top: 10px;
       border-radius: var(--radius-md);
-      color: var(--color-primary);
-      font-size: 14px;
+      background-color: #ffffff;
+      border: 1.5px dashed var(--border-medium);
+      padding: 10px 14px;
+    }
+
+    .btn-toggle-new-product {
+      width: 100%;
+      background: none;
+      border: none;
+      color: var(--color-accent);
+      font-size: 13px;
       font-weight: 700;
       cursor: pointer;
       display: flex;
       align-items: center;
       justify-content: center;
       gap: 6px;
-      transition: all 0.15s ease;
+      padding: 4px;
     }
 
-    .add-custom-toggle-btn:hover {
-      background-color: var(--color-primary-bg);
-      border-color: var(--color-primary);
-    }
-
-    .add-custom-form {
+    .new-product-form-clean {
       display: none;
       flex-direction: column;
-      gap: 10px;
+      gap: 8px;
+      margin-top: 8px;
+      padding-top: 8px;
+      border-top: 1px solid var(--border-subtle);
     }
 
-    .add-custom-form.open {
+    .new-product-form-clean.open {
       display: flex;
     }
 
-    .custom-input-row {
+    .new-product-inputs {
       display: flex;
       gap: 8px;
     }
 
-    .custom-name-input {
+    .new-name-field {
       flex: 1;
-      height: 42px;
+      height: 40px;
       padding: 0 12px;
       border-radius: var(--radius-sm);
-      border: 1.5px solid var(--border-strong);
+      border: 1.5px solid var(--border-medium);
       font-size: 14px;
       font-family: inherit;
     }
 
-    .custom-qty-input {
-      width: 70px;
-      height: 42px;
+    .new-name-field:focus {
+      outline: none;
+      border-color: var(--color-accent);
+    }
+
+    .new-qty-field {
+      width: 64px;
+      height: 40px;
       text-align: center;
       border-radius: var(--radius-sm);
-      border: 1.5px solid var(--border-strong);
+      border: 1.5px solid var(--border-medium);
       font-size: 15px;
       font-weight: 700;
       font-family: inherit;
     }
 
-    .custom-btn-actions {
+    .new-actions-row {
       display: flex;
       gap: 8px;
     }
 
-    .btn-save-custom {
+    .btn-confirm-add-item {
       flex: 1;
-      height: 40px;
-      background-color: var(--color-primary);
-      color: #fff;
+      height: 38px;
+      background-color: var(--color-accent);
+      color: #ffffff;
       border: none;
       border-radius: var(--radius-sm);
+      font-size: 13px;
       font-weight: 700;
-      font-size: 14px;
       cursor: pointer;
     }
 
-    .btn-cancel-custom {
+    .btn-dismiss-add-item {
       padding: 0 14px;
-      height: 40px;
-      background-color: var(--bg-subtle);
-      border: 1px solid var(--border-strong);
+      height: 38px;
+      background-color: var(--bg-surface-subtle);
+      border: 1.5px solid var(--border-subtle);
       border-radius: var(--radius-sm);
       color: var(--text-secondary);
+      font-size: 13px;
       font-weight: 600;
       cursor: pointer;
     }
 
-    /* ESTADO VAZIO / SEM RESULTADOS NA BUSCA */
-    .empty-state {
-      padding: 40px 20px;
+    /* ESTADO VAZIO */
+    .clean-empty-state {
+      padding: 36px 16px;
       text-align: center;
       background-color: var(--bg-surface);
       border-radius: var(--radius-lg);
-      border: 1.5px dashed var(--border-strong);
-      margin: 20px 0;
+      border: 1.5px dashed var(--border-medium);
+      margin: 16px 0;
     }
 
-    .empty-state-icon {
-      font-size: 36px;
-      margin-bottom: 8px;
+    .empty-state-emoji {
+      font-size: 32px;
+      margin-bottom: 6px;
       display: block;
     }
 
-    .empty-state h3 {
-      font-size: 16px;
-      font-weight: 700;
+    .clean-empty-state h3 {
+      font-size: 15px;
+      font-weight: 800;
       color: var(--text-main);
       margin-bottom: 4px;
     }
 
-    .empty-state p {
+    .clean-empty-state p {
       font-size: 13px;
       color: var(--text-muted);
     }
 
-    /* BARRA FIXA INFERIOR DE FINALIZAÇÃO (MOBILE-FIRST) */
-    .fixed-bottom-bar {
+    /* ==========================================================================
+       BARRA DE FINALIZAÇÃO INFERIOR FIXA (MOBILE-FIRST)
+       ========================================================================== */
+    .sticky-bottom-action-bar {
       position: fixed;
       bottom: 0;
       left: 0;
       right: 0;
-      background-color: var(--bg-surface);
-      border-top: 2px solid var(--border-light);
-      padding: 12px 16px;
-      box-shadow: var(--shadow-bottom-bar);
+      background-color: rgba(255, 255, 255, 0.96);
+      backdrop-filter: blur(10px);
+      border-top: 1.5px solid var(--border-subtle);
+      padding: 10px 14px;
+      box-shadow: var(--shadow-bottom);
       z-index: 50;
     }
 
-    .bottom-bar-inner {
-      max-width: 820px;
+    .bottom-bar-wrapper {
+      max-width: 680px;
       margin: 0 auto;
       display: flex;
       align-items: center;
-      gap: 12px;
+      gap: 10px;
     }
 
-    .bottom-bar-stats {
+    .bottom-summary-box {
       flex: 1;
       display: flex;
       flex-direction: column;
     }
 
-    .bottom-bar-stats .count-summary {
-      font-size: 15px;
+    .bottom-count-title {
+      font-size: 14px;
       font-weight: 800;
       color: var(--text-main);
-      display: flex;
-      align-items: center;
-      gap: 6px;
+      line-height: 1.2;
     }
 
-    .bottom-bar-stats .count-subtitle {
+    .bottom-count-units {
       font-size: 12px;
       font-weight: 600;
       color: var(--text-muted);
     }
 
-    .btn-review-summary {
-      background-color: var(--bg-subtle);
-      border: 1.5px solid var(--border-strong);
+    .btn-secondary-review {
+      background-color: var(--bg-app);
+      border: 1.5px solid var(--border-medium);
       color: var(--text-main);
-      height: var(--touch-size-lg);
-      padding: 0 16px;
-      border-radius: var(--radius-md);
+      height: var(--touch-size);
+      padding: 0 14px;
+      border-radius: var(--radius-sm);
       font-weight: 700;
-      font-size: 14px;
+      font-size: 13px;
       cursor: pointer;
       display: flex;
       align-items: center;
       gap: 6px;
       white-space: nowrap;
-      transition: all 0.15s ease;
     }
 
-    .btn-review-summary:hover {
-      background-color: var(--border-light);
+    .btn-secondary-review:active {
+      background-color: var(--border-subtle);
     }
 
-    .btn-finalize-main {
-      flex: 1.4;
-      height: var(--touch-size-lg);
+    .btn-primary-finalize {
+      flex: 1.2;
+      height: var(--touch-size);
       background-color: var(--color-whatsapp-btn);
       color: #ffffff;
       border: none;
-      border-radius: var(--radius-md);
-      font-size: 15px;
+      border-radius: var(--radius-sm);
+      font-size: 14px;
       font-weight: 800;
       display: flex;
       align-items: center;
       justify-content: center;
       gap: 8px;
       cursor: pointer;
-      box-shadow: 0 4px 12px rgba(37, 211, 102, 0.35);
-      transition: all 0.15s ease;
+      box-shadow: 0 3px 10px rgba(22, 163, 74, 0.3);
       white-space: nowrap;
+      transition: all 0.15s ease;
     }
 
-    .btn-finalize-main:active {
+    .btn-primary-finalize:active {
+      background-color: #15803d;
       transform: scale(0.98);
-      background-color: #1eb857;
     }
 
-    .btn-finalize-main svg {
-      width: 22px;
-      height: 22px;
+    .btn-primary-finalize svg {
+      width: 20px;
+      height: 20px;
       fill: currentColor;
     }
 
-    /* MODAL BASE */
-    .modal-overlay {
+    /* ==========================================================================
+       MODAIS E DIÁLOGOS
+       ========================================================================== */
+    .modal-backdrop {
       position: fixed;
       top: 0;
       left: 0;
       right: 0;
       bottom: 0;
-      background-color: rgba(15, 23, 42, 0.6);
-      backdrop-filter: blur(4px);
+      background-color: rgba(41, 24, 17, 0.6);
+      backdrop-filter: blur(3px);
       z-index: 100;
       display: none;
-      align-items: flex-end; /* Abre como bottom-sheet no mobile */
+      align-items: flex-end;
       justify-content: center;
-      padding: 0;
-      opacity: 0;
-      transition: opacity 0.2s ease;
     }
 
-    .modal-overlay.open {
+    .modal-backdrop.open {
       display: flex;
-      opacity: 1;
     }
 
-    @media (min-width: 640px) {
-      .modal-overlay {
+    @media (min-width: 600px) {
+      .modal-backdrop {
         align-items: center;
         padding: 20px;
       }
     }
 
-    .modal-container {
-      background-color: var(--bg-surface);
+    .modal-sheet {
+      background-color: #ffffff;
       width: 100%;
-      max-width: 600px;
+      max-width: 540px;
       border-radius: var(--radius-lg) var(--radius-lg) 0 0;
-      max-height: 90vh;
+      max-height: 88vh;
       display: flex;
       flex-direction: column;
-      box-shadow: var(--shadow-lg);
+      box-shadow: 0 -4px 20px rgba(41, 24, 17, 0.2);
       overflow: hidden;
-      animation: slideUp 0.25s ease-out;
+      animation: sheetUp 0.22s ease-out;
     }
 
-    @media (min-width: 640px) {
-      .modal-container {
+    @media (min-width: 600px) {
+      .modal-sheet {
         border-radius: var(--radius-lg);
-        max-height: 85vh;
-        animation: fadeInScale 0.2s ease-out;
+        animation: scaleIn 0.18s ease-out;
       }
     }
 
-    @keyframes slideUp {
+    @keyframes sheetUp {
       from { transform: translateY(100%); }
       to { transform: translateY(0); }
     }
 
-    @keyframes fadeInScale {
+    @keyframes scaleIn {
       from { transform: scale(0.95); opacity: 0; }
       to { transform: scale(1); opacity: 1; }
     }
 
-    .modal-header {
-      padding: 16px 20px;
-      border-bottom: 1.5px solid var(--border-light);
+    .sheet-header {
+      padding: 14px 18px;
+      border-bottom: 1.5px solid var(--border-subtle);
       display: flex;
       align-items: center;
       justify-content: space-between;
-      background-color: #ffffff;
     }
 
-    .modal-header h2 {
-      font-size: 18px;
+    .sheet-header h2 {
+      font-size: 16px;
       font-weight: 800;
       color: var(--text-main);
       display: flex;
@@ -847,12 +786,12 @@
       gap: 8px;
     }
 
-    .btn-modal-close {
+    .sheet-close-btn {
       background: none;
       border: none;
       color: var(--text-muted);
-      width: 36px;
-      height: 36px;
+      width: 32px;
+      height: 32px;
       border-radius: 50%;
       display: flex;
       align-items: center;
@@ -861,61 +800,84 @@
       cursor: pointer;
     }
 
-    .btn-modal-close:hover {
-      background-color: var(--bg-subtle);
-      color: var(--text-main);
-    }
-
-    .modal-body {
-      padding: 20px;
+    .sheet-body {
+      padding: 16px 18px;
       overflow-y: auto;
       font-size: 14px;
     }
 
-    .modal-footer {
-      padding: 14px 20px;
-      border-top: 1.5px solid var(--border-light);
+    .sheet-footer {
+      padding: 12px 18px;
+      border-top: 1.5px solid var(--border-subtle);
       display: flex;
       gap: 10px;
-      background-color: #f8fafc;
+      background-color: var(--bg-app);
     }
 
-    /* FORMULÁRIO DE CONFIGURAÇÃO OBSIDIAN */
-    .form-group {
-      margin-bottom: 16px;
-    }
-
-    .form-group label {
-      display: block;
+    /* PREVIEW DO RELATÓRIO */
+    .preview-code-box {
+      background-color: #fffaf5;
+      border: 1.5px solid var(--border-subtle);
+      border-radius: var(--radius-sm);
+      padding: 12px;
+      font-family: monospace;
       font-size: 13px;
+      white-space: pre-wrap;
+      max-height: 280px;
+      overflow-y: auto;
+      color: var(--text-main);
+      line-height: 1.45;
+    }
+
+    .badge-dest-wa {
+      background-color: #f0fdf4;
+      border: 1px solid #86efac;
+      color: #166534;
+      padding: 6px 10px;
+      border-radius: var(--radius-sm);
+      font-size: 12px;
+      font-weight: 700;
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    /* FORMULÁRIO CONFIGURAÇÕES OBSIDIAN */
+    .field-group {
+      margin-bottom: 14px;
+    }
+
+    .field-group label {
+      display: block;
+      font-size: 12px;
       font-weight: 700;
       color: var(--text-secondary);
-      margin-bottom: 6px;
+      margin-bottom: 5px;
     }
 
-    .form-control {
+    .field-input {
       width: 100%;
-      height: 44px;
-      padding: 0 14px;
+      height: 42px;
+      padding: 0 12px;
       border-radius: var(--radius-sm);
-      border: 1.5px solid var(--border-strong);
+      border: 1.5px solid var(--border-medium);
       font-size: 14px;
       font-family: inherit;
       color: var(--text-main);
-      background-color: #fff;
     }
 
-    .form-control:focus {
+    .field-input:focus {
       outline: none;
       border-color: var(--color-obsidian);
-      box-shadow: 0 0 0 3px rgba(109, 40, 217, 0.15);
+      box-shadow: 0 0 0 3px rgba(109, 40, 217, 0.12);
     }
 
-    .input-group-password {
+    .pw-input-wrapper {
       position: relative;
     }
 
-    .btn-toggle-pw {
+    .btn-show-hide-pw {
       position: absolute;
       right: 8px;
       top: 50%;
@@ -924,368 +886,216 @@
       border: none;
       color: var(--text-muted);
       cursor: pointer;
-      font-size: 12px;
+      font-size: 11px;
       font-weight: 700;
-      padding: 4px 8px;
+      padding: 4px;
     }
 
-    .obsidian-callout-info {
+    .obsidian-ssl-tip {
       background-color: var(--color-obsidian-bg);
-      border-left: 4px solid var(--color-obsidian);
-      padding: 12px 14px;
+      border-left: 3px solid var(--color-obsidian);
+      padding: 10px 12px;
       border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
       font-size: 12px;
       color: #4c1d95;
-      line-height: 1.45;
-      margin-top: 12px;
+      line-height: 1.4;
+      margin-top: 10px;
     }
 
-    .obsidian-callout-info strong {
-      display: block;
-      margin-bottom: 3px;
-      font-size: 13px;
-    }
-
-    .obsidian-callout-info a {
+    .obsidian-ssl-tip a {
       color: var(--color-obsidian);
       font-weight: 700;
       text-decoration: underline;
     }
 
-    .test-conn-row {
+    /* STATUS DE ENVIO */
+    .sync-progress-box {
+      margin-top: 12px;
+      border: 1.5px solid var(--border-subtle);
+      border-radius: var(--radius-sm);
+      padding: 10px 12px;
+      background-color: #ffffff;
+    }
+
+    .sync-row {
       display: flex;
       align-items: center;
-      gap: 10px;
-      margin-top: 10px;
-    }
-
-    .btn-test-conn {
-      height: 38px;
-      padding: 0 14px;
-      background-color: var(--bg-surface);
-      border: 1.5px solid var(--color-obsidian);
-      color: var(--color-obsidian);
-      border-radius: var(--radius-sm);
-      font-size: 13px;
-      font-weight: 700;
-      cursor: pointer;
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-    }
-
-    .btn-test-conn:hover {
-      background-color: var(--color-obsidian-bg);
-    }
-
-    .conn-status-badge {
+      justify-content: space-between;
+      padding: 6px 0;
       font-size: 12px;
-      font-weight: 600;
+      border-bottom: 1px solid var(--border-subtle);
     }
 
-    /* PREVIEW DE RELATÓRIO NO MODAL */
-    .report-preview-box {
-      background-color: #f8fafc;
-      border: 1.5px solid var(--border-light);
-      border-radius: var(--radius-md);
-      padding: 14px;
-      font-family: monospace;
-      font-size: 13px;
-      white-space: pre-wrap;
-      max-height: 320px;
-      overflow-y: auto;
-      color: #1e293b;
-      line-height: 1.4;
+    .sync-row:last-child {
+      border-bottom: none;
     }
 
-    .dest-info-badge {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      padding: 8px 12px;
-      border-radius: var(--radius-sm);
-      background-color: #f0fdf4;
-      border: 1px solid rgba(22, 163, 74, 0.25);
-      color: #166534;
-      font-size: 12px;
-      font-weight: 700;
-      margin-bottom: 12px;
+    .sync-tag {
+      font-size: 10px;
+      font-weight: 800;
+      padding: 2px 7px;
+      border-radius: var(--radius-full);
     }
 
-    /* SISTEMA DE TOASTS NOTIFICATIONS */
-    .toast-container {
+    .tag-wait { background-color: var(--bg-surface-subtle); color: var(--text-muted); }
+    .tag-ok { background-color: var(--color-success-bg); color: var(--color-success); }
+    .tag-fail { background-color: var(--color-danger-bg); color: var(--color-danger); }
+
+    /* TOASTS */
+    .toast-deck {
       position: fixed;
-      top: 16px;
+      top: 14px;
       left: 50%;
       transform: translateX(-50%);
       z-index: 200;
       display: flex;
       flex-direction: column;
-      gap: 8px;
+      gap: 6px;
       width: 90%;
-      max-width: 440px;
+      max-width: 400px;
       pointer-events: none;
     }
 
-    .toast {
+    .toast-card {
       pointer-events: auto;
-      background-color: var(--bg-surface);
-      border: 1.5px solid var(--border-strong);
+      background-color: #ffffff;
+      border: 1.5px solid var(--border-medium);
       border-radius: var(--radius-md);
-      padding: 12px 16px;
-      box-shadow: var(--shadow-lg);
+      padding: 10px 14px;
+      box-shadow: 0 4px 12px rgba(41, 24, 17, 0.12);
       display: flex;
-      align-items: flex-start;
-      gap: 12px;
-      animation: toastIn 0.25s ease forwards;
-      color: var(--text-main);
+      align-items: center;
+      gap: 10px;
+      animation: toastEnter 0.2s ease forwards;
     }
 
-    @keyframes toastIn {
-      from { opacity: 0; transform: translateY(-15px); }
+    @keyframes toastEnter {
+      from { opacity: 0; transform: translateY(-10px); }
       to { opacity: 1; transform: translateY(0); }
     }
 
-    .toast-icon {
-      font-size: 20px;
-      flex-shrink: 0;
-      margin-top: 1px;
-    }
+    .toast-card.t-success { border-left: 5px solid var(--color-success); }
+    .toast-card.t-error { border-left: 5px solid var(--color-danger); }
+    .toast-card.t-info { border-left: 5px solid var(--color-accent); }
+    .toast-card.t-obsidian { border-left: 5px solid var(--color-obsidian); }
 
-    .toast-content {
+    .toast-text {
       flex: 1;
-    }
-
-    .toast-title {
-      font-size: 14px;
-      font-weight: 800;
-      margin-bottom: 2px;
-    }
-
-    .toast-message {
       font-size: 13px;
-      color: var(--text-secondary);
-      line-height: 1.35;
-    }
-
-    .toast-close {
-      background: none;
-      border: none;
-      color: var(--text-muted);
-      cursor: pointer;
-      font-size: 16px;
-      padding: 2px;
-    }
-
-    .toast.toast-success {
-      border-color: var(--color-success);
-      border-left: 6px solid var(--color-success);
-    }
-
-    .toast.toast-error {
-      border-color: var(--color-danger);
-      border-left: 6px solid var(--color-danger);
-    }
-
-    .toast.toast-info {
-      border-color: var(--color-primary);
-      border-left: 6px solid var(--color-primary);
-    }
-
-    .toast.toast-obsidian {
-      border-color: var(--color-obsidian);
-      border-left: 6px solid var(--color-obsidian);
-    }
-
-    /* STATUS DE FINALIZAÇÃO MULTI-ETAPA */
-    .sync-status-box {
-      margin-top: 14px;
-      border-radius: var(--radius-md);
-      border: 1.5px solid var(--border-light);
-      background-color: #ffffff;
-      padding: 14px;
-    }
-
-    .sync-step-item {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 8px 0;
-      border-bottom: 1px solid var(--border-light);
-    }
-
-    .sync-step-item:last-child {
-      border-bottom: none;
-    }
-
-    .sync-step-name {
-      font-size: 13px;
-      font-weight: 700;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .sync-step-badge {
-      font-size: 11px;
-      font-weight: 700;
-      padding: 3px 8px;
-      border-radius: var(--radius-full);
-    }
-
-    .sync-pending { background-color: var(--bg-subtle); color: var(--text-muted); }
-    .sync-success { background-color: var(--color-success-bg); color: var(--color-success); }
-    .sync-failed { background-color: var(--color-danger-bg); color: var(--color-danger); }
-
-    /* RESPONSIVIDADE ADICIONAL */
-    @media (max-width: 480px) {
-      .stats-card-bar {
-        grid-template-columns: 1fr 1fr;
-      }
-      .btn-quick-reset {
-        grid-column: span 2;
-        justify-content: center;
-      }
-      .quantity-controls {
-        gap: 4px;
-      }
-      .btn-qty {
-        width: 42px;
-        height: 42px;
-      }
-      .qty-input {
-        width: 50px;
-        height: 42px;
-        font-size: 16px;
-      }
+      font-weight: 600;
+      color: var(--text-main);
     }
   </style>
 </head>
 <body>
 
   <!-- ==========================================================================
-       HEADER FIXO COM NAVEGAÇÃO E BUSCA
+       1. CABEÇALHO COMPACTO & ELEGANTE
        ========================================================================== -->
   <header class="app-header">
-    <div class="header-top">
-      <div class="brand-title">
-        <div class="brand-icon">📦</div>
-        <div class="brand-text">
+    <div class="header-content">
+      <div class="brand-group">
+        <div class="brand-badge">📦</div>
+        <div>
           <h1>Contagem de Estoque</h1>
-          <span>Loja &amp; Depósito • Mobile</span>
         </div>
       </div>
       <div class="header-actions">
-        <!-- Botão de Configuração do Obsidian -->
-        <button id="btnOpenSettings" class="btn-header" title="Configurações do Obsidian Local REST API" aria-label="Configurações">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"></path>
+        <!-- Configurações do Obsidian -->
+        <button id="btnOpenSettings" class="btn-header-icon" title="Configurações Obsidian" aria-label="Configurações">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <circle cx="12" cy="12" r="3"></circle>
+            <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
           </svg>
         </button>
       </div>
     </div>
 
-    <!-- Barra de Pesquisa Rápida e Abas de Categoria -->
-    <div class="search-filter-section">
-      <div class="search-box">
-        <span class="search-icon">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+    <!-- Barra de Busca Rápida -->
+    <div class="search-wrapper">
+      <div class="search-input-box">
+        <span class="search-icon-svg">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
             <circle cx="11" cy="11" r="8"></circle>
             <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
           </svg>
         </span>
-        <input type="text" id="searchInput" class="search-input" placeholder="Buscar produto em todas categorias..." autocomplete="off">
-        <button id="searchClear" class="search-clear" title="Limpar busca">&times;</button>
+        <input type="text" id="searchInput" class="search-field" placeholder="Buscar produto rápido..." autocomplete="off">
+        <button id="searchClear" class="search-clear-btn" title="Limpar busca">&times;</button>
       </div>
+    </div>
 
-      <!-- Abas / Pílulas de Categoria -->
-      <div class="category-tabs-scroll" id="categoryTabs">
-        <button class="tab-pill active" data-category="all">
-          Todos os Itens
-          <span class="tab-badge" id="badgeAll">0</span>
-        </button>
-        <button class="tab-pill" data-category="Geladeira">
+    <!-- Navegação de Estações (Abas Focadas) -->
+    <div class="category-nav-bar">
+      <div class="category-pills" id="categoryTabs">
+        <button class="nav-pill active" data-category="Geladeira">
           ❄️ Geladeira
-          <span class="tab-badge" id="badgeGeladeira">0</span>
+          <span class="nav-pill-badge" id="badgeGeladeira">0</span>
         </button>
-        <button class="tab-pill" data-category="Freezer">
+        <button class="nav-pill" data-category="Freezer">
           🧊 Freezer
-          <span class="tab-badge" id="badgeFreezer">0</span>
+          <span class="nav-pill-badge" id="badgeFreezer">0</span>
         </button>
-        <button class="tab-pill" data-category="Prateleira">
+        <button class="nav-pill" data-category="Prateleira">
           📦 Prateleira
-          <span class="tab-badge" id="badgePrateleira">0</span>
+          <span class="nav-pill-badge" id="badgePrateleira">0</span>
         </button>
-        <button class="tab-pill" data-category="counted_only">
-          ✅ Contados (>0)
-          <span class="tab-badge highlight" id="badgeCountedOnly">0</span>
+        <button class="nav-pill" data-category="counted_only">
+          ✅ Contados
+          <span class="nav-pill-badge highlight" id="badgeCountedOnly">0</span>
+        </button>
+        <button class="nav-pill" data-category="all">
+          Todos
+          <span class="nav-pill-badge" id="badgeAll">0</span>
         </button>
       </div>
     </div>
   </header>
 
   <!-- ==========================================================================
-       CONTEÚDO PRINCIPAL
+       2. CONTEÚDO PRINCIPAL (FOCO TOTAL NA TAREFA DE CONTAGEM)
        ========================================================================== -->
   <main class="container">
-    <!-- Card de Estatísticas Rápidas -->
-    <div class="stats-card-bar">
-      <div class="stat-item">
-        <span class="stat-label">Itens Contados</span>
-        <span class="stat-value highlight" id="topCountedTypes">0</span>
-      </div>
-      <div class="stat-item">
-        <span class="stat-label">Total de Unidades</span>
-        <span class="stat-value" id="topTotalUnits">0 un</span>
-      </div>
-      <div>
-        <button id="btnResetAll" class="btn-quick-reset" title="Zerar contagem e recomeçar">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-            <polyline points="1 4 1 10 7 10"></polyline>
-            <path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"></path>
-          </svg>
-          Nova Contagem
-        </button>
-      </div>
+    <!-- Linha de Resumo Sutil e Limpa -->
+    <div class="progress-bar-strip">
+      <span class="progress-stats-text">
+        Progresso: <strong id="stripCountedStats">0 itens</strong> (<span id="stripUnitsStats">0 un</span>)
+      </span>
+      <button id="btnResetAll" class="btn-clean-action" title="Zerar contagem e iniciar de novo">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+          <polyline points="1 4 1 10 7 10"></polyline>
+          <path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"></path>
+        </svg>
+        Zerar
+      </button>
     </div>
 
-    <!-- Lista de Categorias e Produtos (Renderizado dinamicamente via JS) -->
+    <!-- Container Dinâmico de Produtos -->
     <div id="categoriesContainer"></div>
 
-    <!-- Mensagem de busca vazia -->
-    <div id="searchEmptyState" class="empty-state" style="display: none;">
-      <span class="empty-state-icon">🔍</span>
+    <!-- Estado de Busca Sem Resultados -->
+    <div id="searchEmptyState" class="clean-empty-state" style="display: none;">
+      <span class="empty-state-emoji">🔍</span>
       <h3>Nenhum produto encontrado</h3>
-      <p>Verifique a ortografia ou adicione este produto como um novo item na categoria.</p>
+      <p>Tente outra busca ou use o botão abaixo para adicioná-lo.</p>
     </div>
   </main>
 
   <!-- ==========================================================================
-       BARRA FIXA INFERIOR DE FINALIZAÇÃO (MOBILE-FIRST)
+       3. BARRA FIXA INFERIOR (AÇÃO DIRETA NO POLEGAR)
        ========================================================================== -->
-  <div class="fixed-bottom-bar">
-    <div class="bottom-bar-inner">
-      <div class="bottom-bar-stats">
-        <div class="count-summary">
-          <span id="bottomCountedBadge">0 itens contados</span>
-        </div>
-        <span class="count-subtitle" id="bottomUnitsSummary">0 unidades no total</span>
+  <div class="sticky-bottom-action-bar">
+    <div class="bottom-bar-wrapper">
+      <div class="bottom-summary-box">
+        <span class="bottom-count-title" id="bottomSummaryTitle">0 itens contados</span>
+        <span class="bottom-count-units" id="bottomSummaryUnits">0 unidades no total</span>
       </div>
-      
-      <button id="btnOpenReview" class="btn-review-summary" title="Revisar lista de contados">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
-          <polyline points="14 2 14 8 20 8"></polyline>
-          <line x1="16" y1="13" x2="8" y2="13"></line>
-          <line x1="16" y1="17" x2="8" y2="17"></line>
-          <polyline points="10 9 9 9 8 9"></polyline>
-        </svg>
-        Revisar
+
+      <button id="btnOpenReview" class="btn-secondary-review" title="Revisar lista antes de enviar">
+        📋 Revisar
       </button>
 
-      <button id="btnFinalizeMain" class="btn-finalize-main" title="Finalizar contagem e enviar">
-        <!-- Ícone WhatsApp SVG -->
+      <button id="btnFinalizeMain" class="btn-primary-finalize" title="Finalizar contagem e enviar para WhatsApp e Obsidian">
         <svg viewBox="0 0 24 24">
           <path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766 0-3.18-2.587-5.771-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.299.045-.677.063-1.092-.069-.252-.08-.575-.187-.988-.365-1.739-.751-2.874-2.502-2.961-2.617-.087-.116-.708-.94-.708-1.793s.448-1.273.607-1.446c.159-.173.346-.217.462-.217l.332.006c.106.005.249-.04.39.298.144.347.491 1.2.534 1.287.043.087.072.188.014.304-.058.116-.087.188-.173.289l-.26.304c-.087.086-.177.18-.076.354.101.174.449.741.964 1.201.662.591 1.221.774 1.394.86.174.086.275.072.376-.044.101-.116.433-.506.549-.68.116-.173.231-.145.39-.086.159.058 1.011.477 1.184.564.173.087.289.13.332.203.043.072.043.419-.101.824z"/>
         </svg>
@@ -1297,169 +1107,128 @@
   <!-- ==========================================================================
        MODAL 1: REVISÃO & FINALIZAÇÃO (WHATSAPP + OBSIDIAN)
        ========================================================================== -->
-  <div id="modalReview" class="modal-overlay">
-    <div class="modal-container">
-      <div class="modal-header">
-        <h2>📋 Resumo da Contagem</h2>
-        <button class="btn-modal-close" id="btnCloseReviewModal">&times;</button>
+  <div id="modalReview" class="modal-backdrop">
+    <div class="modal-sheet">
+      <div class="sheet-header">
+        <h2>📋 Resumo do Relatório</h2>
+        <button class="sheet-close-btn" id="btnCloseReviewModal">&times;</button>
       </div>
-      <div class="modal-body">
-        <div class="dest-info-badge">
+      <div class="sheet-body">
+        <div class="badge-dest-wa">
           <span>📲 Envio WhatsApp: <strong>+55 11 98278-5102</strong></span>
         </div>
 
-        <p style="margin-bottom: 8px; font-weight: 700; color: var(--text-secondary);">
-          Prévia do Relatório a ser enviado:
-        </p>
-        <div id="reportPreviewText" class="report-preview-box">Carregando dados...</div>
+        <div id="reportPreviewText" class="preview-code-box">Carregando dados...</div>
 
         <!-- Painel de Status de Sincronização -->
-        <div class="sync-status-box" id="syncStatusBox" style="display: none;">
-          <div class="sync-step-item">
-            <span class="sync-step-name">
-              <span>🟣</span> Obsidian Local REST API
-            </span>
-            <span class="sync-step-badge sync-pending" id="syncObsidianBadge">Aguardando</span>
+        <div class="sync-progress-box" id="syncStatusBox" style="display: none;">
+          <div class="sync-row">
+            <span>🟣 Obsidian Local REST API</span>
+            <span class="sync-tag tag-wait" id="syncObsidianBadge">Aguardando</span>
           </div>
-          <div class="sync-step-item">
-            <span class="sync-step-name">
-              <span>🟢</span> Envio WhatsApp (wa.me)
-            </span>
-            <span class="sync-step-badge sync-pending" id="syncWhatsappBadge">Aguardando</span>
+          <div class="sync-row">
+            <span>🟢 Envio WhatsApp</span>
+            <span class="sync-tag tag-wait" id="syncWhatsappBadge">Aguardando</span>
           </div>
           <p id="syncObsidianDetail" style="font-size: 11px; color: var(--text-muted); margin-top: 6px;"></p>
         </div>
       </div>
-      <div class="modal-footer">
-        <button type="button" class="btn-cancel-custom" id="btnCopyReport">📋 Copiar Texto</button>
-        <button type="button" class="btn-finalize-main" id="btnConfirmFinalize" style="flex: 1;">
-          🚀 Finalizar e Enviar
+      <div class="sheet-footer">
+        <button type="button" class="btn-dismiss-add-item" id="btnCopyReport">Copiar Texto</button>
+        <button type="button" class="btn-primary-finalize" id="btnConfirmFinalize" style="flex: 1;">
+          Enviar Agora
         </button>
       </div>
     </div>
   </div>
 
   <!-- ==========================================================================
-       MODAL 2: CONFIGURAÇÕES DO OBSIDIAN (LOCAL REST API)
+       MODAL 2: CONFIGURAÇÕES DO OBSIDIAN
        ========================================================================== -->
-  <div id="modalSettings" class="modal-overlay">
-    <div class="modal-container">
-      <div class="modal-header">
-        <h2>
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"></path>
-            <circle cx="12" cy="12" r="3"></circle>
-          </svg>
-          Configurações do Obsidian
-        </h2>
-        <button class="btn-modal-close" id="btnCloseSettingsModal">&times;</button>
+  <div id="modalSettings" class="modal-backdrop">
+    <div class="modal-sheet">
+      <div class="sheet-header">
+        <h2>🟣 Configurações do Obsidian</h2>
+        <button class="sheet-close-btn" id="btnCloseSettingsModal">&times;</button>
       </div>
-      <div class="modal-body">
-        <p style="color: var(--text-secondary); margin-bottom: 16px;">
-          Configure a integração com o plugin <strong>Local REST API</strong> do Obsidian. Os dados são salvos no seu navegador (localStorage).
-        </p>
-
-        <div class="form-group">
-          <label for="obsidianUrl">URL do Servidor Local REST API</label>
-          <input type="text" id="obsidianUrl" class="form-control" placeholder="https://127.0.0.1:27124" value="https://127.0.0.1:27124">
-          <span style="font-size: 11px; color: var(--text-muted); display: block; margin-top: 4px;">
-            Padrão seguro do plugin: <code>https://127.0.0.1:27124</code> (ou <code>http://127.0.0.1:27123</code> para HTTP)
-          </span>
+      <div class="sheet-body">
+        <div class="field-group">
+          <label for="obsidianUrl">URL Local REST API</label>
+          <input type="text" id="obsidianUrl" class="field-input" placeholder="https://127.0.0.1:27124" value="https://127.0.0.1:27124">
         </div>
 
-        <div class="form-group">
-          <label for="obsidianApiKey">Chave de API (API Key)</label>
-          <div class="input-group-password">
-            <input type="password" id="obsidianApiKey" class="form-control" placeholder="Cole a chave gerada no plugin do Obsidian">
-            <button type="button" class="btn-toggle-pw" id="btnToggleApiKey">Exibir</button>
+        <div class="field-group">
+          <label for="obsidianApiKey">Chave de API (Bearer Token)</label>
+          <div class="pw-input-wrapper">
+            <input type="password" id="obsidianApiKey" class="field-input" placeholder="Cole a chave gerada no plugin">
+            <button type="button" class="btn-show-hide-pw" id="btnToggleApiKey">Exibir</button>
           </div>
-          <span style="font-size: 11px; color: var(--text-muted); display: block; margin-top: 4px;">
-            Encontrada em: <em>Obsidian &gt; Configurações &gt; Local REST API &gt; API Key</em>.
-          </span>
         </div>
 
-        <div class="form-group">
-          <label for="obsidianFolder">Pasta de Destino no Vault</label>
-          <input type="text" id="obsidianFolder" class="form-control" placeholder="Contagens/" value="Contagens/">
-          <span style="font-size: 11px; color: var(--text-muted); display: block; margin-top: 4px;">
-            Exemplo: <code>Contagens/</code> ou <code>Estoque/2026/</code>
-          </span>
+        <div class="field-group">
+          <label for="obsidianFolder">Pasta no Vault</label>
+          <input type="text" id="obsidianFolder" class="field-input" placeholder="Contagens/" value="Contagens/">
         </div>
 
-        <div class="test-conn-row">
-          <button type="button" id="btnTestObsidian" class="btn-test-conn">
+        <div style="display: flex; align-items: center; gap: 8px; margin-top: 8px;">
+          <button type="button" id="btnTestObsidian" class="btn-dismiss-add-item" style="color: var(--color-obsidian); font-weight: 700;">
             ⚡ Testar Conexão
           </button>
-          <span id="testConnStatus" class="conn-status-badge"></span>
+          <span id="testConnStatus" style="font-size: 12px; font-weight: 600;"></span>
         </div>
 
-        <!-- Instruções de CORS / Certificado SSL Autoassinado -->
-        <div class="obsidian-callout-info">
-          <strong>⚠️ Dica importante sobre Certificado SSL / Conexão Local:</strong>
-          Como o plugin Local REST API do Obsidian utiliza certificado SSL autoassinado em HTTPS por padrão, seu navegador pode bloquear requisições para localhost. Se o teste falhar:
-          <ol style="margin-left: 16px; margin-top: 6px;">
-            <li>Abra este link em uma nova aba: <a id="linkOpenObsidianUrl" href="https://127.0.0.1:27124" target="_blank" rel="noopener">Abrir URL do Obsidian no navegador</a></li>
-            <li>Se aparecer a tela de aviso de segurança ("Sua conexão não é privada"), clique em <strong>Avançado &gt; Continuar para 127.0.0.1 (não seguro)</strong>.</li>
-            <li>Pronto! O navegador lembrará da autorização e as requisições funcionarão direto.</li>
-          </ol>
+        <div class="obsidian-ssl-tip">
+          <strong>⚠️ Dica sobre Certificado SSL no celular/navegador:</strong><br>
+          Se o teste falhar, acesse uma vez a URL <a id="linkOpenObsidianUrl" href="https://127.0.0.1:27124" target="_blank" rel="noopener">https://127.0.0.1:27124</a> e clique em <em>Avançado &gt; Continuar</em> para liberar o certificado autoassinado.
         </div>
       </div>
-      <div class="modal-footer">
-        <button type="button" class="btn-cancel-custom" id="btnCancelSettings">Cancelar</button>
-        <button type="button" class="btn-save-custom" id="btnSaveSettings">Salvar Configurações</button>
+      <div class="sheet-footer">
+        <button type="button" class="btn-dismiss-add-item" id="btnCancelSettings">Cancelar</button>
+        <button type="button" class="btn-confirm-add-item" id="btnSaveSettings">Salvar</button>
       </div>
     </div>
   </div>
 
   <!-- ==========================================================================
-       MODAL 3: CONFIRMAÇÃO DE NOVA CONTAGEM (ZERAR)
+       MODAL 3: CONFIRMAÇÃO DE ZERAR / NOVA CONTAGEM
        ========================================================================== -->
-  <div id="modalResetConfirm" class="modal-overlay">
-    <div class="modal-container" style="max-width: 440px;">
-      <div class="modal-header">
-        <h2 style="color: var(--color-danger);">⚠️ Iniciar Nova Contagem?</h2>
-        <button class="btn-modal-close" id="btnCloseResetModal">&times;</button>
+  <div id="modalResetConfirm" class="modal-backdrop">
+    <div class="modal-sheet" style="max-width: 400px;">
+      <div class="sheet-header">
+        <h2 style="color: var(--color-danger);">⚠️ Zerar Contagem?</h2>
+        <button class="sheet-close-btn" id="btnCloseResetModal">&times;</button>
       </div>
-      <div class="modal-body">
-        <p style="color: var(--text-secondary); margin-bottom: 8px;">
-          Esta ação irá <strong>zerar todas as quantidades contadas</strong> atualmente.
-        </p>
-        <p style="font-size: 13px; color: var(--text-muted);">
-          Certifique-se de que já finalizou e enviou a contagem anterior pelo WhatsApp ou Obsidian antes de limpar.
+      <div class="sheet-body">
+        <p style="color: var(--text-secondary); line-height: 1.4;">
+          Isso irá zerar as quantidades contadas para iniciar uma nova conferência.
         </p>
       </div>
-      <div class="modal-footer">
-        <button type="button" class="btn-cancel-custom" id="btnCancelReset">Não, voltar</button>
-        <button type="button" class="btn-save-custom" id="btnConfirmReset" style="background-color: var(--color-danger);">
-          Sim, Zerar Tudo
+      <div class="sheet-footer">
+        <button type="button" class="btn-dismiss-add-item" id="btnCancelReset">Voltar</button>
+        <button type="button" class="btn-confirm-add-item" id="btnConfirmReset" style="background-color: var(--color-danger);">
+          Sim, Zerar
         </button>
       </div>
     </div>
   </div>
 
-  <!-- CONTAINER DE TOASTS -->
-  <div class="toast-container" id="toastContainer" aria-live="polite"></div>
+  <!-- TOASTS DE NOTIFICAÇÃO -->
+  <div class="toast-deck" id="toastContainer"></div>
 
   <!-- ==========================================================================
-       LÓGICA JAVASCRIPT VANILLA AUTOCONTIDA
+       LÓGICA JAVASCRIPT AUTOCONTIDA
        ========================================================================== -->
   <script>
-    /**
-     * SISTEMA DE CONTAGEM DE PRODUTOS / ESTOQUE
-     * Integrado com WhatsApp (+55 11 98278-5102) e Obsidian Local REST API
-     */
-
-    // Número fixo de WhatsApp
     const WHATSAPP_FIXED_PHONE = "5511982785102";
 
-    // Chaves de armazenamento no LocalStorage
     const STORAGE_KEYS = {
       COUNTS: "estoque_counts_v1",
       CUSTOM_ITEMS: "estoque_custom_items_v1",
-      OBSIDIAN_CONFIG: "estoque_obsidian_config_v1"
+      OBSIDIAN_CONFIG: "estoque_obsidian_config_v1",
+      ACTIVE_CAT: "estoque_active_cat_v1"
     };
 
-    // 1. BASE DE PRODUTOS PRÉ-CADASTRADOS (74 itens exatos conforme especificação)
+    // Catálogo exato de 74 produtos
     const CATALOG_PRESET = {
       "Geladeira": [
         "Hot miola", "Ketchup", "Mostarda", "Milho", "Cebola branca",
@@ -1488,26 +1257,18 @@
       ]
     };
 
-    // Estado da Aplicação
     const state = {
-      // Map de contagens { [itemId]: number }
       counts: {},
-      // Lista de itens customizados: [ { id, name, category } ]
       customItems: [],
-      // Configuração Obsidian
       obsidianConfig: {
         url: "https://127.0.0.1:27124",
         apiKey: "",
         folder: "Contagens/"
       },
-      // Filtros da UI
-      activeCategory: "all",
+      activeCategory: "Geladeira", // Padrão focado na primeira estação (reduz sobrecarga)
       searchQuery: ""
     };
 
-    // ==========================================================================
-    // INICIALIZAÇÃO & LOCALSTORAGE
-    // ==========================================================================
     function initApp() {
       loadFromStorage();
       setupEventListeners();
@@ -1518,55 +1279,37 @@
     function loadFromStorage() {
       try {
         const savedCounts = localStorage.getItem(STORAGE_KEYS.COUNTS);
-        if (savedCounts) {
-          state.counts = JSON.parse(savedCounts);
-        }
+        if (savedCounts) state.counts = JSON.parse(savedCounts);
 
         const savedCustom = localStorage.getItem(STORAGE_KEYS.CUSTOM_ITEMS);
-        if (savedCustom) {
-          state.customItems = JSON.parse(savedCustom);
-        }
+        if (savedCustom) state.customItems = JSON.parse(savedCustom);
 
         const savedObsidian = localStorage.getItem(STORAGE_KEYS.OBSIDIAN_CONFIG);
-        if (savedObsidian) {
-          state.obsidianConfig = { ...state.obsidianConfig, ...JSON.parse(savedObsidian) };
-        }
+        if (savedObsidian) state.obsidianConfig = { ...state.obsidianConfig, ...JSON.parse(savedObsidian) };
+
+        const savedCat = localStorage.getItem(STORAGE_KEYS.ACTIVE_CAT);
+        if (savedCat) state.activeCategory = savedCat;
       } catch (err) {
-        console.error("Erro ao carregar do localStorage:", err);
+        console.error("Erro storage:", err);
       }
     }
 
     function saveCountsToStorage() {
-      try {
-        localStorage.setItem(STORAGE_KEYS.COUNTS, JSON.stringify(state.counts));
-      } catch (err) {
-        console.error("Erro ao salvar contagens:", err);
-      }
+      try { localStorage.setItem(STORAGE_KEYS.COUNTS, JSON.stringify(state.counts)); } catch (e) {}
     }
-
     function saveCustomItemsToStorage() {
-      try {
-        localStorage.setItem(STORAGE_KEYS.CUSTOM_ITEMS, JSON.stringify(state.customItems));
-      } catch (err) {
-        console.error("Erro ao salvar itens customizados:", err);
-      }
+      try { localStorage.setItem(STORAGE_KEYS.CUSTOM_ITEMS, JSON.stringify(state.customItems)); } catch (e) {}
     }
-
     function saveObsidianConfigToStorage() {
-      try {
-        localStorage.setItem(STORAGE_KEYS.OBSIDIAN_CONFIG, JSON.stringify(state.obsidianConfig));
-      } catch (err) {
-        console.error("Erro ao salvar configurações do Obsidian:", err);
-      }
+      try { localStorage.setItem(STORAGE_KEYS.OBSIDIAN_CONFIG, JSON.stringify(state.obsidianConfig)); } catch (e) {}
     }
 
-    // Gerador de ID estável para itens pré-cadastrados
     function getItemId(category, name) {
       return `${category}__${name.trim().toLowerCase().replace(/[^a-z0-9]/g, '_')}`;
     }
 
     // ==========================================================================
-    // RENDERIZAÇÃO DA INTERFACE
+    // RENDERIZAÇÃO DA UI COM VISÃO LIMPA E FOCADA
     // ==========================================================================
     function renderUI() {
       const container = document.getElementById("categoriesContainer");
@@ -1574,15 +1317,16 @@
 
       const categories = ["Geladeira", "Freezer", "Prateleira"];
       const query = state.searchQuery.trim().toLowerCase();
-      let totalVisibleProducts = 0;
+      let totalVisible = 0;
+
+      // Se há busca ativa, busca em todas categorias; senão, foca na categoria selecionada
+      const showAll = query !== "" || state.activeCategory === "all" || state.activeCategory === "counted_only";
 
       categories.forEach(category => {
-        // Se filtro ativo for específico e diferente desta categoria, pula (exceto se for "all" ou "counted_only")
-        if (state.activeCategory !== "all" && state.activeCategory !== "counted_only" && state.activeCategory !== category) {
+        if (!showAll && state.activeCategory !== category) {
           return;
         }
 
-        // Combina catálogo base com itens customizados da categoria
         const baseItems = CATALOG_PRESET[category].map(name => ({
           id: getItemId(category, name),
           name: name,
@@ -1599,113 +1343,97 @@
             isCustom: true
           }));
 
-        const allCatItems = [...baseItems, ...customCatItems];
+        const allItems = [...baseItems, ...customCatItems];
 
-        // Filtra por busca e por 'apenas contados' se necessário
-        const filteredItems = allCatItems.filter(item => {
-          const matchesQuery = query === "" || item.name.toLowerCase().includes(query) || category.toLowerCase().includes(query);
+        const filtered = allItems.filter(item => {
+          const matches = query === "" || item.name.toLowerCase().includes(query) || category.toLowerCase().includes(query);
           const currentQty = state.counts[item.id] || 0;
           if (state.activeCategory === "counted_only") {
-            return matchesQuery && currentQty > 0;
+            return matches && currentQty > 0;
           }
-          return matchesQuery;
+          return matches;
         });
 
-        // Se estiver filtrando e não tiver itens nesta categoria, esconde a seção
-        if (filteredItems.length === 0 && (query !== "" || state.activeCategory === "counted_only")) {
+        if (filtered.length === 0 && (query !== "" || state.activeCategory === "counted_only")) {
           return;
         }
 
-        totalVisibleProducts += filteredItems.length;
+        totalVisible += filtered.length;
 
-        // Monta o Card da Categoria
-        const sectionEl = document.createElement("section");
-        sectionEl.className = "category-section";
-        sectionEl.dataset.category = category;
+        const blockEl = document.createElement("div");
+        blockEl.className = "category-block";
 
-        // Ícone por categoria
-        let catIcon = "📦";
-        if (category === "Geladeira") catIcon = "❄️";
-        if (category === "Freezer") catIcon = "🧊";
+        const icon = category === "Geladeira" ? "❄️" : (category === "Freezer" ? "🧊" : "📦");
+        const countedInCat = allItems.filter(i => (state.counts[i.id] || 0) > 0).length;
 
-        // Quantidade contada na categoria
-        const countedInCat = allCatItems.filter(i => (state.counts[i.id] || 0) > 0).length;
-
-        sectionEl.innerHTML = `
-          <div class="category-header">
-            <h2 class="category-title">
-              <span class="category-icon">${catIcon}</span>
-              ${category}
-            </h2>
-            <span class="category-counter ${countedInCat > 0 ? 'active' : ''}">
-              ${countedInCat}/${allCatItems.length} contados
-            </span>
+        blockEl.innerHTML = `
+          <div class="category-section-title">
+            <span>${icon} ${category}</span>
+            <span style="font-weight: 700; color: var(--color-accent);">${countedInCat} de ${allItems.length} contados</span>
           </div>
-          <div class="products-list" id="list_${category}"></div>
-          <div class="add-custom-box">
-            <button class="add-custom-toggle-btn" data-toggle-cat="${category}">
-              + Adicionar produto não listado em ${category}
+          <div class="products-flow" id="flow_${category}"></div>
+          
+          <div class="add-new-product-clean">
+            <button class="btn-toggle-new-product" data-toggle-cat="${category}">
+              + Adicionar produto avulso em ${category}
             </button>
-            <div class="add-custom-form" id="customForm_${category}">
-              <div class="custom-input-row">
-                <input type="text" class="custom-name-input" id="customName_${category}" placeholder="Nome do produto (ex: Molho Especial)">
-                <input type="number" inputmode="numeric" class="custom-qty-input" id="customQty_${category}" placeholder="Qtd" min="1" value="1">
+            <div class="new-product-form-clean" id="newForm_${category}">
+              <div class="new-product-inputs">
+                <input type="text" class="new-name-field" id="newName_${category}" placeholder="Nome do produto...">
+                <input type="number" inputmode="numeric" class="new-qty-field" id="newQty_${category}" value="1" min="1">
               </div>
-              <div class="custom-btn-actions">
-                <button type="button" class="btn-cancel-custom" data-cancel-cat="${category}">Cancelar</button>
-                <button type="button" class="btn-save-custom" data-save-cat="${category}">Salvar e Adicionar</button>
+              <div class="new-actions-row">
+                <button type="button" class="btn-dismiss-add-item" data-cancel-cat="${category}">Cancelar</button>
+                <button type="button" class="btn-confirm-add-item" data-save-cat="${category}">Adicionar</button>
               </div>
             </div>
           </div>
         `;
 
-        const listEl = sectionEl.querySelector(`#list_${category}`);
+        const flowEl = blockEl.querySelector(`#flow_${category}`);
 
-        filteredItems.forEach(item => {
+        filtered.forEach(item => {
           const qty = state.counts[item.id] || 0;
-          const rowEl = document.createElement("div");
-          rowEl.className = `product-row ${qty > 0 ? 'has-count' : ''}`;
-          rowEl.dataset.itemId = item.id;
+          const card = document.createElement("div");
+          card.className = `product-card ${qty > 0 ? 'is-counted' : ''}`;
+          card.dataset.itemId = item.id;
 
-          rowEl.innerHTML = `
-            <div class="product-info">
-              <div class="product-name">${escapeHtml(item.name)}</div>
-              <div class="product-meta">
-                ${item.isCustom ? `<span class="badge-custom">Personalizado</span>` : ''}
-                ${item.isCustom ? `<button class="btn-delete-custom" data-delete-id="${item.id}">remover item</button>` : ''}
-              </div>
+          card.innerHTML = `
+            <div class="product-card-details">
+              <div class="product-title-text">${escapeHtml(item.name)}</div>
+              ${item.isCustom ? `
+                <div class="product-sub-meta">
+                  <span>Avulso</span>
+                  <button class="btn-remove-custom-item" data-del-id="${item.id}">remover</button>
+                </div>
+              ` : ''}
             </div>
-            <div class="quantity-controls">
-              <button type="button" class="btn-qty btn-qty-minus" data-action="minus" data-id="${item.id}" aria-label="Diminuir quantidade">−</button>
-              <input type="number" inputmode="numeric" class="qty-input" data-id="${item.id}" value="${qty}" min="0">
-              <button type="button" class="btn-qty btn-qty-plus" data-action="plus" data-id="${item.id}" aria-label="Aumentar quantidade">+</button>
+            <div class="qty-stepper">
+              <button type="button" class="stepper-btn stepper-btn-minus" data-action="minus" data-id="${item.id}" aria-label="Diminuir">−</button>
+              <input type="number" inputmode="numeric" class="stepper-input" data-id="${item.id}" value="${qty}" min="0">
+              <button type="button" class="stepper-btn stepper-btn-plus" data-action="plus" data-id="${item.id}" aria-label="Aumentar">+</button>
             </div>
           `;
 
-          listEl.appendChild(rowEl);
+          flowEl.appendChild(card);
         });
 
-        container.appendChild(sectionEl);
+        container.appendChild(blockEl);
       });
 
-      // Estado vazio quando busca não retorna nada
-      const emptyState = document.getElementById("searchEmptyState");
-      if (totalVisibleProducts === 0) {
-        emptyState.style.display = "block";
-      } else {
-        emptyState.style.display = "none";
-      }
+      const empty = document.getElementById("searchEmptyState");
+      empty.style.display = totalVisible === 0 ? "block" : "none";
     }
 
     // ==========================================================================
-    // ATUALIZAÇÃO DE BADGES E TOTALIZADORES
+    // TOTALIZADORES E CONTADORES DE ESTAÇÃO
     // ==========================================================================
     function updateBadgesAndTotals() {
       let totalUnits = 0;
       let totalCountedDistinct = 0;
 
       const categories = ["Geladeira", "Freezer", "Prateleira"];
-      const catCounts = {
+      const counts = {
         "Geladeira": { counted: 0, total: 0 },
         "Freezer": { counted: 0, total: 0 },
         "Prateleira": { counted: 0, total: 0 }
@@ -1715,41 +1443,41 @@
         const baseItems = CATALOG_PRESET[cat].map(n => getItemId(cat, n));
         const customItems = state.customItems.filter(i => i.category === cat).map(i => i.id);
         const allIds = [...baseItems, ...customItems];
-
-        catCounts[cat].total = allIds.length;
+        counts[cat].total = allIds.length;
 
         allIds.forEach(id => {
-          const qty = state.counts[id] || 0;
-          if (qty > 0) {
-            catCounts[cat].counted++;
+          const q = state.counts[id] || 0;
+          if (q > 0) {
+            counts[cat].counted++;
             totalCountedDistinct++;
-            totalUnits += qty;
+            totalUnits += q;
           }
         });
       });
 
-      // Atualiza Badges das Abas
-      document.getElementById("badgeAll").textContent = Object.keys(state.counts).filter(k => state.counts[k] > 0).length;
-      document.getElementById("badgeGeladeira").textContent = `${catCounts["Geladeira"].counted}/${catCounts["Geladeira"].total}`;
-      document.getElementById("badgeFreezer").textContent = `${catCounts["Freezer"].counted}/${catCounts["Freezer"].total}`;
-      document.getElementById("badgePrateleira").textContent = `${catCounts["Prateleira"].counted}/${catCounts["Prateleira"].total}`;
+      // Badges
+      document.getElementById("badgeGeladeira").textContent = `${counts["Geladeira"].counted}/${counts["Geladeira"].total}`;
+      document.getElementById("badgeFreezer").textContent = `${counts["Freezer"].counted}/${counts["Freezer"].total}`;
+      document.getElementById("badgePrateleira").textContent = `${counts["Prateleira"].counted}/${counts["Prateleira"].total}`;
       document.getElementById("badgeCountedOnly").textContent = totalCountedDistinct;
+      document.getElementById("badgeAll").textContent = totalCountedDistinct;
 
-      // Atualiza Estatísticas do Topo
-      document.getElementById("topCountedTypes").textContent = totalCountedDistinct;
-      document.getElementById("topTotalUnits").textContent = `${totalUnits} un`;
+      // Resumo limpo superior
+      document.getElementById("stripCountedStats").textContent = `${totalCountedDistinct} tipos`;
+      document.getElementById("stripUnitsStats").textContent = `${totalUnits} un`;
 
-      // Atualiza Barra Flutuante Inferior
-      document.getElementById("bottomCountedBadge").textContent = `${totalCountedDistinct} itens contados`;
-      document.getElementById("bottomUnitsSummary").textContent = `${totalUnits} unidades no total`;
+      // Barra inferior
+      document.getElementById("bottomSummaryTitle").textContent = `${totalCountedDistinct} itens contados`;
+      document.getElementById("bottomSummaryUnits").textContent = `${totalUnits} unidades totais`;
+
+      // Sincroniza visual das abas ativas
+      document.querySelectorAll(".nav-pill").forEach(p => {
+        p.classList.toggle("active", p.dataset.category === state.activeCategory);
+      });
     }
 
-    // ==========================================================================
-    // MANIPULAÇÃO DE QUANTIDADES
-    // ==========================================================================
     function updateItemQuantity(itemId, newQty) {
       newQty = Math.max(0, parseInt(newQty, 10) || 0);
-
       if (newQty === 0) {
         delete state.counts[itemId];
       } else {
@@ -1758,96 +1486,55 @@
 
       saveCountsToStorage();
 
-      // Atualiza visual da linha diretamente para performance ágil
-      const row = document.querySelector(`.product-row[data-item-id="${itemId}"]`);
-      if (row) {
-        const input = row.querySelector(".qty-input");
-        if (input && input.value != newQty) {
-          input.value = newQty;
-        }
-        if (newQty > 0) {
-          row.classList.add("has-count");
-        } else {
-          row.classList.remove("has-count");
-        }
+      const card = document.querySelector(`.product-card[data-item-id="${itemId}"]`);
+      if (card) {
+        const input = card.querySelector(".stepper-input");
+        if (input && input.value != newQty) input.value = newQty;
+        card.classList.toggle("is-counted", newQty > 0);
       }
 
       updateBadgesAndTotals();
 
-      // Atualiza contador no cabeçalho da categoria
-      const catSection = row ? row.closest(".category-section") : null;
-      if (catSection) {
-        const catName = catSection.dataset.category;
-        const allRows = catSection.querySelectorAll(".product-row");
-        let activeCount = 0;
-        allRows.forEach(r => {
-          const id = r.dataset.itemId;
-          if ((state.counts[id] || 0) > 0) activeCount++;
-        });
-        const counterEl = catSection.querySelector(".category-counter");
-        if (counterEl) {
-          counterEl.textContent = `${activeCount}/${allRows.length} contados`;
-          if (activeCount > 0) {
-            counterEl.classList.add("active");
-          } else {
-            counterEl.classList.remove("active");
-          }
-        }
+      // Se estiver na aba "apenas contados" e o item foi zerado, re-renderiza para sumir limpo
+      if (state.activeCategory === "counted_only" && newQty === 0) {
+        renderUI();
       }
     }
 
     function incrementQuantity(itemId, delta) {
-      const current = state.counts[itemId] || 0;
-      updateItemQuantity(itemId, current + delta);
+      const cur = state.counts[itemId] || 0;
+      updateItemQuantity(itemId, cur + delta);
     }
 
-    // ==========================================================================
-    // ADIÇÃO E REMOÇÃO DE ITENS PERSONALIZADOS
-    // ==========================================================================
     function addCustomItem(category, name, quantity) {
       const cleanName = name.trim();
-      if (!cleanName) {
-        showToast("Nome inválido", "Por favor, digite o nome do produto.", "toast-error");
-        return;
-      }
+      if (!cleanName) return;
 
-      const id = "custom_" + Date.now() + "_" + Math.random().toString(36).substr(2, 5);
-      const newItem = {
-        id: id,
-        name: cleanName,
-        category: category,
-        isCustom: true
-      };
-
-      state.customItems.push(newItem);
+      const id = "c_" + Date.now();
+      state.customItems.push({ id, name: cleanName, category, isCustom: true });
       saveCustomItemsToStorage();
 
-      const initialQty = Math.max(1, parseInt(quantity, 10) || 1);
-      state.counts[id] = initialQty;
+      const qty = Math.max(1, parseInt(quantity, 10) || 1);
+      state.counts[id] = qty;
       saveCountsToStorage();
 
-      showToast("Produto adicionado!", `"${cleanName}" foi incluído em ${category}.`, "toast-success");
+      showToast(`Adicionado: ${cleanName}`, "t-success");
       renderUI();
       updateBadgesAndTotals();
     }
 
     function removeCustomItem(itemId) {
-      const item = state.customItems.find(i => i.id === itemId);
-      const itemName = item ? item.name : "Item";
-
-      if (confirm(`Deseja remover o produto "${itemName}" da lista?`)) {
-        state.customItems = state.customItems.filter(i => i.id !== itemId);
-        delete state.counts[itemId];
-        saveCustomItemsToStorage();
-        saveCountsToStorage();
-        showToast("Produto removido", `"${itemName}" foi excluído.`, "toast-info");
-        renderUI();
-        updateBadgesAndTotals();
-      }
+      state.customItems = state.customItems.filter(i => i.id !== itemId);
+      delete state.counts[itemId];
+      saveCustomItemsToStorage();
+      saveCountsToStorage();
+      showToast("Item removido", "t-info");
+      renderUI();
+      updateBadgesAndTotals();
     }
 
     // ==========================================================================
-    // GERAÇÃO DOS RELATÓRIOS (WHATSAPP & OBSIDIAN MARKDOWN)
+    // MENSAGENS E RELATÓRIOS
     // ==========================================================================
     function getActiveItemsGrouped() {
       const categories = ["Geladeira", "Freezer", "Prateleira"];
@@ -1856,576 +1543,397 @@
       let totalTypes = 0;
 
       categories.forEach(cat => {
-        // Obter todos itens
-        const baseItems = CATALOG_PRESET[cat].map(name => ({
-          id: getItemId(cat, name),
-          name: name,
-          category: cat
-        }));
+        const baseItems = CATALOG_PRESET[cat].map(n => ({ id: getItemId(cat, n), name: n }));
+        const customCat = state.customItems.filter(i => i.category === cat);
+        const all = [...baseItems, ...customCat];
+        const counted = [];
 
-        const customCatItems = state.customItems
-          .filter(item => item.category === cat)
-          .map(item => ({
-            id: item.id,
-            name: item.name,
-            category: cat
-          }));
-
-        const allItems = [...baseItems, ...customCatItems];
-        const countedItems = [];
-
-        allItems.forEach(item => {
-          const qty = state.counts[item.id] || 0;
-          if (qty > 0) {
-            countedItems.push({ name: item.name, qty: qty });
-            totalUnits += qty;
+        all.forEach(item => {
+          const q = state.counts[item.id] || 0;
+          if (q > 0) {
+            counted.push({ name: item.name, qty: q });
+            totalUnits += q;
             totalTypes++;
           }
         });
 
-        if (countedItems.length > 0) {
-          grouped[cat] = countedItems;
-        }
+        if (counted.length > 0) grouped[cat] = counted;
       });
 
       return { grouped, totalUnits, totalTypes };
     }
 
-    function getFormattedTimestamp() {
-      const now = new Date();
+    function getTimestamp() {
+      const d = new Date();
       const pad = n => String(n).padStart(2, '0');
-      const dateStr = `${pad(now.getDate())}/${pad(now.getMonth() + 1)}/${now.getFullYear()}`;
-      const timeStr = `${pad(now.getHours())}:${pad(now.getMinutes())}`;
-      const fileTimestamp = `${now.getFullYear()}-${pad(now.getMonth() + 1)}-${pad(now.getDate())} ${pad(now.getHours())}-${pad(now.getMinutes())}`;
-      return { dateStr, timeStr, fileTimestamp };
+      const dateStr = `${pad(d.getDate())}/${pad(d.getMonth() + 1)}/${d.getFullYear()}`;
+      const timeStr = `${pad(d.getHours())}:${pad(d.getMinutes())}`;
+      const fileStamp = `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())} ${pad(d.getHours())}-${pad(d.getMinutes())}`;
+      return { dateStr, timeStr, fileStamp };
     }
 
-    // Mensagem formatada para o WhatsApp
     function generateWhatsAppMessage() {
       const { grouped, totalUnits, totalTypes } = getActiveItemsGrouped();
-      const { dateStr, timeStr } = getFormattedTimestamp();
+      const { dateStr, timeStr } = getTimestamp();
 
       if (totalTypes === 0) {
-        return `⚠️ *CONTAGEM DE ESTOQUE - VAZIA*\n🗓 *Data:* ${dateStr} às ${timeStr}\n\nNenhum produto foi contado com quantidade maior que zero.`;
+        return `⚠️ *CONTAGEM DE ESTOQUE*\n🗓 ${dateStr} às ${timeStr}\n\nNenhum produto foi lançado com quantidade superior a zero.`;
       }
 
       let msg = `📋 *RELATÓRIO DE CONTAGEM DE ESTOQUE*\n`;
       msg += `🗓 *Data:* ${dateStr} às ${timeStr}\n`;
       msg += `━━━━━━━━━━━━━━━━━━━━━\n\n`;
 
-      const catEmoji = {
-        "Geladeira": "❄️",
-        "Freezer": "🧊",
-        "Prateleira": "📦"
-      };
+      const emoji = { "Geladeira": "❄️", "Freezer": "🧊", "Prateleira": "📦" };
 
       for (const [cat, items] of Object.entries(grouped)) {
-        msg += `${catEmoji[cat] || "📁"} *${cat.toUpperCase()}*\n`;
-        items.forEach(item => {
-          msg += `• ${item.name}: *${item.qty} un*\n`;
+        msg += `${emoji[cat] || "📁"} *${cat.toUpperCase()}*\n`;
+        items.forEach(i => {
+          msg += `• ${i.name}: *${i.qty} un*\n`;
         });
         msg += `\n`;
       }
 
       msg += `━━━━━━━━━━━━━━━━━━━━━\n`;
-      msg += `📊 *TOTAL GERAL:*\n`;
-      msg += `• Tipos de Itens Contados: *${totalTypes}*\n`;
-      msg += `• Volume Total: *${totalUnits} unidades*\n`;
+      msg += `📊 *RESUMO GERAL:*\n`;
+      msg += `• Itens Contados: *${totalTypes} tipos*\n`;
+      msg += `• Total de Unidades: *${totalUnits} un*\n`;
       msg += `━━━━━━━━━━━━━━━━━━━━━\n`;
-      msg += `✅ _Contagem conferida e registrada via sistema móvel._`;
+      msg += `✅ _Enviado via sistema móvel de contagem._`;
 
       return msg;
     }
 
-    // Nota formatada em Markdown para o Obsidian Local REST API
     function generateObsidianMarkdown() {
       const { grouped, totalUnits, totalTypes } = getActiveItemsGrouped();
-      const { dateStr, timeStr, fileTimestamp } = getFormattedTimestamp();
+      const { dateStr, timeStr } = getTimestamp();
 
       let md = `---\n`;
-      md += `tags:\n  - estoque\n  - contagem-produtos\n`;
-      md += `data_contagem: ${dateStr}\n`;
-      md += `hora_contagem: ${timeStr}\n`;
-      md += `total_tipos_contados: ${totalTypes}\n`;
-      md += `volume_total_unidades: ${totalUnits}\n`;
+      md += `tags:\n  - estoque\n  - contagem\n`;
+      md += `data: ${dateStr}\n`;
+      md += `hora: ${timeStr}\n`;
+      md += `total_itens: ${totalTypes}\n`;
+      md += `total_unidades: ${totalUnits}\n`;
       md += `---\n\n`;
-
-      md += `# 📋 Relatório de Contagem de Estoque\n\n`;
-      md += `> **Data e Hora:** ${dateStr} às ${timeStr}  \n`;
-      md += `> **Total de Produtos Contados:** ${totalTypes} tipos | **Volume Total:** ${totalUnits} unidades\n\n`;
-
-      if (totalTypes === 0) {
-        md += `*Nenhum item com quantidade superior a 0 foi registrado nesta sessão.*\n`;
-        return md;
-      }
+      md += `# 📋 Contagem de Estoque - ${dateStr}\n\n`;
+      md += `> **Horário:** ${timeStr} | **Produtos:** ${totalTypes} | **Volume Total:** ${totalUnits} un\n\n`;
 
       for (const [cat, items] of Object.entries(grouped)) {
         md += `## 🔹 ${cat}\n\n`;
-        md += `| Produto | Quantidade |\n`;
-        md += `| :--- | :---: |\n`;
-        items.forEach(item => {
-          md += `| ${item.name} | **${item.qty} un** |\n`;
+        md += `| Produto | Quantidade |\n| :--- | :---: |\n`;
+        items.forEach(i => {
+          md += `| ${i.name} | **${i.qty} un** |\n`;
         });
         md += `\n`;
       }
-
-      md += `---\n`;
-      md += `*Relatório gerado automaticamente pelo Sistema Web de Contagem de Estoque.*\n`;
 
       return md;
     }
 
     // ==========================================================================
-    // ENVIO PARA OBSIDIAN (LOCAL REST API VIA FETCH PUT)
+    // ENVIO OBSIDIAN & WHATSAPP
     // ==========================================================================
-    async function sendToObsidianLocalRestApi(markdownContent) {
-      const config = state.obsidianConfig;
-      const { fileTimestamp } = getFormattedTimestamp();
+    async function sendToObsidian(mdContent) {
+      const cfg = state.obsidianConfig;
+      const { fileStamp } = getTimestamp();
 
-      // Normaliza pasta
-      let folder = (config.folder || "Contagens/").trim();
+      let folder = (cfg.folder || "Contagens/").trim();
       if (!folder.endsWith("/")) folder += "/";
       if (folder.startsWith("/")) folder = folder.substring(1);
 
-      const fileName = `Contagem - ${fileTimestamp}.md`;
-      const baseUrl = (config.url || "https://127.0.0.1:27124").trim().replace(/\/$/, "");
-      
-      // Endpoint REST API do Obsidian: PUT /vault/{path}
-      // Trata a barra no caminho da pasta para compatibilidade
-      const targetPath = encodeURIComponent(folder + fileName).replace(/%2F/g, '/');
-      const endpoint = `${baseUrl}/vault/${targetPath}`;
+      const fileName = `Contagem - ${fileStamp}.md`;
+      const base = (cfg.url || "https://127.0.0.1:27124").trim().replace(/\/$/, "");
+      const endpoint = `${base}/vault/${encodeURIComponent(folder + fileName).replace(/%2F/g, '/')}`;
 
-      console.log(`[Obsidian API] Enviando nota para: ${endpoint}`);
-
-      const headers = {
-        "Content-Type": "text/markdown; charset=utf-8"
-      };
-
-      if (config.apiKey && config.apiKey.trim() !== "") {
-        headers["Authorization"] = `Bearer ${config.apiKey.trim()}`;
+      const headers = { "Content-Type": "text/markdown; charset=utf-8" };
+      if (cfg.apiKey && cfg.apiKey.trim()) {
+        headers["Authorization"] = `Bearer ${cfg.apiKey.trim()}`;
       }
 
       try {
-        const response = await fetch(endpoint, {
+        const res = await fetch(endpoint, {
           method: "PUT",
           headers: headers,
-          body: markdownContent,
+          body: mdContent,
           mode: "cors"
         });
 
-        if (response.ok || response.status === 200 || response.status === 204 || response.status === 201) {
-          return { success: true, message: `Nota "${fileName}" salva com sucesso em "${folder}".` };
-        } else {
-          const status = response.status;
-          let detail = "";
-          try {
-            const errData = await response.json();
-            detail = errData.message || "";
-          } catch(e) {}
-
-          if (status === 401 || status === 403) {
-            return {
-              success: false,
-              message: `Erro de autorização (Status ${status}). Verifique se a Chave de API (Bearer Token) está correta nas Configurações.`
-            };
-          }
-
-          return {
-            success: false,
-            message: `O servidor do Obsidian retornou erro HTTP ${status}. ${detail}`
-          };
+        if (res.ok || res.status === 200 || res.status === 204 || res.status === 201) {
+          return { success: true, msg: `Salvo no Obsidian em "${folder}".` };
         }
+        return { success: false, msg: `Obsidian retornou status ${res.status}.` };
       } catch (err) {
-        console.error("[Obsidian API Error]", err);
-        return {
-          success: false,
-          isConnectionError: true,
-          message: `Não foi possível conectar ao Obsidian (${baseUrl}). Verifique se o Obsidian está aberto, se o plugin Local REST API está ativo e se você autorizou o certificado autoassinado HTTPS no navegador.`
-        };
+        return { success: false, msg: "Não foi possível conectar ao Obsidian (Verifique o aplicativo e certificado)." };
       }
     }
 
-    // ==========================================================================
-    // FINALIZAÇÃO COMPLETA: OBSIDIAN + WHATSAPP
-    // ==========================================================================
-    async function executeFinalizationFlow() {
+    async function handleFinalize() {
       const { totalTypes } = getActiveItemsGrouped();
       if (totalTypes === 0) {
-        showToast("Contagem vazia", "Adicione quantidade em pelo menos 1 produto antes de finalizar.", "toast-error");
+        showToast("Nenhum item contado ainda.", "t-error");
         return;
       }
 
       const syncBox = document.getElementById("syncStatusBox");
-      const obsidianBadge = document.getElementById("syncObsidianBadge");
-      const whatsappBadge = document.getElementById("syncWhatsappBadge");
-      const detailMsg = document.getElementById("syncObsidianDetail");
+      const obBadge = document.getElementById("syncObsidianBadge");
+      const waBadge = document.getElementById("syncWhatsappBadge");
+      const obDetail = document.getElementById("syncObsidianDetail");
 
       syncBox.style.display = "block";
-      obsidianBadge.className = "sync-step-badge sync-pending";
-      obsidianBadge.textContent = "Salvando...";
-      whatsappBadge.className = "sync-step-badge sync-pending";
-      whatsappBadge.textContent = "Preparando...";
-      detailMsg.textContent = "";
+      obBadge.className = "sync-tag tag-wait";
+      obBadge.textContent = "Salvando...";
+      waBadge.className = "sync-tag tag-wait";
+      waBadge.textContent = "Preparando...";
+      obDetail.textContent = "";
 
-      const mdContent = generateObsidianMarkdown();
-      const waMessage = generateWhatsAppMessage();
+      const md = generateObsidianMarkdown();
+      const wa = generateWhatsAppMessage();
 
-      // 1. Tenta salvar no Obsidian via Local REST API
-      const obsidianResult = await sendToObsidianLocalRestApi(mdContent);
-
-      if (obsidianResult.success) {
-        obsidianBadge.className = "sync-step-badge sync-success";
-        obsidianBadge.textContent = "Salvo com Sucesso!";
-        showToast("Obsidian Sincronizado!", obsidianResult.message, "toast-obsidian");
+      // 1. Obsidian PUT
+      const obRes = await sendToObsidian(md);
+      if (obRes.success) {
+        obBadge.className = "sync-tag tag-ok";
+        obBadge.textContent = "Salvo!";
+        showToast("Obsidian sincronizado!", "t-obsidian");
       } else {
-        obsidianBadge.className = "sync-step-badge sync-failed";
-        obsidianBadge.textContent = "Falha ao Salvar";
-        detailMsg.textContent = obsidianResult.message;
-        
-        // Exibe aviso não bloqueante para o operador
-        showToast(
-          "Obsidian Offline / Erro",
-          "Não foi possível salvar no Obsidian. O envio para o WhatsApp continuará normalmente.",
-          "toast-error"
-        );
+        obBadge.className = "sync-tag tag-fail";
+        obBadge.textContent = "Falhou";
+        obDetail.textContent = obRes.msg;
+        showToast("Obsidian offline. Abrindo WhatsApp...", "t-info");
       }
 
-      // 2. Prossegue para o WhatsApp (Sem travar o fluxo)
-      whatsappBadge.className = "sync-step-badge sync-success";
-      whatsappBadge.textContent = "Abrindo WhatsApp...";
+      // 2. WhatsApp
+      waBadge.className = "sync-tag tag-ok";
+      waBadge.textContent = "Abrindo...";
 
-      const encodedText = encodeURIComponent(waMessage);
-      const whatsappUrl = `https://wa.me/${WHATSAPP_FIXED_PHONE}?text=${encodedText}`;
+      const url = `https://wa.me/${WHATSAPP_FIXED_PHONE}?text=${encodeURIComponent(wa)}`;
 
-      showToast("Abrindo WhatsApp...", "Direcionando para o número fixo +55 11 98278-5102.", "toast-success");
-
-      // Abre o WhatsApp em nova janela / app nativo
       setTimeout(() => {
-        window.open(whatsappUrl, "_blank");
-      }, 700);
+        window.open(url, "_blank");
+      }, 600);
     }
 
-    // ==========================================================================
-    // SISTEMA DE TOASTS
-    // ==========================================================================
-    function showToast(title, message, type = "toast-info", duration = 4500) {
+    function showToast(text, type = "t-info") {
       const container = document.getElementById("toastContainer");
-      const toast = document.createElement("div");
-      toast.className = `toast ${type}`;
+      const el = document.createElement("div");
+      el.className = `toast-card ${type}`;
 
       let icon = "ℹ️";
-      if (type === "toast-success") icon = "✅";
-      if (type === "toast-error") icon = "⚠️";
-      if (type === "toast-obsidian") icon = "🟣";
+      if (type === "t-success") icon = "✅";
+      if (type === "t-error") icon = "⚠️";
+      if (type === "t-obsidian") icon = "🟣";
 
-      toast.innerHTML = `
-        <span class="toast-icon">${icon}</span>
-        <div class="toast-content">
-          <div class="toast-title">${escapeHtml(title)}</div>
-          <div class="toast-message">${escapeHtml(message)}</div>
-        </div>
-        <button class="toast-close">&times;</button>
-      `;
-
-      toast.querySelector(".toast-close").addEventListener("click", () => {
-        toast.remove();
-      });
-
-      container.appendChild(toast);
+      el.innerHTML = `<span>${icon}</span><span class="toast-text">${escapeHtml(text)}</span>`;
+      container.appendChild(el);
 
       setTimeout(() => {
-        if (toast.parentNode) {
-          toast.style.opacity = "0";
-          toast.style.transform = "translateY(-10px)";
-          toast.style.transition = "all 0.25s ease";
-          setTimeout(() => toast.remove(), 250);
-        }
-      }, duration);
+        el.style.opacity = "0";
+        el.style.transition = "opacity 0.2s";
+        setTimeout(() => el.remove(), 200);
+      }, 3500);
     }
 
     function escapeHtml(str) {
       if (!str) return "";
-      return String(str)
-        .replace(/&/g, "&amp;")
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;")
-        .replace(/"/g, "&quot;")
-        .replace(/'/g, "&#039;");
+      return String(str).replace(/[&<>"']/g, m => ({
+        '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;'
+      }[m]));
     }
 
     // ==========================================================================
-    // GERENCIAMENTO DE EVENTOS DA INTERFACE
+    // EVENTOS E INTERAÇÃO
     // ==========================================================================
     function setupEventListeners() {
-      // 1. Delegação de eventos para a lista de produtos (Cliques nos botões + e -)
       const container = document.getElementById("categoriesContainer");
 
       container.addEventListener("click", (e) => {
-        // Botões de + e -
-        const btnQty = e.target.closest(".btn-qty");
-        if (btnQty) {
-          const id = btnQty.dataset.id;
-          const action = btnQty.dataset.action;
-          if (action === "plus") incrementQuantity(id, 1);
-          if (action === "minus") incrementQuantity(id, -1);
+        const btn = e.target.closest(".stepper-btn");
+        if (btn) {
+          const id = btn.dataset.id;
+          if (btn.dataset.action === "plus") incrementQuantity(id, 1);
+          if (btn.dataset.action === "minus") incrementQuantity(id, -1);
           return;
         }
 
-        // Botão de deletar item customizado
-        const btnDel = e.target.closest(".btn-delete-custom");
-        if (btnDel) {
-          const id = btnDel.dataset.deleteId;
-          removeCustomItem(id);
+        const del = e.target.closest(".btn-remove-custom-item");
+        if (del) {
+          removeCustomItem(del.dataset.delId);
           return;
         }
 
-        // Toggle formulário de adicionar novo produto
-        const btnToggle = e.target.closest(".add-custom-toggle-btn");
-        if (btnToggle) {
-          const cat = btnToggle.dataset.toggleCat;
-          const form = document.getElementById(`customForm_${cat}`);
-          if (form) {
-            form.classList.toggle("open");
-            if (form.classList.contains("open")) {
-              const input = form.querySelector(".custom-name-input");
-              if (input) input.focus();
+        const toggleBtn = e.target.closest(".btn-toggle-new-product");
+        if (toggleBtn) {
+          const cat = toggleBtn.dataset.toggleCat;
+          const f = document.getElementById(`newForm_${cat}`);
+          if (f) {
+            f.classList.toggle("open");
+            if (f.classList.contains("open")) {
+              const inp = f.querySelector(".new-name-field");
+              if (inp) inp.focus();
             }
           }
           return;
         }
 
-        // Cancelar formulário de produto novo
-        const btnCancel = e.target.closest(".btn-cancel-custom");
-        if (btnCancel && btnCancel.dataset.cancelCat) {
-          const cat = btnCancel.dataset.cancelCat;
-          const form = document.getElementById(`customForm_${cat}`);
-          if (form) form.classList.remove("open");
+        const cancelBtn = e.target.closest("[data-cancel-cat]");
+        if (cancelBtn) {
+          const cat = cancelBtn.dataset.cancelCat;
+          const f = document.getElementById(`newForm_${cat}`);
+          if (f) f.classList.remove("open");
           return;
         }
 
-        // Salvar formulário de produto novo
-        const btnSave = e.target.closest(".btn-save-custom");
-        if (btnSave && btnSave.dataset.saveCat) {
-          const cat = btnSave.dataset.saveCat;
-          const nameInput = document.getElementById(`customName_${cat}`);
-          const qtyInput = document.getElementById(`customQty_${cat}`);
-          if (nameInput && qtyInput) {
-            addCustomItem(cat, nameInput.value, qtyInput.value);
-            nameInput.value = "";
-            qtyInput.value = "1";
+        const saveBtn = e.target.closest("[data-save-cat]");
+        if (saveBtn) {
+          const cat = saveBtn.dataset.saveCat;
+          const nameInp = document.getElementById(`newName_${cat}`);
+          const qtyInp = document.getElementById(`newQty_${cat}`);
+          if (nameInp && qtyInp) {
+            addCustomItem(cat, nameInp.value, qtyInp.value);
+            nameInp.value = "";
+            qtyInp.value = "1";
           }
           return;
         }
       });
 
-      // Alteração direta nos inputs numéricos
       container.addEventListener("change", (e) => {
-        if (e.target.classList.contains("qty-input")) {
-          const id = e.target.dataset.id;
-          updateItemQuantity(id, e.target.value);
+        if (e.target.classList.contains("stepper-input")) {
+          updateItemQuantity(e.target.dataset.id, e.target.value);
         }
       });
 
-      // Previne comportamento indesejado ao pressionar Enter nos inputs
       container.addEventListener("keydown", (e) => {
-        if (e.target.classList.contains("qty-input") && e.key === "Enter") {
+        if (e.target.classList.contains("stepper-input") && e.key === "Enter") {
           e.target.blur();
         }
       });
 
-      // 2. Busca e Filtro
-      const searchInput = document.getElementById("searchInput");
-      const searchClear = document.getElementById("searchClear");
-
-      searchInput.addEventListener("input", (e) => {
+      // Busca
+      const search = document.getElementById("searchInput");
+      const clear = document.getElementById("searchClear");
+      search.addEventListener("input", (e) => {
         state.searchQuery = e.target.value;
-        if (state.searchQuery.length > 0) {
-          searchClear.classList.add("visible");
-        } else {
-          searchClear.classList.remove("visible");
-        }
+        clear.classList.toggle("visible", state.searchQuery.length > 0);
         renderUI();
       });
-
-      searchClear.addEventListener("click", () => {
-        searchInput.value = "";
+      clear.addEventListener("click", () => {
+        search.value = "";
         state.searchQuery = "";
-        searchClear.classList.remove("visible");
+        clear.classList.remove("visible");
         renderUI();
-        searchInput.focus();
+        search.focus();
       });
 
-      // 3. Abas de Categoria
-      const categoryTabs = document.getElementById("categoryTabs");
-      categoryTabs.addEventListener("click", (e) => {
-        const pill = e.target.closest(".tab-pill");
+      // Abas de Categoria
+      const tabs = document.getElementById("categoryTabs");
+      tabs.addEventListener("click", (e) => {
+        const pill = e.target.closest(".nav-pill");
         if (!pill) return;
-
-        categoryTabs.querySelectorAll(".tab-pill").forEach(p => p.classList.remove("active"));
-        pill.classList.add("active");
-
         state.activeCategory = pill.dataset.category;
+        try { localStorage.setItem(STORAGE_KEYS.ACTIVE_CAT, state.activeCategory); } catch(e){}
+        updateBadgesAndTotals();
         renderUI();
       });
 
-      // 4. Botão "Nova Contagem" (Zerar)
-      const btnResetAll = document.getElementById("btnResetAll");
+      // Zerar
       const modalReset = document.getElementById("modalResetConfirm");
-      const btnCancelReset = document.getElementById("btnCancelReset");
-      const btnConfirmReset = document.getElementById("btnConfirmReset");
-      const btnCloseReset = document.getElementById("btnCloseResetModal");
-
-      btnResetAll.addEventListener("click", () => {
-        modalReset.classList.add("open");
-      });
-
-      const closeResetModal = () => modalReset.classList.remove("open");
-      btnCancelReset.addEventListener("click", closeResetModal);
-      btnCloseReset.addEventListener("click", closeResetModal);
-
-      btnConfirmReset.addEventListener("click", () => {
+      document.getElementById("btnResetAll").addEventListener("click", () => modalReset.classList.add("open"));
+      document.getElementById("btnCancelReset").addEventListener("click", () => modalReset.classList.remove("open"));
+      document.getElementById("btnCloseResetModal").addEventListener("click", () => modalReset.classList.remove("open"));
+      document.getElementById("btnConfirmReset").addEventListener("click", () => {
         state.counts = {};
         saveCountsToStorage();
-        closeResetModal();
+        modalReset.classList.remove("open");
         renderUI();
         updateBadgesAndTotals();
-        showToast("Nova Contagem", "Todas as quantidades foram zeradas com sucesso.", "toast-info");
+        showToast("Contagens zeradas", "t-info");
       });
 
-      // 5. Botões de Finalizar & Modal de Revisão
-      const btnOpenReview = document.getElementById("btnOpenReview");
-      const btnFinalizeMain = document.getElementById("btnFinalizeMain");
+      // Revisar e Finalizar
       const modalReview = document.getElementById("modalReview");
-      const btnCloseReview = document.getElementById("btnCloseReviewModal");
-      const btnConfirmFinalize = document.getElementById("btnConfirmFinalize");
-      const btnCopyReport = document.getElementById("btnCopyReport");
-      const reportPreviewText = document.getElementById("reportPreviewText");
-
-      const openReviewModal = () => {
-        reportPreviewText.textContent = generateWhatsAppMessage();
+      const openRev = () => {
+        document.getElementById("reportPreviewText").textContent = generateWhatsAppMessage();
         document.getElementById("syncStatusBox").style.display = "none";
         modalReview.classList.add("open");
       };
+      document.getElementById("btnOpenReview").addEventListener("click", openRev);
+      document.getElementById("btnFinalizeMain").addEventListener("click", openRev);
+      document.getElementById("btnCloseReviewModal").addEventListener("click", () => modalReview.classList.remove("open"));
+      document.getElementById("btnConfirmFinalize").addEventListener("click", handleFinalize);
 
-      btnOpenReview.addEventListener("click", openReviewModal);
-      btnFinalizeMain.addEventListener("click", openReviewModal);
-
-      btnCloseReview.addEventListener("click", () => {
-        modalReview.classList.remove("open");
-      });
-
-      btnConfirmFinalize.addEventListener("click", () => {
-        executeFinalizationFlow();
-      });
-
-      btnCopyReport.addEventListener("click", () => {
-        const text = generateWhatsAppMessage();
-        navigator.clipboard.writeText(text).then(() => {
-          showToast("Copiado!", "Relatório copiado para a área de transferência.", "toast-success");
-        }).catch(() => {
-          showToast("Erro ao copiar", "Não foi possível copiar o relatório.", "toast-error");
+      document.getElementById("btnCopyReport").addEventListener("click", () => {
+        navigator.clipboard.writeText(generateWhatsAppMessage()).then(() => {
+          showToast("Copiado para a área de transferência!", "t-success");
         });
       });
 
-      // 6. Modal de Configurações do Obsidian
-      const btnOpenSettings = document.getElementById("btnOpenSettings");
-      const modalSettings = document.getElementById("modalSettings");
-      const btnCloseSettings = document.getElementById("btnCloseSettingsModal");
-      const btnCancelSettings = document.getElementById("btnCancelSettings");
-      const btnSaveSettings = document.getElementById("btnSaveSettings");
-      const btnToggleApiKey = document.getElementById("btnToggleApiKey");
-      const apiKeyInput = document.getElementById("obsidianApiKey");
-      const btnTestObsidian = document.getElementById("btnTestObsidian");
-      const testConnStatus = document.getElementById("testConnStatus");
-      const linkOpenObsidian = document.getElementById("linkOpenObsidianUrl");
-
-      btnOpenSettings.addEventListener("click", () => {
+      // Configurações Obsidian
+      const modalSet = document.getElementById("modalSettings");
+      document.getElementById("btnOpenSettings").addEventListener("click", () => {
         document.getElementById("obsidianUrl").value = state.obsidianConfig.url || "https://127.0.0.1:27124";
         document.getElementById("obsidianApiKey").value = state.obsidianConfig.apiKey || "";
         document.getElementById("obsidianFolder").value = state.obsidianConfig.folder || "Contagens/";
-        linkOpenObsidian.href = state.obsidianConfig.url || "https://127.0.0.1:27124";
-        testConnStatus.textContent = "";
-        modalSettings.classList.add("open");
+        document.getElementById("linkOpenObsidianUrl").href = state.obsidianConfig.url || "https://127.0.0.1:27124";
+        document.getElementById("testConnStatus").textContent = "";
+        modalSet.classList.add("open");
       });
+      document.getElementById("btnCloseSettingsModal").addEventListener("click", () => modalSet.classList.remove("open"));
+      document.getElementById("btnCancelSettings").addEventListener("click", () => modalSet.classList.remove("open"));
 
-      const closeSettingsModal = () => modalSettings.classList.remove("open");
-      btnCloseSettings.addEventListener("click", closeSettingsModal);
-      btnCancelSettings.addEventListener("click", closeSettingsModal);
-
-      // Toggle visibilidade da senha da API
-      btnToggleApiKey.addEventListener("click", () => {
-        if (apiKeyInput.type === "password") {
-          apiKeyInput.type = "text";
-          btnToggleApiKey.textContent = "Ocultar";
+      document.getElementById("btnToggleApiKey").addEventListener("click", () => {
+        const inp = document.getElementById("obsidianApiKey");
+        const btn = document.getElementById("btnToggleApiKey");
+        if (inp.type === "password") {
+          inp.type = "text";
+          btn.textContent = "Ocultar";
         } else {
-          apiKeyInput.type = "password";
-          btnToggleApiKey.textContent = "Exibir";
+          inp.type = "password";
+          btn.textContent = "Exibir";
         }
       });
 
-      // Atualiza link de autorização ao digitar URL
-      document.getElementById("obsidianUrl").addEventListener("input", (e) => {
-        linkOpenObsidian.href = e.target.value.trim();
-      });
-
-      // Salvar Configurações do Obsidian
-      btnSaveSettings.addEventListener("click", () => {
+      document.getElementById("btnSaveSettings").addEventListener("click", () => {
         state.obsidianConfig.url = document.getElementById("obsidianUrl").value.trim() || "https://127.0.0.1:27124";
         state.obsidianConfig.apiKey = document.getElementById("obsidianApiKey").value.trim();
         state.obsidianConfig.folder = document.getElementById("obsidianFolder").value.trim() || "Contagens/";
-        
         saveObsidianConfigToStorage();
-        closeSettingsModal();
-        showToast("Configurações Salvas", "Os parâmetros do Obsidian foram atualizados no seu navegador.", "toast-obsidian");
+        modalSet.classList.remove("open");
+        showToast("Configurações salvas", "t-obsidian");
       });
 
-      // Testar Conexão com Obsidian Local REST API
-      btnTestObsidian.addEventListener("click", async () => {
-        testConnStatus.style.color = "var(--color-primary)";
-        testConnStatus.textContent = "Testando conexão...";
-
-        const testUrl = document.getElementById("obsidianUrl").value.trim() || "https://127.0.0.1:27124";
-        const testKey = document.getElementById("obsidianApiKey").value.trim();
-
+      document.getElementById("btnTestObsidian").addEventListener("click", async () => {
+        const st = document.getElementById("testConnStatus");
+        st.style.color = "var(--color-accent)";
+        st.textContent = "Testando...";
+        const url = document.getElementById("obsidianUrl").value.trim() || "https://127.0.0.1:27124";
+        const key = document.getElementById("obsidianApiKey").value.trim();
         const headers = {};
-        if (testKey) headers["Authorization"] = `Bearer ${testKey}`;
+        if (key) headers["Authorization"] = `Bearer ${key}`;
 
         try {
-          // Faz requisição simples para a raiz da API
-          const res = await fetch(`${testUrl.replace(/\/$/, '')}/`, {
-            method: "GET",
-            headers: headers,
-            mode: "cors"
-          });
-
-          if (res.ok || res.status === 200) {
-            testConnStatus.style.color = "var(--color-success)";
-            testConnStatus.textContent = "✅ Conexão estabelecida com sucesso!";
-            showToast("Obsidian Conectado", "Local REST API está respondendo perfeitamente.", "toast-success");
-          } else if (res.status === 401 || res.status === 403) {
-            testConnStatus.style.color = "var(--color-danger)";
-            testConnStatus.textContent = "⚠️ Chave de API inválida ou não autorizada.";
+          const res = await fetch(`${url.replace(/\/$/, '')}/`, { method: "GET", headers, mode: "cors" });
+          if (res.ok) {
+            st.style.color = "var(--color-success)";
+            st.textContent = "✅ Conectado com sucesso!";
           } else {
-            testConnStatus.style.color = "var(--color-danger)";
-            testConnStatus.textContent = `⚠️ Resposta inesperada (Status ${res.status}).`;
+            st.style.color = "var(--color-danger)";
+            st.textContent = `Erro (${res.status})`;
           }
-        } catch (err) {
-          testConnStatus.style.color = "var(--color-danger)";
-          testConnStatus.textContent = "❌ Falha na conexão. Clique no link abaixo para aceitar o certificado SSL.";
+        } catch(e) {
+          st.style.color = "var(--color-danger)";
+          st.textContent = "❌ Falha. Clique no link abaixo para aceitar o certificado SSL.";
         }
       });
 
-      // Fecha modais ao clicar no fundo escuro
-      document.querySelectorAll(".modal-overlay").forEach(overlay => {
-        overlay.addEventListener("click", (e) => {
-          if (e.target === overlay) {
-            overlay.classList.remove("open");
-          }
+      // Fecha modais ao clicar fora
+      document.querySelectorAll(".modal-backdrop").forEach(b => {
+        b.addEventListener("click", (e) => {
+          if (e.target === b) b.classList.remove("open");
         });
       });
     }
 
-    // Inicializa a aplicação assim que o DOM estiver pronto
     document.addEventListener("DOMContentLoaded", initApp);
   </script>
 </body>
