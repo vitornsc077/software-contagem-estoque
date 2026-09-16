@@ -891,6 +891,10 @@
           📦 Prateleira
           <span class="nav-pill-badge" id="badgePrateleira">0</span>
         </button>
+        <button class="nav-pill" data-category="Bar">
+          🍹 Bar
+          <span class="nav-pill-badge" id="badgeBar">0</span>
+        </button>
         <button class="nav-pill" data-category="counted_only">
           ✅ Contados
           <span class="nav-pill-badge highlight" id="badgeCountedOnly">0</span>
@@ -1019,7 +1023,15 @@
       ACTIVE_CAT: "estoque_active_cat_v1"
     };
 
-    // Catálogo de 74 produtos
+    // Catálogo pré-cadastrado (88 produtos)
+    const CATEGORIES = ["Geladeira", "Freezer", "Prateleira", "Bar"];
+    const CATEGORY_ICONS = {
+      "Geladeira": "❄️",
+      "Freezer": "🧊",
+      "Prateleira": "📦",
+      "Bar": "🍹"
+    };
+
     const CATALOG_PRESET = {
       "Geladeira": [
         "Hot miola", "Ketchup", "Mostarda", "Milho", "Cebola branca",
@@ -1045,6 +1057,22 @@
         "Cotubas 0", "Pacote de guaraná", "Pacote de guaraná 0", "Pacote de coca",
         "Groselha", "Molho Chipotle", "Ketchup real", "Pct copo salão",
         "Pct copo cozinha", "Pote de batata"
+      ],
+      "Bar": [
+        "Coca",
+        "Coca LT 0",
+        "Coca KS 0",
+        "Coca KS",
+        "Turbaína",
+        "Guaraná",
+        "Guaraná 0",
+        "Pudim",
+        "Eisenbahn",
+        "Heineken",
+        "Água",
+        "Água com gás",
+        "Garrafa de berry",
+        "Garrafa passion"
       ]
     };
 
@@ -1095,8 +1123,9 @@
       const container = document.getElementById("categoriesContainer");
       container.innerHTML = "";
 
-      const categories = ["Geladeira", "Freezer", "Prateleira"];
-      const query = state.searchQuery.trim().toLowerCase();
+      const categories = CATEGORIES;
+      const normalizeStr = s => (s || "").normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+      const query = normalizeStr(state.searchQuery.trim());
       let totalVisible = 0;
 
       const showAll = query !== "" || state.activeCategory === "all" || state.activeCategory === "counted_only";
@@ -1106,7 +1135,7 @@
           return;
         }
 
-        const baseItems = CATALOG_PRESET[category].map(name => ({
+        const baseItems = (CATALOG_PRESET[category] || []).map(name => ({
           id: getItemId(category, name),
           name: name,
           category: category,
@@ -1125,7 +1154,9 @@
         const allItems = [...baseItems, ...customCatItems];
 
         const filtered = allItems.filter(item => {
-          const matches = query === "" || item.name.toLowerCase().includes(query) || category.toLowerCase().includes(query);
+          const nameNorm = normalizeStr(item.name);
+          const catNorm = normalizeStr(category);
+          const matches = query === "" || nameNorm.includes(query) || catNorm.includes(query);
           const currentQty = state.counts[item.id] || 0;
           if (state.activeCategory === "counted_only") {
             return matches && currentQty > 0;
@@ -1142,7 +1173,7 @@
         const blockEl = document.createElement("div");
         blockEl.className = "category-block";
 
-        const icon = category === "Geladeira" ? "❄️" : (category === "Freezer" ? "🧊" : "📦");
+        const icon = CATEGORY_ICONS[category] || "📁";
         const countedInCat = allItems.filter(i => (state.counts[i.id] || 0) > 0).length;
 
         blockEl.innerHTML = `
@@ -1211,15 +1242,14 @@
       let totalUnits = 0;
       let totalCountedDistinct = 0;
 
-      const categories = ["Geladeira", "Freezer", "Prateleira"];
-      const counts = {
-        "Geladeira": { counted: 0, total: 0 },
-        "Freezer": { counted: 0, total: 0 },
-        "Prateleira": { counted: 0, total: 0 }
-      };
+      const categories = CATEGORIES;
+      const counts = {};
+      categories.forEach(cat => {
+        counts[cat] = { counted: 0, total: 0 };
+      });
 
       categories.forEach(cat => {
-        const baseItems = CATALOG_PRESET[cat].map(n => getItemId(cat, n));
+        const baseItems = (CATALOG_PRESET[cat] || []).map(n => getItemId(cat, n));
         const customItems = state.customItems.filter(i => i.category === cat).map(i => i.id);
         const allIds = [...baseItems, ...customItems];
         counts[cat].total = allIds.length;
@@ -1234,9 +1264,12 @@
         });
       });
 
-      document.getElementById("badgeGeladeira").textContent = `${counts["Geladeira"].counted}/${counts["Geladeira"].total}`;
-      document.getElementById("badgeFreezer").textContent = `${counts["Freezer"].counted}/${counts["Freezer"].total}`;
-      document.getElementById("badgePrateleira").textContent = `${counts["Prateleira"].counted}/${counts["Prateleira"].total}`;
+      categories.forEach(cat => {
+        const badge = document.getElementById(`badge${cat}`);
+        if (badge) {
+          badge.textContent = `${counts[cat].counted}/${counts[cat].total}`;
+        }
+      });
       document.getElementById("badgeCountedOnly").textContent = totalCountedDistinct;
       document.getElementById("badgeAll").textContent = totalCountedDistinct;
 
@@ -1311,13 +1344,13 @@
     // MENSAGEM DO WHATSAPP
     // ==========================================================================
     function getActiveItemsGrouped() {
-      const categories = ["Geladeira", "Freezer", "Prateleira"];
+      const categories = CATEGORIES;
       const grouped = {};
       let totalUnits = 0;
       let totalTypes = 0;
 
       categories.forEach(cat => {
-        const baseItems = CATALOG_PRESET[cat].map(n => ({ id: getItemId(cat, n), name: n }));
+        const baseItems = (CATALOG_PRESET[cat] || []).map(n => ({ id: getItemId(cat, n), name: n }));
         const customCat = state.customItems.filter(i => i.category === cat);
         const all = [...baseItems, ...customCat];
         const counted = [];
@@ -1357,7 +1390,7 @@
       msg += `🗓 *Data:* ${dateStr} às ${timeStr}\n`;
       msg += `━━━━━━━━━━━━━━━━━━━━━\n\n`;
 
-      const emoji = { "Geladeira": "❄️", "Freezer": "🧊", "Prateleira": "📦" };
+      const emoji = CATEGORY_ICONS;
 
       for (const [cat, items] of Object.entries(grouped)) {
         msg += `${emoji[cat] || "📁"} *${cat.toUpperCase()}*\n`;
