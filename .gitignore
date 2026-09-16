@@ -1,0 +1,11 @@
+# Sistema operacional e IDE
+.DS_Store
+Thumbs.db
+desktop.ini
+.vscode/
+.idea/
+
+# Logs e arquivos temporários
+*.log
+temp_*
+scratch/
