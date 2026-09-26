@@ -8,8 +8,9 @@ O sistema integra o envio direto do relatório formatado para o **WhatsApp fixo 
 
 ## 🚀 Demonstração e Acesso Online
 
-- **Aplicação Online (GitHub Pages):** [https://vitornsc077.github.io/software-contagem-estoque/](https://vitornsc077.github.io/software-contagem-estoque/)
-- **Arquivo Local:** Basta abrir o `index.html` em qualquer navegador (celular, tablet ou computador). Não requer instalação de servidor nem dependências externas.
+- **⚡ Aplicação Online (Vercel):** [https://software-contagem-estoque.vercel.app](https://software-contagem-estoque.vercel.app)
+- **📦 Espelho Online (GitHub Pages):** [https://vitornsc077.github.io/software-contagem-estoque/](https://vitornsc077.github.io/software-contagem-estoque/)
+- **📱 Arquivo Local:** Basta abrir o `index.html` em qualquer navegador (celular, tablet ou computador). Não requer instalação de servidor nem dependências externas.
 
 ---
 
