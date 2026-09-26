@@ -847,6 +847,634 @@
       font-weight: 600;
       color: var(--text-main);
     }
+
+    /* ==========================================================================
+       SEGUNDO CÉREBRO (OBSIDIAN) & INDUÇÃO DE AGENTES IA
+       ========================================================================== */
+    :root {
+      --color-obsidian: #7c3aed;
+      --color-obsidian-hover: #6d28d9;
+      --color-obsidian-subtle: #f5f3ff;
+      --color-obsidian-border: #ddd6fe;
+      --color-obsidian-text: #4c1d95;
+      --color-agent-accent: #0284c7;
+      --color-agent-subtle: #f0f9ff;
+      --color-agent-border: #bae6fd;
+      --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    }
+
+    .sub-header-tag {
+      display: block;
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--color-obsidian);
+      letter-spacing: 0.3px;
+    }
+
+    .btn-header-brain {
+      background: linear-gradient(135deg, #7c3aed, #4f46e5);
+      color: #ffffff;
+      border: none;
+      padding: 7px 14px;
+      border-radius: var(--radius-full);
+      font-size: 12px;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      box-shadow: 0 2px 8px rgba(124, 58, 237, 0.25);
+      transition: all 0.18s ease;
+      white-space: nowrap;
+    }
+
+    .btn-header-brain:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(124, 58, 237, 0.35);
+      background: linear-gradient(135deg, #6d28d9, #4338ca);
+    }
+
+    .btn-header-brain:active {
+      transform: translateY(0) scale(0.98);
+    }
+
+    .brain-pulse-dot {
+      width: 8px;
+      height: 8px;
+      background-color: #34d399;
+      border-radius: 50%;
+      box-shadow: 0 0 0 2px rgba(52, 211, 153, 0.4);
+      animation: pulseGreen 1.8s infinite;
+    }
+
+    @keyframes pulseGreen {
+      0% { box-shadow: 0 0 0 0 rgba(52, 211, 153, 0.7); }
+      70% { box-shadow: 0 0 0 6px rgba(52, 211, 153, 0); }
+      100% { box-shadow: 0 0 0 0 rgba(52, 211, 153, 0); }
+    }
+
+    .nav-pill-brain {
+      background-color: var(--color-obsidian-subtle) !important;
+      color: var(--color-obsidian-text) !important;
+      border-color: var(--color-obsidian-border) !important;
+      font-weight: 700;
+    }
+
+    .nav-pill-brain.active {
+      background: linear-gradient(135deg, #7c3aed, #5b21b6) !important;
+      color: #ffffff !important;
+      border-color: transparent !important;
+      box-shadow: 0 2px 8px rgba(124, 58, 237, 0.3) !important;
+    }
+
+    .badge-brain {
+      background-color: rgba(124, 58, 237, 0.15) !important;
+      color: var(--color-obsidian-text) !important;
+    }
+
+    .nav-pill-brain.active .badge-brain {
+      background-color: rgba(255, 255, 255, 0.25) !important;
+      color: #ffffff !important;
+    }
+
+    /* Painel do Segundo Cérebro */
+    .second-brain-panel {
+      display: none;
+      animation: fadeIn 0.2s ease-in-out;
+    }
+
+    .second-brain-panel.active {
+      display: block;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Card Master do Segundo Cérebro */
+    .brain-hero-card {
+      background: linear-gradient(135deg, #ffffff, #faf5ff);
+      border: 1.5px solid var(--color-obsidian-border);
+      border-radius: var(--radius-lg);
+      padding: 16px 18px;
+      margin-bottom: 16px;
+      box-shadow: 0 4px 16px rgba(124, 58, 237, 0.08);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .brain-hero-card::before {
+      content: "";
+      position: absolute;
+      top: -30px;
+      right: -30px;
+      width: 110px;
+      height: 110px;
+      background: radial-gradient(circle, rgba(124, 58, 237, 0.12) 0%, transparent 70%);
+      border-radius: 50%;
+      pointer-events: none;
+    }
+
+    .brain-hero-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 10px;
+      flex-wrap: wrap;
+    }
+
+    .brain-hero-title {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .brain-hero-title h2 {
+      font-size: 16px;
+      font-weight: 800;
+      color: var(--color-obsidian-text);
+      line-height: 1.2;
+    }
+
+    .brain-tag-pill {
+      background-color: #ede9fe;
+      color: #6d28d9;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: var(--radius-full);
+      border: 1px solid #ddd6fe;
+    }
+
+    .brain-vault-path {
+      font-size: 12px;
+      color: var(--text-secondary);
+      font-family: var(--font-mono);
+      background: rgba(255, 255, 255, 0.85);
+      border: 1px dashed var(--color-obsidian-border);
+      padding: 6px 10px;
+      border-radius: var(--radius-sm);
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      overflow-x: auto;
+    }
+
+    .brain-sync-actions {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+      gap: 8px;
+    }
+
+    .btn-brain-sync {
+      background-color: var(--color-obsidian);
+      color: #ffffff;
+      border: none;
+      padding: 9px 12px;
+      border-radius: var(--radius-sm);
+      font-size: 12px;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      box-shadow: 0 2px 6px rgba(124, 58, 237, 0.2);
+      transition: all 0.15s ease;
+    }
+
+    .btn-brain-sync:hover {
+      background-color: var(--color-obsidian-hover);
+      transform: translateY(-1px);
+    }
+
+    .btn-brain-sync:active {
+      transform: scale(0.98);
+    }
+
+    .btn-brain-outline {
+      background-color: #ffffff;
+      color: var(--color-obsidian-text);
+      border: 1.5px solid var(--color-obsidian-border);
+      padding: 9px 12px;
+      border-radius: var(--radius-sm);
+      font-size: 12px;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      transition: all 0.15s ease;
+    }
+
+    .btn-brain-outline:hover {
+      background-color: var(--color-obsidian-subtle);
+      border-color: var(--color-obsidian);
+    }
+
+    .btn-brain-settings {
+      background: transparent;
+      border: 1px solid var(--border-medium);
+      color: var(--text-secondary);
+      border-radius: var(--radius-sm);
+      padding: 4px 8px;
+      font-size: 11px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      font-weight: 600;
+    }
+
+    .btn-brain-settings:hover {
+      background-color: var(--bg-surface-subtle);
+      color: var(--text-main);
+    }
+
+    /* Grid dos 4 Agentes */
+    .agents-section-title {
+      font-size: 14px;
+      font-weight: 800;
+      color: var(--text-main);
+      margin: 18px 0 10px 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .agents-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+      margin-bottom: 16px;
+    }
+
+    @media (max-width: 480px) {
+      .agents-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .agent-card-item {
+      background-color: var(--bg-surface);
+      border: 1.5px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 12px 14px;
+      cursor: pointer;
+      transition: all 0.18s ease;
+      position: relative;
+      text-align: left;
+    }
+
+    .agent-card-item:hover {
+      border-color: var(--color-obsidian-border);
+      box-shadow: 0 3px 10px rgba(124, 58, 237, 0.08);
+      transform: translateY(-1px);
+    }
+
+    .agent-card-item.active {
+      border-color: var(--color-obsidian);
+      background-color: #faf7ff;
+      box-shadow: 0 4px 14px rgba(124, 58, 237, 0.15);
+    }
+
+    .agent-card-item.active::after {
+      content: "✓ Ativo";
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      font-size: 10px;
+      font-weight: 800;
+      color: var(--color-obsidian);
+      background-color: #ede9fe;
+      padding: 2px 6px;
+      border-radius: var(--radius-full);
+    }
+
+    .agent-card-badge {
+      font-size: 22px;
+      margin-bottom: 6px;
+      display: inline-block;
+    }
+
+    .agent-card-title {
+      font-size: 14px;
+      font-weight: 800;
+      color: var(--text-main);
+      margin-bottom: 3px;
+      line-height: 1.3;
+    }
+
+    .agent-card-desc {
+      font-size: 12px;
+      color: var(--text-muted);
+      line-height: 1.35;
+    }
+
+    .agent-card-tags {
+      margin-top: 8px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 4px;
+    }
+
+    .agent-tag {
+      font-size: 10px;
+      font-weight: 700;
+      background-color: #f3f4f6;
+      color: #4b5563;
+      padding: 1px 6px;
+      border-radius: 4px;
+      font-family: var(--font-mono);
+    }
+
+    .agent-card-item.active .agent-tag {
+      background-color: #ede9fe;
+      color: #6d28d9;
+    }
+
+    /* Painel do Agente Selecionado */
+    .agent-active-panel {
+      background-color: var(--bg-surface);
+      border: 1.5px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      padding: 16px;
+      margin-bottom: 18px;
+      box-shadow: var(--shadow-card);
+    }
+
+    .agent-panel-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1.5px solid var(--border-subtle);
+      padding-bottom: 12px;
+      margin-bottom: 14px;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .agent-panel-info {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .agent-panel-icon {
+      font-size: 26px;
+      width: 44px;
+      height: 44px;
+      border-radius: var(--radius-md);
+      background-color: var(--color-obsidian-subtle);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .agent-panel-title h3 {
+      font-size: 15px;
+      font-weight: 800;
+      color: var(--text-main);
+    }
+
+    .agent-panel-title p {
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    /* Heurística / Análise Ao Vivo do Agente */
+    .agent-live-analysis-box {
+      background-color: #fbfbfe;
+      border: 1.5px solid #e0e7ff;
+      border-radius: var(--radius-md);
+      padding: 14px;
+      margin-bottom: 14px;
+    }
+
+    .agent-live-title {
+      font-size: 12px;
+      font-weight: 800;
+      color: #3730a3;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      text-transform: uppercase;
+      letter-spacing: 0.4px;
+    }
+
+    .agent-live-stats-row {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
+      gap: 8px;
+      margin-bottom: 10px;
+    }
+
+    .agent-stat-pill {
+      background-color: #ffffff;
+      border: 1px solid #c7d2fe;
+      border-radius: var(--radius-sm);
+      padding: 8px;
+      text-align: center;
+    }
+
+    .agent-stat-num {
+      font-size: 16px;
+      font-weight: 800;
+      color: #312e81;
+      display: block;
+    }
+
+    .agent-stat-label {
+      font-size: 10px;
+      font-weight: 600;
+      color: #4b5563;
+      display: block;
+      margin-top: 2px;
+    }
+
+    .agent-insights-list {
+      font-size: 13px;
+      color: var(--text-secondary);
+      line-height: 1.5;
+      padding-left: 18px;
+    }
+
+    .agent-insights-list li {
+      margin-bottom: 5px;
+    }
+
+    .agent-insights-list li strong {
+      color: var(--text-main);
+    }
+
+    /* Caixa do Prompt de Indução */
+    .agent-prompt-container {
+      margin-top: 14px;
+    }
+
+    .prompt-box-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 6px;
+    }
+
+    .prompt-box-label {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--text-secondary);
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .btn-copy-prompt {
+      background-color: #ffffff;
+      border: 1.5px solid var(--border-medium);
+      color: var(--text-main);
+      padding: 5px 12px;
+      border-radius: var(--radius-sm);
+      font-size: 12px;
+      font-weight: 700;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      transition: all 0.15s ease;
+    }
+
+    .btn-copy-prompt:hover {
+      background-color: var(--bg-surface-subtle);
+      border-color: var(--color-accent);
+      color: var(--color-accent);
+    }
+
+    .agent-prompt-box {
+      background-color: #1e1e24;
+      color: #e2e8f0;
+      font-family: var(--font-mono);
+      font-size: 12px;
+      line-height: 1.5;
+      padding: 14px;
+      border-radius: var(--radius-md);
+      max-height: 250px;
+      overflow-y: auto;
+      white-space: pre-wrap;
+      border: 1px solid #334155;
+    }
+
+    /* Pré-visualização do Markdown do Obsidian */
+    .obsidian-preview-section {
+      margin-top: 20px;
+      background-color: var(--bg-surface);
+      border: 1.5px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      padding: 16px;
+    }
+
+    .obsidian-preview-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 10px;
+    }
+
+    .obsidian-preview-header h3 {
+      font-size: 14px;
+      font-weight: 800;
+      color: var(--color-obsidian-text);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .obsidian-code-box {
+      background-color: #2e263d;
+      color: #f1f0f7;
+      font-family: var(--font-mono);
+      font-size: 12px;
+      line-height: 1.45;
+      padding: 14px;
+      border-radius: var(--radius-md);
+      max-height: 220px;
+      overflow-y: auto;
+      white-space: pre-wrap;
+      border: 1px solid #4c3a6e;
+    }
+
+    /* Botão Segundo Cérebro na Barra Fixa */
+    .btn-brain-action {
+      background: linear-gradient(135deg, #7c3aed, #5b21b6);
+      color: #ffffff;
+      border: none;
+      border-radius: var(--radius-md);
+      padding: 0 14px;
+      height: var(--touch-size);
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      box-shadow: 0 2px 6px rgba(124, 58, 237, 0.25);
+      transition: all 0.15s ease;
+      white-space: nowrap;
+    }
+
+    .btn-brain-action:hover {
+      background: linear-gradient(135deg, #6d28d9, #4c1d95);
+      transform: translateY(-1px);
+    }
+
+    /* Abas de Navegação dentro do Modal de Revisão */
+    .review-tabs {
+      display: flex;
+      gap: 6px;
+      margin-bottom: 12px;
+      border-bottom: 1.5px solid var(--border-subtle);
+      padding-bottom: 8px;
+    }
+
+    .review-tab-btn {
+      flex: 1;
+      padding: 8px 10px;
+      font-size: 13px;
+      font-weight: 700;
+      border: 1.5px solid transparent;
+      border-radius: var(--radius-sm);
+      background-color: transparent;
+      color: var(--text-muted);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      transition: all 0.15s ease;
+    }
+
+    .review-tab-btn.active {
+      background-color: var(--bg-surface-subtle);
+      color: var(--text-main);
+      border-color: var(--border-medium);
+    }
+
+    .review-tab-btn.active.tab-wa {
+      color: var(--color-whatsapp);
+      border-color: #86efac;
+      background-color: #f0fdf4;
+    }
+
+    .review-tab-btn.active.tab-brain {
+      color: var(--color-obsidian);
+      border-color: var(--color-obsidian-border);
+      background-color: var(--color-obsidian-subtle);
+    }
+
   </style>
 </head>
 <body>
@@ -858,8 +1486,15 @@
     <div class="header-content">
       <div class="brand-group">
         <div class="brand-badge">📦</div>
-        <h1>Contagem de Estoque</h1>
+        <div>
+          <h1>Contagem de Estoque</h1>
+          <span class="sub-header-tag">2º Cérebro Obsidian & Agentes IA</span>
+        </div>
       </div>
+      <button id="btnQuickBrain" class="btn-header-brain" title="Abrir 2º Cérebro & Central de Agentes IA">
+        <span class="brain-pulse-dot"></span>
+        <span>🧠 2º Cérebro</span>
+      </button>
     </div>
 
     <!-- Barra de Busca Rápida -->
@@ -903,6 +1538,10 @@
           Todos
           <span class="nav-pill-badge" id="badgeAll">0</span>
         </button>
+        <button class="nav-pill nav-pill-brain" data-category="agents_brain" id="tabBrainAgents">
+          🧠 2º Cérebro & Agentes
+          <span class="nav-pill-badge badge-brain" id="badgeAgents">4</span>
+        </button>
       </div>
     </div>
   </header>
@@ -928,6 +1567,137 @@
     <!-- Container Dinâmico de Produtos -->
     <div id="categoriesContainer"></div>
 
+    <!-- Painel Dedicado do Segundo Cérebro & Agentes IA -->
+    <div id="secondBrainPanel" class="second-brain-panel">
+      <!-- Card Hero Segundo Cérebro -->
+      <div class="brain-hero-card">
+        <div class="brain-hero-header">
+          <div class="brain-hero-title">
+            <span style="font-size: 20px;">🧠</span>
+            <h2>Segundo Cérebro — Obsidian Vault</h2>
+            <span class="brain-tag-pill">MEM-ORQ • MEM-WEB</span>
+          </div>
+          <button id="btnOpenObsidianSettings" class="btn-brain-settings" title="Configurar conexão REST com o Obsidian">
+            ⚙️ REST API
+          </button>
+        </div>
+
+        <div class="brain-vault-path">
+          <span>📁</span>
+          <span>Vault: <strong>C:\Users\kelly\Documents\Obsidian Vault</strong> / Contagens/</span>
+        </div>
+
+        <div class="brain-sync-actions">
+          <button id="btnSyncObsidianRest" class="btn-brain-sync" title="Enviar para o Obsidian via Local REST API">
+            <span>🟣</span> Sincronizar Obsidian
+          </button>
+          <button id="btnDownloadMarkdown" class="btn-brain-outline" title="Baixar arquivo .md pronto para o Vault">
+            <span>📥</span> Baixar Nota (.md)
+          </button>
+          <button id="btnCopyMarkdownNote" class="btn-brain-outline" title="Copiar nota formatada em Markdown com Frontmatter">
+            <span>📋</span> Copiar Markdown
+          </button>
+        </div>
+      </div>
+
+      <!-- Seção dos 4 Agentes Autônomos -->
+      <div class="agents-section-title">
+        <span>🤖 Indução de Agentes Especializados</span>
+        <span style="font-size: 11px; font-weight: 600; color: var(--color-obsidian);">Selecione o agente para induzir</span>
+      </div>
+
+      <div class="agents-grid">
+        <div class="agent-card-item active" data-agent="AGENT-BUY" id="cardAgentBuy">
+          <span class="agent-card-badge">🛒</span>
+          <div class="agent-card-title">Agente de Compras & Reposição</div>
+          <div class="agent-card-desc">Calcula rupturas, itens críticos e monta pedidos para fornecedores.</div>
+          <div class="agent-card-tags">
+            <span class="agent-tag">#compras</span>
+            <span class="agent-tag">#reposicao</span>
+          </div>
+        </div>
+
+        <div class="agent-card-item" data-agent="AGENT-AUDIT" id="cardAgentAudit">
+          <span class="agent-card-badge">🛡️</span>
+          <div class="agent-card-title">Agente de Auditoria & Perdas</div>
+          <div class="agent-card-desc">Audita carnes, frios, laticínios e molhos caseiros contra desperdício.</div>
+          <div class="agent-card-tags">
+            <span class="agent-tag">#auditoria</span>
+            <span class="agent-tag">#perdas</span>
+          </div>
+        </div>
+
+        <div class="agent-card-item" data-agent="AGENT-OPS" id="cardAgentOps">
+          <span class="agent-card-badge">👨‍🍳</span>
+          <div class="agent-card-title">Agente de Operações & Chapa</div>
+          <div class="agent-card-desc">Calcula capacidade de saída de hambúrgueres e direciona a chapa.</div>
+          <div class="agent-card-tags">
+            <span class="agent-tag">#cozinha</span>
+            <span class="agent-tag">#chapa</span>
+          </div>
+        </div>
+
+        <div class="agent-card-item" data-agent="AGENT-BRAIN" id="cardAgentBrain">
+          <span class="agent-card-badge">🧠</span>
+          <div class="agent-card-title">Agente Cérebro Central (Master)</div>
+          <div class="agent-card-desc">Orquestra o Segundo Cérebro, despacho executivo e taxonomia MEM-ORQ.</div>
+          <div class="agent-card-tags">
+            <span class="agent-tag">#segundo-cerebro</span>
+            <span class="agent-tag">#master-moc</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Detalhes do Agente Ativo -->
+      <div class="agent-active-panel">
+        <div class="agent-panel-header">
+          <div class="agent-panel-info">
+            <div class="agent-panel-icon" id="activeAgentIcon">🛒</div>
+            <div class="agent-panel-title">
+              <h3 id="activeAgentName">Agente de Compras & Reposição (AGENT-BUY)</h3>
+              <p id="activeAgentSubtitle">Especialista em suprimentos, ponto de pedido e prevenção de ruptura</p>
+            </div>
+          </div>
+          <span class="agent-tag" id="activeAgentBadge">#reposicao #compras</span>
+        </div>
+
+        <!-- Heurística Ao Vivo -->
+        <div class="agent-live-analysis-box">
+          <div class="agent-live-title">
+            <span>⚡</span> Diagnóstico em Tempo Real do Estoque
+          </div>
+          <div class="agent-live-stats-row" id="agentLiveStatsRow"></div>
+          <ul class="agent-insights-list" id="agentLiveInsights"></ul>
+        </div>
+
+        <!-- Prompt de Indução -->
+        <div class="agent-prompt-container">
+          <div class="prompt-box-header">
+            <span class="prompt-box-label">
+              <span>📜</span> Prompt de Indução Canônico (Pronto para LLM)
+            </span>
+            <button id="btnCopyAgentPrompt" class="btn-copy-prompt">
+              <span>📋</span> Copiar Prompt de Indução
+            </button>
+          </div>
+          <div id="activeAgentPromptText" class="agent-prompt-box">Gerando prompt com dados do estoque...</div>
+        </div>
+      </div>
+
+      <!-- Preview da Nota do Segundo Cérebro no Obsidian -->
+      <div class="obsidian-preview-section">
+        <div class="obsidian-preview-header">
+          <h3>
+            <span>🟣</span> Nota Formatada para o Obsidian (Frontmatter + Wikilinks)
+          </h3>
+          <button id="btnCopyObsidianMarkdown" class="btn-copy-prompt">
+            <span>📋</span> Copiar Nota (.md)
+          </button>
+        </div>
+        <div id="obsidianPreviewBox" class="obsidian-code-box">Carregando markdown do Segundo Cérebro...</div>
+      </div>
+    </div>
+
     <!-- Estado de Busca Sem Resultados -->
     <div id="searchEmptyState" class="clean-empty-state" style="display: none;">
       <span class="empty-state-emoji">🔍</span>
@@ -945,6 +1715,10 @@
         <span class="bottom-count-title" id="bottomSummaryTitle">0 itens contados</span>
         <span class="bottom-count-units" id="bottomSummaryUnits">0 unidades no total</span>
       </div>
+
+      <button id="btnOpenBrainAction" class="btn-brain-action" title="Abrir Segundo Cérebro & Agentes IA">
+        🧠 2º Cérebro
+      </button>
 
       <button id="btnOpenReview" class="btn-secondary-review" title="Revisar lista antes de enviar">
         📋 Revisar
@@ -969,16 +1743,36 @@
         <button class="sheet-close-btn" id="btnCloseReviewModal">&times;</button>
       </div>
       <div class="sheet-body">
-        <div class="badge-dest-wa">
-          <span>📲 Envio WhatsApp: <strong>+55 11 98278-5102</strong></span>
+        <div class="review-tabs">
+          <button type="button" class="review-tab-btn active tab-wa" id="tabReviewWa">
+            📲 WhatsApp Fixo
+          </button>
+          <button type="button" class="review-tab-btn tab-brain" id="tabReviewBrain">
+            🧠 2º Cérebro & Agentes
+          </button>
         </div>
 
-        <div id="reportPreviewText" class="preview-code-box">Carregando dados...</div>
+        <div id="reviewWaPanel">
+          <div class="badge-dest-wa">
+            <span>📲 Envio WhatsApp: <strong>+55 11 98278-5102</strong></span>
+          </div>
+          <div id="reportPreviewText" class="preview-code-box">Carregando dados...</div>
+        </div>
+
+        <div id="reviewBrainPanel" style="display: none;">
+          <div class="brain-vault-path" style="margin-bottom: 8px;">
+            <span>🟣</span> Sincronização direta com <strong>Obsidian Vault / Contagens/</strong>
+          </div>
+          <div id="reportBrainPreviewText" class="obsidian-code-box" style="max-height: 220px;">Carregando nota...</div>
+        </div>
       </div>
       <div class="sheet-footer">
         <button type="button" class="btn-dismiss-add-item" id="btnCopyReport">Copiar Texto</button>
         <button type="button" class="btn-primary-finalize" id="btnConfirmFinalize" style="flex: 1;">
           Enviar no WhatsApp
+        </button>
+        <button type="button" class="btn-brain-sync" id="btnConfirmObsidianModal" style="display: none; flex: 1;">
+          🟣 Sincronizar Obsidian
         </button>
       </div>
     </div>
@@ -1007,6 +1801,51 @@
     </div>
   </div>
 
+  <!-- ==========================================================================
+       MODAL 3: CONFIGURAÇÃO LOCAL REST API OBSIDIAN
+       ========================================================================== -->
+  <div id="modalObsidianSettings" class="modal-backdrop">
+    <div class="modal-sheet" style="max-width: 440px;">
+      <div class="sheet-header">
+        <h2 style="color: var(--color-obsidian-text); display: flex; align-items: center; gap: 8px;">
+          <span>⚙️</span> Conexão Obsidian Local REST API
+        </h2>
+        <button class="sheet-close-btn" id="btnCloseObsidianSettings">&times;</button>
+      </div>
+      <div class="sheet-body">
+        <p style="color: var(--text-secondary); margin-bottom: 12px; font-size: 13px; line-height: 1.4;">
+          Conecte este sistema diretamente ao seu Obsidian local via o plugin comunitário <strong>Local REST API</strong>.
+        </p>
+
+        <div style="margin-bottom: 10px;">
+          <label style="display: block; font-size: 12px; font-weight: 700; margin-bottom: 4px;">URL da API Local</label>
+          <input type="text" id="cfgObsidianUrl" class="search-field" value="https://127.0.0.1:27124" style="width: 100%;">
+        </div>
+
+        <div style="margin-bottom: 10px;">
+          <label style="display: block; font-size: 12px; font-weight: 700; margin-bottom: 4px;">Chave de API (Bearer Token)</label>
+          <div style="display: flex; gap: 6px;">
+            <input type="password" id="cfgObsidianKey" class="search-field" placeholder="Token gerado pelo plugin..." style="flex: 1;">
+            <button type="button" id="btnToggleObsidianKey" class="btn-brain-outline" style="padding: 0 10px;">Ver</button>
+          </div>
+        </div>
+
+        <div style="margin-bottom: 12px;">
+          <label style="display: block; font-size: 12px; font-weight: 700; margin-bottom: 4px;">Pasta no Vault</label>
+          <input type="text" id="cfgObsidianFolder" class="search-field" value="Contagens/" style="width: 100%;">
+        </div>
+
+        <div id="obsidianTestStatus" style="font-size: 12px; font-weight: 600; min-height: 20px;"></div>
+      </div>
+      <div class="sheet-footer">
+        <button type="button" class="btn-brain-outline" id="btnTestObsidianConn">Testar Conexão</button>
+        <button type="button" class="btn-brain-sync" id="btnSaveObsidianSettings" style="flex: 1;">
+          Salvar Configurações
+        </button>
+      </div>
+    </div>
+  </div>
+
   <!-- TOASTS DE NOTIFICAÇÃO -->
   <div class="toast-deck" id="toastContainer"></div>
 
@@ -1020,10 +1859,11 @@
     const STORAGE_KEYS = {
       COUNTS: "estoque_counts_v1",
       CUSTOM_ITEMS: "estoque_custom_items_v1",
-      ACTIVE_CAT: "estoque_active_cat_v1"
+      ACTIVE_CAT: "estoque_active_cat_v1",
+      OBSIDIAN_CONFIG: "estoque_obsidian_config_v1"
     };
 
-    // Catálogo pré-cadastrado (88 produtos)
+    // Catálogo pré-cadastrado (105 produtos)
     const CATEGORIES = ["Geladeira", "Freezer", "Prateleira", "Bar"];
     const CATEGORY_ICONS = {
       "Geladeira": "❄️",
@@ -1038,13 +1878,16 @@
         "Pimenta jalapeno", "Cebola caramelizada", "Geleia de bacon", "Tomate em cubos",
         "Chedar", "Maionese verde", "Baconnaise", "Sour cream", "Pct tomate",
         "Pct alface crespa", "Caixa de carne", "Pct limão", "Pct de Bacon",
-        "Requeijão cremoso", "Chantilly", "Maionese vigor", "Pct mussarela"
+        "Requeijão cremoso", "Chantilly", "Maionese vigor", "Pct mussarela",
+        "Cebola roxa", "Pct alface americana", "Toucinho defumado", "Farofa de bacon", "Leite"
       ],
       "Freezer": [
         "Pacote de batata", "Pct de hambúrguer RP", "Pct de salsicha", "Pão Brioche",
         "Pacote de bacon fechado", "Pct pão sem glúten", "Disco de alho", "Saco cebola crua",
         "Purê", "Molho de frango", "Caixa de hambúrguer vegetal", "Palito de requeijão",
-        "Coxinha de queijo", "Coxinha de frango", "Porção de frango", "Pct molho de frango"
+        "Coxinha de queijo", "Coxinha de frango", "Porção de frango", "Pct molho de frango",
+        "Saco de molho de costela", "Pct Nuggets", "Cebola branca", "Carne moída",
+        "Presunto", "Disco de gorgonzola", "Disco de bacon"
       ],
       "Prateleira": [
         "Caixa pão Brioche", "Caixa pão hot-dog", "Hambúrguer do RP", "Pacotes de Barquinha",
@@ -1056,7 +1899,8 @@
         "Pct bases de baunilha", "Pct batata palha", "Caixas de Heineken", "Caixa de cotuba",
         "Cotubas 0", "Pacote de guaraná", "Pacote de guaraná 0", "Pacote de coca",
         "Groselha", "Molho Chipotle", "Ketchup real", "Pct copo salão",
-        "Pct copo cozinha", "Pote de batata"
+        "Pct copo cozinha", "Pote de batata", "Fardo de água", "Pão gergelim",
+        "Molho american chicken", "Molho GRILL", "Cebola crispy"
       ],
       "Bar": [
         "Coca",
@@ -1076,11 +1920,53 @@
       ]
     };
 
+    // Definição dos 4 Agentes Especializados
+    const AGENTS_META = {
+      "AGENT-BUY": {
+        name: "Agente de Compras & Reposição",
+        code: "AGENT-BUY",
+        badge: "#reposicao #compras #suprimentos",
+        icon: "🛒",
+        subtitle: "Especialista em suprimentos, ponto de pedido e prevenção de ruptura",
+        role: "Gestão de Cadeia de Suprimentos & Compras"
+      },
+      "AGENT-AUDIT": {
+        name: "Agente de Auditoria & Perdas",
+        code: "AGENT-AUDIT",
+        badge: "#auditoria #perdas #qualidade #haccp",
+        icon: "🛡️",
+        subtitle: "Auditoria preventiva em perecíveis, cadeia de frio e controle de quebra",
+        role: "Auditoria Operacional & Qualidade A&B"
+      },
+      "AGENT-OPS": {
+        name: "Agente de Operações & Chapa",
+        code: "AGENT-OPS",
+        badge: "#cozinha #chapa #mise-en-place #capacidade",
+        icon: "👨‍🍳",
+        subtitle: "Cálculo de capacidade produtiva, insumo gargalo e fluxo de chapa",
+        role: "Engenharia de Menu & Operação de Cozinha"
+      },
+      "AGENT-BRAIN": {
+        name: "Agente Cérebro Central (Master MOC)",
+        code: "AGENT-BRAIN",
+        badge: "#segundo-cerebro #master-moc #orquestracao #mem-orq",
+        icon: "🧠",
+        subtitle: "Orquestrador supremo, classificação canônica MEM-ORQ e despacho executivo",
+        role: "Orquestrador Master do Segundo Cérebro no Obsidian"
+      }
+    };
+
     const state = {
       counts: {},
       customItems: [],
       activeCategory: "Geladeira",
-      searchQuery: ""
+      searchQuery: "",
+      selectedAgent: "AGENT-BUY",
+      obsidianConfig: {
+        url: "https://127.0.0.1:27124",
+        apiKey: "",
+        folder: "Contagens/"
+      }
     };
 
     function initApp() {
@@ -1100,6 +1986,11 @@
 
         const savedCat = localStorage.getItem(STORAGE_KEYS.ACTIVE_CAT);
         if (savedCat) state.activeCategory = savedCat;
+
+        const savedObsidian = localStorage.getItem(STORAGE_KEYS.OBSIDIAN_CONFIG);
+        if (savedObsidian) {
+          state.obsidianConfig = { ...state.obsidianConfig, ...JSON.parse(savedObsidian) };
+        }
       } catch (err) {
         console.error("Erro storage:", err);
       }
@@ -1111,6 +2002,9 @@
     function saveCustomItemsToStorage() {
       try { localStorage.setItem(STORAGE_KEYS.CUSTOM_ITEMS, JSON.stringify(state.customItems)); } catch (e) {}
     }
+    function saveObsidianConfigToStorage() {
+      try { localStorage.setItem(STORAGE_KEYS.OBSIDIAN_CONFIG, JSON.stringify(state.obsidianConfig)); } catch (e) {}
+    }
 
     function getItemId(category, name) {
       return `${category}__${name.trim().toLowerCase().replace(/[^a-z0-9]/g, '_')}`;
@@ -1120,8 +2014,28 @@
     // RENDERIZAÇÃO DA UI
     // ==========================================================================
     function renderUI() {
-      const container = document.getElementById("categoriesContainer");
-      container.innerHTML = "";
+      const brainPanel = document.getElementById("secondBrainPanel");
+      const categoriesContainer = document.getElementById("categoriesContainer");
+      const searchWrapper = document.querySelector(".search-wrapper");
+      const progressStrip = document.querySelector(".progress-bar-strip");
+      const empty = document.getElementById("searchEmptyState");
+
+      if (state.activeCategory === "agents_brain") {
+        brainPanel.classList.add("active");
+        categoriesContainer.style.display = "none";
+        if (searchWrapper) searchWrapper.style.display = "none";
+        if (progressStrip) progressStrip.style.display = "none";
+        if (empty) empty.style.display = "none";
+        renderSecondBrainPanel();
+        return;
+      } else {
+        brainPanel.classList.remove("active");
+        categoriesContainer.style.display = "block";
+        if (searchWrapper) searchWrapper.style.display = "block";
+        if (progressStrip) progressStrip.style.display = "flex";
+      }
+
+      categoriesContainer.innerHTML = "";
 
       const categories = CATEGORIES;
       const normalizeStr = s => (s || "").normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
@@ -1228,10 +2142,9 @@
           flowEl.appendChild(card);
         });
 
-        container.appendChild(blockEl);
+        categoriesContainer.appendChild(blockEl);
       });
 
-      const empty = document.getElementById("searchEmptyState");
       empty.style.display = totalVisible === 0 ? "block" : "none";
     }
 
@@ -1273,6 +2186,9 @@
       document.getElementById("badgeCountedOnly").textContent = totalCountedDistinct;
       document.getElementById("badgeAll").textContent = totalCountedDistinct;
 
+      const badgeAgents = document.getElementById("badgeAgents");
+      if (badgeAgents) badgeAgents.textContent = "4";
+
       document.getElementById("stripCountedStats").textContent = `${totalCountedDistinct} tipos`;
       document.getElementById("stripUnitsStats").textContent = `${totalUnits} un`;
 
@@ -1282,6 +2198,11 @@
       document.querySelectorAll(".nav-pill").forEach(p => {
         p.classList.toggle("active", p.dataset.category === state.activeCategory);
       });
+
+      // Se o painel do cérebro estiver ativo, atualiza-o
+      if (state.activeCategory === "agents_brain") {
+        renderSecondBrainPanel();
+      }
     }
 
     function updateItemQuantity(itemId, newQty) {
@@ -1341,7 +2262,7 @@
     }
 
     // ==========================================================================
-    // MENSAGEM DO WHATSAPP
+    // AGRUPAMENTO DE DADOS & TIMESTAMP
     // ==========================================================================
     function getActiveItemsGrouped() {
       const categories = CATEGORIES;
@@ -1358,7 +2279,7 @@
         all.forEach(item => {
           const q = state.counts[item.id] || 0;
           if (q > 0) {
-            counted.push({ name: item.name, qty: q });
+            counted.push({ name: item.name, qty: q, category: cat });
             totalUnits += q;
             totalTypes++;
           }
@@ -1375,9 +2296,14 @@
       const pad = n => String(n).padStart(2, '0');
       const dateStr = `${pad(d.getDate())}/${pad(d.getMonth() + 1)}/${d.getFullYear()}`;
       const timeStr = `${pad(d.getHours())}:${pad(d.getMinutes())}`;
-      return { dateStr, timeStr };
+      const isoDate = `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())} ${timeStr}`;
+      const fileStamp = `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}-${pad(d.getHours())}${pad(d.getMinutes())}`;
+      return { dateStr, timeStr, isoDate, fileStamp };
     }
 
+    // ==========================================================================
+    // WHATSAPP
+    // ==========================================================================
     function generateWhatsAppMessage() {
       const { grouped, totalUnits, totalTypes } = getActiveItemsGrouped();
       const { dateStr, timeStr } = getTimestamp();
@@ -1424,6 +2350,388 @@
       setTimeout(() => {
         window.open(url, "_blank");
       }, 400);
+    }
+
+    // ==========================================================================
+    // SEGUNDO CÉREBRO: GERADOR MARKDOWN CANÔNICO DO OBSIDIAN
+    // ==========================================================================
+    function generateObsidianMarkdown() {
+      const { grouped, totalUnits, totalTypes } = getActiveItemsGrouped();
+      const { dateStr, timeStr, isoDate } = getTimestamp();
+
+      let md = `---\n`;
+      md += `title: "Contagem de Estoque — ${dateStr}"\n`;
+      md += `aliases: ["Estoque ${dateStr}", "Inventário ${dateStr}", "Contagem Diária", "Snapshot Estoque"]\n`;
+      md += `category: "00 - 🧠 Cérebro Central & Governança / Estoque"\n`;
+      md += `tags:\n`;
+      md += `  - estoque\n`;
+      md += `  - contagem\n`;
+      md += `  - segundo-cerebro\n`;
+      md += `  - agentes\n`;
+      md += `  - hamburgueria\n`;
+      md += `  - operacao\n`;
+      md += `created: ${isoDate}\n`;
+      md += `total_itens_contados: ${totalTypes}\n`;
+      md += `total_unidades: ${totalUnits}\n`;
+      md += `status_auditoria: "Validado"\n`;
+      md += `---\n\n`;
+
+      md += `# 📋 Contagem de Estoque & Indução Neural — ${dateStr}\n\n`;
+      md += `> [!ABSTRACT] **Segundo Cérebro — Sincronização Operacional**\n`;
+      md += `> Relatório gerado pela aplicação móvel para registro canônico no **[[00 - 🧠 Cérebro Central & Governança/🧠 Cérebro Central - Second Brain Master Hub|🧠 Cérebro Central]]** e indução autônoma dos agentes do ecossistema.\n`;
+      md += `> **🗓 Data:** ${dateStr} às ${timeStr} | **📦 Tipos Contados:** ${totalTypes} produtos | **📊 Volume Total:** ${totalUnits} unidades\n\n`;
+
+      md += `## ⚡ Diretrizes de Roteamento para Agentes IA\n`;
+      md += `* **🛒 [[AGENT-BUY]]:** Indução para cálculo de ponto de pedido e cotações de fornecedores.\n`;
+      md += `* **🛡️ [[AGENT-AUDIT]]:** Indução para auditoria de validade, quebras e perecíveis fatiados.\n`;
+      md += `* **👨‍🍳 [[AGENT-OPS]]:** Indução para briefing de capacidade da chapa e mise en place de hambúrgueres.\n`;
+      md += `* **🧠 [[AGENT-BRAIN]]:** Despacho executivo e atualização do Map of Content (MOC).\n\n`;
+
+      md += `## 📦 Inventário Consolidado por Setor\n\n`;
+
+      const icons = { "Geladeira": "❄️", "Freezer": "🧊", "Prateleira": "📦", "Bar": "🍹" };
+
+      for (const [cat, items] of Object.entries(grouped)) {
+        md += `### ${icons[cat] || "📁"} ${cat}\n\n`;
+        md += `| Produto | Quantidade | Nível Operacional |\n`;
+        md += `| :--- | :---: | :--- |\n`;
+        items.forEach(i => {
+          let status = "🟢 Normal";
+          if (i.qty <= 2) status = "🔴 **Crítico (Comprar)**";
+          else if (i.qty <= 5) status = "🟡 *Atenção / Giro*";
+          md += `| ${i.name} | **${i.qty} un** | ${status} |\n`;
+        });
+        md += `\n`;
+      }
+
+      md += `## 🤖 Diagnóstico Sintético dos Agentes\n\n`;
+      md += `> [!TIP] **Alerta de Reposição Imediata (Agente de Compras)**\n`;
+      const critical = [];
+      for (const items of Object.values(grouped)) {
+        items.forEach(i => { if (i.qty <= 2) critical.push(`${i.name} (${i.qty} un)`); });
+      }
+      if (critical.length > 0) {
+        md += `> Itens em nível de ruptura imediata: **${critical.join(", ")}**.\n\n`;
+      } else {
+        md += `> Nenhum item em nível crítico imediato detectado.\n\n`;
+      }
+
+      md += `---\n`;
+      md += `*Conexões do Segundo Cérebro: [[00 - 🧠 Cérebro Central & Governança/🧠 Cérebro Central - Second Brain Master Hub|🧠 Master Hub]] • [[01 - 🌐 Web & Frontend (2.agents Kit)/00 - Visão Geral & Memória/🌐 Memória Específica — Arquitetura, Engenharia & Design WEB|MEM-WEB]] • [[Estoque Mestre]]*\n`;
+
+      return md;
+    }
+
+    // ==========================================================================
+    // SEGUNDO CÉREBRO: INDUÇÃO DOS 4 AGENTES
+    // ==========================================================================
+    function generateAgentPrompt(agentId) {
+      const { grouped, totalUnits, totalTypes } = getActiveItemsGrouped();
+      const { dateStr, timeStr } = getTimestamp();
+
+      const inventorySummary = [];
+      for (const [cat, items] of Object.entries(grouped)) {
+        inventorySummary.push(`### ${cat}:\n` + items.map(i => `- ${i.name}: ${i.qty} un`).join("\n"));
+      }
+      const inventoryText = inventorySummary.length > 0 ? inventorySummary.join("\n\n") : "Nenhum produto com contagem positiva no momento.";
+
+      if (agentId === "AGENT-BUY") {
+        return `[SISTEMA & PAPEL DO AGENTE]
+Você é o AGENTE DE COMPRAS & CADEIA DE SUPRIMENTOS da hamburgueria, conectado ao Segundo Cérebro no Obsidian (MEM-ORQ / MEM-BCK).
+
+[CONTEXTO OPERACIONAL]
+- Data da Contagem: ${dateStr} às ${timeStr}
+- Total de Itens Contados: ${totalTypes} tipos
+- Total de Unidades Físicas: ${totalUnits} un
+- Local de Destino das Notas: C:\\Users\\kelly\\Documents\\Obsidian Vault\\Contagens\\
+
+[DADOS DO ESTOQUE ATUAL]
+${inventoryText}
+
+[TAREFA DO AGENTE]
+1. Identifique todos os insumos em nível crítico de ruptura (quantidade <= 2 unidades) e de alerta (<= 5 unidades).
+2. Agrupe os pedidos por categoria de fornecedor:
+   - Fornecedor de Pães & Panificação
+   - Frigorífico / Açougue (Carnes e Bacon)
+   - Laticínios, Molhos & Queijos
+   - Hortifrúti (Tomates, Alfaces, Cebolas)
+   - Bebidas & Sobremesas
+   - Descartáveis & Embalagens
+3. Sugira a quantidade mínima recomendada de compra para suportar a operação pelos próximos 3 a 5 dias.
+4. Apresente um plano de ação direto, sem rodeios (Anti-Slop), com tabela resumida de compras emergenciais.`;
+      }
+
+      if (agentId === "AGENT-AUDIT") {
+        return `[SISTEMA & PAPEL DO AGENTE]
+Você é o AGENTE DE AUDITORIA OPERACIONAL & PREVENÇÃO DE PERDAS (A&B), conectado ao Segundo Cérebro no Obsidian.
+
+[CONTEXTO OPERACIONAL]
+- Data da Auditoria: ${dateStr} às ${timeStr}
+- Itens Auditados: ${totalTypes} produtos (${totalUnits} unidades totais)
+
+[DADOS DO ESTOQUE ATUAL]
+${inventoryText}
+
+[TAREFA DO AGENTE]
+1. Audite os insumos sensíveis de refrigeração e congelamento (Carnes, Toucinho, Discos de Bacon/Gorgonzola, Cheddar, Mussarela, Molhos caseiros como Baconnaise e Sour cream).
+2. Verifique discrepâncias operacionais: itens com estoque zerado no freezer vs geladeira, risco de contaminação cruzada ou vencimento de embalagens abertas.
+3. Alerte sobre conformidade com a regra PEPS (Primeiro que Entra, Primeiro que Sai) para os molhos e laticínios contados.
+4. Entregue um checklist de auditoria em formato Markdown compatível com o Obsidian.`;
+      }
+
+      if (agentId === "AGENT-OPS") {
+        return `[SISTEMA & PAPEL DO AGENTE]
+Você é o AGENTE DE INTELIGÊNCIA OPERACIONAL & ENGENHARIA DE CHAPA da hamburgueria.
+
+[CONTEXTO OPERACIONAL]
+- Turno: ${dateStr} às ${timeStr}
+- Insumos disponíveis: ${totalTypes} tipos (${totalUnits} un)
+
+[DADOS DO ESTOQUE ATUAL]
+${inventoryText}
+
+[TAREFA DO AGENTE]
+1. Calcule a CAPACIDADE MÁXIMA DE PRODUÇÃO de hambúrgueres antes que o primeiro insumo limitante se esgote (analise pães brioche/gergelim vs hambúrgueres do RP / carne moída / queijos).
+2. Indique o insumo "Gargalo" (aquele que vai travar as vendas se não for reposto imediatamente).
+3. Sugira o mise en place exato para a equipe de cozinha e chapa antes do início do pico de pedidos.
+4. Forneça instruções operacionais objetivas para o líder da chapa.`;
+      }
+
+      // AGENT-BRAIN
+      return `[SISTEMA & PAPEL DO AGENTE]
+Você é o ORQUESTRADOR CENTRAL DO SEGUNDO CÉREBRO (Master Agent Orchestrator - MEM-ORQ), sediado no Obsidian Vault (C:\\Users\\kelly\\Documents\\Obsidian Vault).
+
+[TAXONOMIA CANÔNICA]
+- Memória Pai: 00 - 🧠 Cérebro Central & Governança / Master Hub
+- Domínios Afetados: MEM-ORQ, MEM-WEB, MEM-BCK
+- Timestamp: ${dateStr} às ${timeStr}
+
+[DADOS DO ESTOQUE]
+${inventoryText}
+
+[TAREFA DO AGENTE]
+1. Gere o DESPACHO EXECUTIVO DIÁRIO para o gestor geral da hamburgueria.
+2. Forneça uma nota canônica com wikilinks [[Estoque Mestre]], [[00 - 🧠 Cérebro Central & Governança/🧠 Cérebro Central - Second Brain Master Hub|Master Hub]], avaliando a saúde geral do estoque (Score de 0 a 100).
+3. Roteie as diretrizes de execução para os agentes subordinados: AGENT-BUY (Compras), AGENT-AUDIT (Qualidade) e AGENT-OPS (Chapa).
+4. Redija a nota em tom sintético, profissional e rigoroso, sem clichês de IA (Anti-Slop).`;
+    }
+
+    function generateLiveAgentAnalysis(agentId) {
+      let totalUnits = 0;
+      let totalTypes = 0;
+      let criticalItems = [];
+      let warningItems = [];
+      let normalItems = [];
+      let coldProteins = [];
+      let coldDairy = [];
+      let coldSauces = [];
+
+      const bunsCount = [];
+      const meatCount = [];
+
+      CATEGORIES.forEach(cat => {
+        const baseItems = (CATALOG_PRESET[cat] || []).map(n => ({ id: getItemId(cat, n), name: n }));
+        const customCat = (state.customItems || []).filter(i => i.category === cat);
+        const all = [...baseItems, ...customCat];
+
+        all.forEach(item => {
+          const q = state.counts[item.id] || 0;
+          if (q > 0) {
+            totalUnits += q;
+            totalTypes++;
+            const itemObj = { name: item.name, qty: q, category: cat };
+            if (q <= 2) criticalItems.push(itemObj);
+            else if (q <= 5) warningItems.push(itemObj);
+            else normalItems.push(itemObj);
+
+            const lower = item.name.toLowerCase();
+            if (lower.includes("carne") || lower.includes("hambúrguer") || lower.includes("frango") || lower.includes("bacon") || lower.includes("toucinho") || lower.includes("salsicha")) {
+              coldProteins.push(itemObj);
+            }
+            if (lower.includes("queijo") || lower.includes("mussarela") || lower.includes("cheddar") || lower.includes("chedar") || lower.includes("gorgonzola") || lower.includes("requeijão") || lower.includes("leite")) {
+              coldDairy.push(itemObj);
+            }
+            if (lower.includes("molho") || lower.includes("maionese") || lower.includes("baconnaise") || lower.includes("ketchup") || lower.includes("sour cream")) {
+              coldSauces.push(itemObj);
+            }
+
+            if (lower.includes("pão") || lower.includes("pao")) bunsCount.push(itemObj);
+            if (lower.includes("hambúrguer") || lower.includes("hamburguer") || lower.includes("carne")) meatCount.push(itemObj);
+          }
+        });
+      });
+
+      if (agentId === "AGENT-BUY") {
+        const statusText = criticalItems.length > 5 ? "Crítico (Urgente)" : criticalItems.length > 0 ? "Atenção (Repor)" : "Estável";
+        const stats = [
+          { num: criticalItems.length, label: "Ruptura (<= 2 un)" },
+          { num: warningItems.length, label: "Alerta (3 a 5 un)" },
+          { num: normalItems.length, label: "Abastecidos (> 5 un)" },
+          { num: statusText, label: "Status Geral" }
+        ];
+
+        const insights = [];
+        if (criticalItems.length > 0) {
+          const list = criticalItems.slice(0, 5).map(i => `<strong>${escapeHtml(i.name)}</strong> (${i.qty} un)`).join(", ");
+          insights.push(`🚨 <strong>Risco de Ruptura Imediata:</strong> Os itens ${list}${criticalItems.length > 5 ? ` e mais ${criticalItems.length - 5} produtos` : ''} precisam de reposição antes do próximo turno.`);
+        } else {
+          insights.push(`✅ <strong>Estoque sem Rupturas:</strong> Nenhum produto contado está em nível crítico emergencial.`);
+        }
+
+        if (warningItems.length > 0) {
+          const wList = warningItems.slice(0, 4).map(i => `${escapeHtml(i.name)} (${i.qty} un)`).join(", ");
+          insights.push(`🟡 <strong>Atenção de Giro:</strong> Itens com estoque moderado que devem entrar no radar de cotação: ${wList}.`);
+        }
+
+        insights.push(`📋 <strong>Sugestão para Fornecedores:</strong> Dispare a lista de compras para pães, carnes ou hortifrúti prioritariamente.`);
+        return { stats, insights };
+      }
+
+      if (agentId === "AGENT-AUDIT") {
+        const stats = [
+          { num: coldProteins.length, label: "Proteínas & Carnes" },
+          { num: coldDairy.length, label: "Laticínios & Queijos" },
+          { num: coldSauces.length, label: "Molhos & Emulsões" },
+          { num: "PEPS / FIFO", label: "Protocolo Ativo" }
+        ];
+
+        const insights = [
+          `❄️ <strong>Cadeia de Frio & Sensíveis:</strong> Foram identificados ${coldProteins.length} tipos de carnes/proteínas e ${coldDairy.length} tipos de laticínios que exigem monitoramento rigoroso de refrigeração.`,
+          `⏳ <strong>Validade de Molhos Artesanais:</strong> Molhos abertos como Baconnaise, Sour cream e Maioneses têm prazo de consumo reduzido (48 a 72h). Aplique o protocolo PEPS.`,
+          `🛡️ <strong>Prevenção de Perdas:</strong> Queijos e bacon fatiados devem permanecer lacrados em porções padronizadas para evitar oxidação e quebra de peso.`
+        ];
+        return { stats, insights };
+      }
+
+      if (agentId === "AGENT-OPS") {
+        const totalBuns = bunsCount.reduce((acc, i) => acc + i.qty, 0);
+        const totalMeats = meatCount.reduce((acc, i) => acc + i.qty, 0);
+        const estimatedBurgers = Math.max(0, totalMeats > 0 ? totalMeats : 0);
+
+        const stats = [
+          { num: totalBuns + " cx/un", label: "Pães em Estoque" },
+          { num: totalMeats + " un", label: "Carnes/Burgers" },
+          { num: `~${estimatedBurgers}`, label: "Burgers Estimados" },
+          { num: totalMeats < totalBuns ? "Carne" : "Pão", label: "Insumo Limitante" }
+        ];
+
+        const insights = [
+          `🍔 <strong>Capacidade de Entrega da Cozinha:</strong> Com o volume atual de carnes e hambúrgueres contados, a capacidade operacional estimada é de aproximadamente <strong>${estimatedBurgers} hambúrgueres</strong>.`,
+          `⚠️ <strong>Gargalo de Produção:</strong> O principal fator limitante atual é a disponibilidade de <strong>${totalMeats < totalBuns ? 'Carnes/Proteínas' : 'Pães'}</strong>.`,
+          `👨‍🍳 <strong>Orientação de Mise en Place:</strong> Deixar a praça de montagem abastecida com queijo cheddar, bacon e molhos para garantir agilidade no pico.`
+        ];
+        return { stats, insights };
+      }
+
+      // AGENT-BRAIN
+      const healthScore = Math.min(100, Math.max(20, Math.round(100 - (criticalItems.length * 5))));
+      const stats = [
+        { num: `${healthScore}/100`, label: "Health Score Estoque" },
+        { num: `${totalTypes} tipos`, label: "Variedade Ativa" },
+        { num: `${totalUnits} un`, label: "Volume Total" },
+        { num: "Sincronizado", label: "Estado 2º Cérebro" }
+      ];
+
+      const insights = [
+        `🧠 <strong>Governança do Segundo Cérebro:</strong> Snapshot auditado e classificado sob o código <code>MEM-ORQ</code> e <code>MEM-WEB</code>.`,
+        `📂 <strong>Destino Obsidian Vault:</strong> O arquivo está configurado para gravação canônica em <code>C:\\Users\\kelly\\Documents\\Obsidian Vault\\Contagens\\</code> com tags e wikilinks.`,
+        `⚡ <strong>Roteamento de Agentes:</strong> Os dados de contagem estão prontos para alimentar pipelines autônomos de automação (Antigravity, Claude, ChatGPT, n8n).`
+      ];
+      return { stats, insights };
+    }
+
+    function renderSecondBrainPanel() {
+      const agent = AGENTS_META[state.selectedAgent] || AGENTS_META["AGENT-BUY"];
+
+      // Atualiza cards de agentes
+      document.querySelectorAll(".agent-card-item").forEach(card => {
+        card.classList.toggle("active", card.dataset.agent === state.selectedAgent);
+      });
+
+      // Atualiza detalhes do agente
+      document.getElementById("activeAgentIcon").textContent = agent.icon;
+      document.getElementById("activeAgentName").textContent = `${agent.name} (${agent.code})`;
+      document.getElementById("activeAgentSubtitle").textContent = agent.subtitle;
+      document.getElementById("activeAgentBadge").textContent = agent.badge;
+
+      // Heurística Ao Vivo
+      const analysis = generateLiveAgentAnalysis(state.selectedAgent);
+      const statsRow = document.getElementById("agentLiveStatsRow");
+      statsRow.innerHTML = analysis.stats.map(s => `
+        <div class="agent-stat-pill">
+          <span class="agent-stat-num">${escapeHtml(String(s.num))}</span>
+          <span class="agent-stat-label">${escapeHtml(s.label)}</span>
+        </div>
+      `).join("");
+
+      const insightsList = document.getElementById("agentLiveInsights");
+      insightsList.innerHTML = analysis.insights.map(i => `<li>${i}</li>`).join("");
+
+      // Prompt do Agente
+      const promptText = generateAgentPrompt(state.selectedAgent);
+      document.getElementById("activeAgentPromptText").textContent = promptText;
+
+      // Markdown do Obsidian
+      const mdNote = generateObsidianMarkdown();
+      document.getElementById("obsidianPreviewBox").textContent = mdNote;
+    }
+
+    // ==========================================================================
+    // INTEGRAÇÃO OBSIDIAN LOCAL REST API & DOWNLOAD
+    // ==========================================================================
+    async function sendToObsidian(mdContent) {
+      const cfg = state.obsidianConfig;
+      const { fileStamp } = getTimestamp();
+
+      let folder = (cfg.folder || "Contagens/").trim();
+      if (!folder.endsWith("/")) folder += "/";
+      if (folder.startsWith("/")) folder = folder.substring(1);
+
+      const fileName = `Contagem - ${fileStamp}.md`;
+      const base = (cfg.url || "https://127.0.0.1:27124").trim().replace(/\/$/, "");
+      const endpoint = `${base}/vault/${encodeURIComponent(folder + fileName).replace(/%2F/g, '/')}`;
+
+      const headers = { "Content-Type": "text/markdown; charset=utf-8" };
+      if (cfg.apiKey && cfg.apiKey.trim()) {
+        headers["Authorization"] = `Bearer ${cfg.apiKey.trim()}`;
+      }
+
+      showToast("Conectando ao Obsidian...", "t-info");
+
+      try {
+        const res = await fetch(endpoint, {
+          method: "PUT",
+          headers: headers,
+          body: mdContent,
+          mode: "cors"
+        });
+
+        if (res.ok || res.status === 200 || res.status === 204 || res.status === 201) {
+          showToast(`✅ Salvo no Obsidian em "${folder}"!`, "t-success");
+          return { success: true, msg: `Salvo no Obsidian em "${folder}".` };
+        }
+        showToast(`Obsidian retornou status ${res.status}`, "t-error");
+        return { success: false, msg: `Obsidian retornou status ${res.status}.` };
+      } catch (err) {
+        showToast("Obsidian REST API offline. Baixando arquivo .md...", "t-info");
+        downloadMarkdownFile();
+        return { success: false, msg: "Não foi possível conectar ao Obsidian via REST API. Arquivo .md baixado para seu dispositivo." };
+      }
+    }
+
+    function downloadMarkdownFile() {
+      const { fileStamp } = getTimestamp();
+      const md = generateObsidianMarkdown();
+      const blob = new Blob([md], { type: "text/markdown;charset=utf-8" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = `Contagem - ${fileStamp}.md`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+      showToast("📥 Nota .md baixada para o seu Vault!", "t-success");
     }
 
     function showToast(text, type = "t-info") {
@@ -1548,6 +2856,108 @@
         renderUI();
       });
 
+      // Botão Rápido 2º Cérebro no Header e na Barra Inferior
+      const openBrain = () => {
+        state.activeCategory = "agents_brain";
+        try { localStorage.setItem(STORAGE_KEYS.ACTIVE_CAT, state.activeCategory); } catch(e){}
+        updateBadgesAndTotals();
+        renderUI();
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      };
+      document.getElementById("btnQuickBrain").addEventListener("click", openBrain);
+      document.getElementById("btnOpenBrainAction").addEventListener("click", openBrain);
+
+      // Seleção dos 4 Agentes
+      document.querySelectorAll(".agent-card-item").forEach(card => {
+        card.addEventListener("click", () => {
+          state.selectedAgent = card.dataset.agent;
+          renderSecondBrainPanel();
+        });
+      });
+
+      // Botão Copiar Prompt do Agente
+      document.getElementById("btnCopyAgentPrompt").addEventListener("click", () => {
+        const prompt = generateAgentPrompt(state.selectedAgent);
+        navigator.clipboard.writeText(prompt).then(() => {
+          showToast(`📋 Prompt de indução do ${AGENTS_META[state.selectedAgent].name} copiado!`, "t-success");
+        });
+      });
+
+      // Botão Copiar Markdown do Obsidian
+      const copyMdHandler = () => {
+        const md = generateObsidianMarkdown();
+        navigator.clipboard.writeText(md).then(() => {
+          showToast("📋 Nota do Segundo Cérebro copiada com Frontmatter!", "t-success");
+        });
+      };
+      document.getElementById("btnCopyMarkdownNote").addEventListener("click", copyMdHandler);
+      document.getElementById("btnCopyObsidianMarkdown").addEventListener("click", copyMdHandler);
+
+      // Botão Baixar Markdown
+      document.getElementById("btnDownloadMarkdown").addEventListener("click", downloadMarkdownFile);
+
+      // Botão Sincronizar Obsidian REST API
+      document.getElementById("btnSyncObsidianRest").addEventListener("click", () => {
+        sendToObsidian(generateObsidianMarkdown());
+      });
+
+      // Modal de Configurações do Obsidian
+      const modalObsidian = document.getElementById("modalObsidianSettings");
+      document.getElementById("btnOpenObsidianSettings").addEventListener("click", () => {
+        document.getElementById("cfgObsidianUrl").value = state.obsidianConfig.url || "https://127.0.0.1:27124";
+        document.getElementById("cfgObsidianKey").value = state.obsidianConfig.apiKey || "";
+        document.getElementById("cfgObsidianFolder").value = state.obsidianConfig.folder || "Contagens/";
+        document.getElementById("obsidianTestStatus").textContent = "";
+        modalObsidian.classList.add("open");
+      });
+      document.getElementById("btnCloseObsidianSettings").addEventListener("click", () => modalObsidian.classList.remove("open"));
+
+      document.getElementById("btnToggleObsidianKey").addEventListener("click", () => {
+        const inp = document.getElementById("cfgObsidianKey");
+        const btn = document.getElementById("btnToggleObsidianKey");
+        if (inp.type === "password") {
+          inp.type = "text";
+          btn.textContent = "Ocultar";
+        } else {
+          inp.type = "password";
+          btn.textContent = "Ver";
+        }
+      });
+
+      document.getElementById("btnSaveObsidianSettings").addEventListener("click", () => {
+        state.obsidianConfig.url = document.getElementById("cfgObsidianUrl").value.trim() || "https://127.0.0.1:27124";
+        state.obsidianConfig.apiKey = document.getElementById("cfgObsidianKey").value.trim();
+        state.obsidianConfig.folder = document.getElementById("cfgObsidianFolder").value.trim() || "Contagens/";
+        saveObsidianConfigToStorage();
+        modalObsidian.classList.remove("open");
+        showToast("Configurações do Obsidian salvas!", "t-success");
+      });
+
+      document.getElementById("btnTestObsidianConn").addEventListener("click", async () => {
+        const st = document.getElementById("obsidianTestStatus");
+        st.style.color = "var(--color-obsidian)";
+        st.textContent = "Testando conexão com o Obsidian...";
+
+        const url = document.getElementById("cfgObsidianUrl").value.trim() || "https://127.0.0.1:27124";
+        const key = document.getElementById("cfgObsidianKey").value.trim();
+        const headers = {};
+        if (key) headers["Authorization"] = `Bearer ${key}`;
+
+        try {
+          const res = await fetch(`${url.replace(/\/$/, '')}/`, { method: "GET", headers, mode: "cors" });
+          if (res.ok) {
+            st.style.color = "var(--color-success)";
+            st.textContent = "✅ Conectado com sucesso ao Obsidian!";
+          } else {
+            st.style.color = "var(--color-danger)";
+            st.textContent = `⚠️ Obsidian respondeu com status ${res.status}`;
+          }
+        } catch(e) {
+          st.style.color = "var(--color-danger)";
+          st.textContent = "❌ Falha ao conectar. Verifique se o Obsidian e o plugin Local REST API estão ativos.";
+        }
+      });
+
       // Zerar
       const modalReset = document.getElementById("modalResetConfirm");
       document.getElementById("btnResetAll").addEventListener("click", () => modalReset.classList.add("open"));
@@ -1566,15 +2976,46 @@
       const modalReview = document.getElementById("modalReview");
       const openRev = () => {
         document.getElementById("reportPreviewText").textContent = generateWhatsAppMessage();
+        document.getElementById("reportBrainPreviewText").textContent = generateObsidianMarkdown();
         modalReview.classList.add("open");
       };
       document.getElementById("btnOpenReview").addEventListener("click", openRev);
       document.getElementById("btnFinalizeMain").addEventListener("click", openRev);
       document.getElementById("btnCloseReviewModal").addEventListener("click", () => modalReview.classList.remove("open"));
       document.getElementById("btnConfirmFinalize").addEventListener("click", handleFinalize);
+      document.getElementById("btnConfirmObsidianModal").addEventListener("click", () => {
+        sendToObsidian(generateObsidianMarkdown());
+      });
+
+      // Alternador de abas no modal de revisão
+      const tabWa = document.getElementById("tabReviewWa");
+      const tabBrain = document.getElementById("tabReviewBrain");
+      const panelWa = document.getElementById("reviewWaPanel");
+      const panelBrain = document.getElementById("reviewBrainPanel");
+      const btnWa = document.getElementById("btnConfirmFinalize");
+      const btnBrain = document.getElementById("btnConfirmObsidianModal");
+
+      tabWa.addEventListener("click", () => {
+        tabWa.classList.add("active");
+        tabBrain.classList.remove("active");
+        panelWa.style.display = "block";
+        panelBrain.style.display = "none";
+        btnWa.style.display = "block";
+        btnBrain.style.display = "none";
+      });
+
+      tabBrain.addEventListener("click", () => {
+        tabBrain.classList.add("active");
+        tabWa.classList.remove("active");
+        panelBrain.style.display = "block";
+        panelWa.style.display = "none";
+        btnBrain.style.display = "block";
+        btnWa.style.display = "none";
+      });
 
       document.getElementById("btnCopyReport").addEventListener("click", () => {
-        navigator.clipboard.writeText(generateWhatsAppMessage()).then(() => {
+        const text = tabBrain.classList.contains("active") ? generateObsidianMarkdown() : generateWhatsAppMessage();
+        navigator.clipboard.writeText(text).then(() => {
           showToast("Copiado para a área de transferência!", "t-success");
         });
       });
