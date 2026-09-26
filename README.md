@@ -40,19 +40,6 @@ O sistema integra o envio direto do relatório formatado para o **WhatsApp fixo 
   - Todos os lançamentos e itens customizados são salvos em tempo real no `localStorage` do navegador. Se a página for recarregada ou fechada, nada é perdido.
   - Botão **Zerar** com confirmação de segurança para iniciar nova contagem.
 
-- **🧠 Integração com o Segundo Cérebro (Obsidian Vault):**
-  - Conexão e sincronização direta com o seu Segundo Cérebro em `C:\Users\kelly\Documents\Obsidian Vault\Contagens\`.
-  - Suporte à **Obsidian Local REST API** (`https://127.0.0.1:27124`) e exportação direta com 1 clique de notas `.md`.
-  - Notas formatadas com Frontmatter YAML canônico, tags (`#segundo-cerebro`, `#agentes`, `#estoque`), callouts de síntese e wikilinks para o `[[00 - 🧠 Cérebro Central & Governança/🧠 Cérebro Central - Second Brain Master Hub|🧠 Master Hub]]` e classificações `MEM-ORQ` e `MEM-WEB`.
-
-- **🤖 Hub de Indução de Agentes Autônomos de IA:**
-  - **🛒 Agente de Compras & Reposição (AGENT-BUY):** Analisa rupturas imediatas (≤ 2 un) e gera ordens de compra organizadas por fornecedor (Padaria, Açougue/Frigorífico, Hortifrúti, Laticínios e Bebidas).
-  - **🛡️ Agente de Auditoria & Prevenção de Perdas (AGENT-AUDIT):** Audita a cadeia de frio, perecibilidade de queijos, carnes moídas, toucinho e molhos caseiros sob a regra PEPS/FIFO.
-  - **👨‍🍳 Agente de Operações & Chapa (AGENT-OPS):** Traduz matérias-primas na capacidade real de entrega de hambúrgueres do próximo turno, identificando o insumo gargalo e direcionando o mise en place da chapa.
-  - **🧠 Agente Cérebro Central (AGENT-BRAIN):** O nó mestre que calcula o Health Score do estoque (0 a 100) e compila o Despacho Executivo para a gerência.
-  - **⚡ Diagnóstico Heurístico em Tempo Real:** Gera métricas e insights acionáveis imediatos na tela a cada contagem.
-  - **📜 Prompts Canônicos de Indução (1-Click):** Copia prompts profissionais de sistema estruturados para induzir qualquer LLM (Claude, ChatGPT, Gemini, Antigravity ou agentes n8n).
-
 ---
 
 ## 📲 Integração com WhatsApp
